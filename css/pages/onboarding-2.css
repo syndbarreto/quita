@@ -1,0 +1,149 @@
+body {
+  background: #eaeaea;
+}
+
+.onboarding-2 {
+  width: 402px;
+  height: 874px;
+  margin: 0 auto;
+  padding: 72px 20px;
+
+  background: var(--blue);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 44px;
+
+  overflow: hidden;
+}
+
+.onboarding-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-button,
+.skip-button {
+  border: 0;
+  background: transparent;
+  text-decoration: none;
+}
+
+.back-button {
+  font-family: var(--font-primary);
+  font-size: 36px;
+  line-height: 1;
+  color: var(--background);
+}
+
+.skip-button {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  color: var(--background);
+  opacity: 0.7;
+}
+
+.onboarding-art {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.onboarding-art img {
+  width: 334px;
+  height: 338px;
+  object-fit: contain;
+  display: block;
+}
+
+.onboarding-content {
+  width: 100%;
+}
+
+.step-label {
+  margin-bottom: 8px;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  letter-spacing: 3.3px;
+  line-height: 16.5px;
+  color: var(--background);
+  opacity: 0.7;
+}
+
+.onboarding-content h1 {
+  margin-bottom: 7px;
+  font-family: var(--font-title);
+  font-size: 34px;
+  line-height: 35.7px;
+  color: var(--background);
+}
+
+.description {
+  margin-bottom: 8px;
+  font-family: var(--font-primary);
+  font-size: 14px;
+  line-height: 22.8px;
+  color: var(--background);
+  opacity: 0.85;
+}
+
+.description strong {
+  font-weight: 700;
+}
+
+.support-text {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  line-height: 19.5px;
+  color: var(--background);
+  opacity: 0.65;
+}
+
+.onboarding-footer {
+  width: 100%;
+  margin-top: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.dots span {
+  width: 8px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 252, 245, 0.33);
+}
+
+.dots .active {
+  width: 22px;
+  background: var(--background);
+}
+
+.continue-button {
+  width: 100%;
+  height: 54px;
+
+  border-radius: 999px;
+  background: var(--yellow);
+  color: var(--blue);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}

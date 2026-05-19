@@ -1,0 +1,31 @@
+.welcome-page {
+  width: 100%;
+  max-width: 402px;
+  min-height: 100svh;
+
+  background: var(--background);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+  transition: opacity 450ms ease, transform 450ms ease;
+}
+
+.welcome-logo {
+  width: min(100%, 393px);
+
+  display: block;
+}
+
+.is-leaving .welcome-page {
+  opacity: 0;
+  transform: scale(0.985);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-page {
+    transition: none;
+  }
+}

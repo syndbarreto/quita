@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Quita</title>
+
+    <link rel="stylesheet" href="./css/variables.css" />
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/pages/welcome.css" />
+  </head>
+
+  <script>
+    const splashDuration = 2000;
+    const transitionDuration = 450;
+
+    setTimeout(() => {
+      document.body.classList.add("is-leaving");
+    }, splashDuration - transitionDuration);
+
+    setTimeout(() => {
+      window.location.href = "./onboarding-1.html";
+    }, splashDuration);
+  </script>
+
+  <body>
+    <main class="welcome-page">
+      <img
+        class="welcome-logo"
+        src="./assets/GIF_animado.gif"
+        alt="Logo Quita"
+      />
+    </main>
+  </body>
+</html>
