@@ -3,17 +3,30 @@
 
   --purple: #4a2e6e;
   --blue: #465ae1;
+  --light-blue: #63a7f7;
   --yellow: #ffd719;
+  --light-yellow: #fff080;
   --mint: #69e093;
-  
+  --light-green: #d2d741;
+  --light-red: #ff1d25;
+  --dark-red: #b20202;
+  --dark-orange: #f55a32;
+  --light-orange: #ff7b02;
+  --light-pink: #ffaac3;
+  --light-grey: #787880;
+
 
   --text-primary: #3e3c3d;
   --text-secondary: #68655e;
+  --placeholder: #727272;
+  
 
   --white: #ffffff;
+  --black: #000000;
 
   --font-primary: "SF Pro";
   --font-italic: "SF Pro Italic";
 
   --font-title: "Tumb Test";
+
 }
