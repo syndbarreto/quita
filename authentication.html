@@ -6,7 +6,7 @@
     <title>Quita - Give your worries a place to rest</title>
     <link rel="stylesheet" href="./css/variables.css">
     <link rel="stylesheet" href="./css/global.css">
-    <link rel="stylesheet" href="./css/pages/login-signup.css">
+    <link rel="stylesheet" href="./css/pages/authentication.css">
 </head>
 <body>
     <div class="login-sign-up">
@@ -19,12 +19,12 @@
         
         <!-- Secção de Autenticação -->
         <div class="div">
-            <button class="liquid-glass-regular">
+            <button class="liquid-glass-regular" data-navigate="./signupLogin.html">
                 <div class="glass-effect"></div>
                 <div class="text-wrapper-2">Create an account</div>
             </button>
             
-            <button class="button-liquid-glass">
+            <button class="button-liquid-glass" data-navigate="./signupLogin.html?view=login">
                 <div class="BG">
                     <div class="glass-effect-2"></div>
                 </div>
@@ -53,7 +53,7 @@
                 </div>
             </div>
             
-            <button class="button-liquid-glass">
+            <button class="button-liquid-glass" data-navigate="./home.html">
                 <div class="BG-2">
                     <div class="glass-effect-2"></div>
                 </div>
@@ -63,5 +63,7 @@
             </button>
         </div>
     </div>
+    <script type="module" src="./views/authenticationView.js"></script>
+    
 </body>
 </html>
