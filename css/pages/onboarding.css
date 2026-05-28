@@ -1,0 +1,343 @@
+body {
+  background: #eaeaea;
+  font-family: var(--font-primary);
+}
+
+h1 {
+  font-family: var(--font-title);
+}
+
+.onboarding-page {
+  --page-background: var(--background);
+  --page-text: var(--text-primary);
+  --page-copy: var(--text-secondary);
+  --nav-color: var(--purple);
+  --dot-idle: rgba(74, 46, 110, 0.33);
+  --dot-active: var(--purple);
+  --button-background: var(--blue);
+  --button-text: var(--background);
+  --title-size: 32px;
+  --title-line-height: 35.7px;
+  --title-weight: 900;
+  --content-title-gap: 7px;
+  --description-size: 14px;
+  --description-line-height: 22.8px;
+  --button-height: 54px;
+
+  width: 402px;
+  min-height: 874px;
+  margin: 0 auto;
+  padding: 72px 20px 28px;
+  background: var(--page-background);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 44px;
+
+  overflow: hidden;
+}
+
+.onboarding-page--intro {
+  gap: 24px;
+}
+
+.onboarding-page[hidden] {
+  display: none;
+}
+
+.onboarding-page--create {
+  --page-background: var(--blue);
+  --page-text: var(--background);
+  --page-copy: var(--background);
+  --nav-color: var(--background);
+  --dot-idle: rgba(255, 252, 245, 0.33);
+  --dot-active: var(--background);
+  --button-background: var(--yellow);
+  --button-text: var(--blue);
+  --title-size: 34px;
+  --button-height: 54px;
+
+  padding-bottom: 72px;
+}
+
+.onboarding-page--quiz {
+  --title-size: 30px;
+  --title-line-height: 31.5px;
+  --content-title-gap: 16px;
+  --description-size: 13px;
+  --description-line-height: 21.1px;
+}
+
+.onboarding-page--vault {
+  --page-background: var(--mint);
+  --page-text: var(--purple);
+  --page-copy: var(--purple);
+  --title-line-height: 33.6px;
+  --title-weight: 400;
+  --content-title-gap: 10px;
+  --description-size: 13px;
+  --description-line-height: 21.13px;
+  --button-background: var(--purple);
+  --button-height: 54.5px;
+
+  gap: 34px;
+}
+
+.onboarding-page--growth {
+  --page-text: var(--blue);
+  --page-copy: #1a1a1a;
+  --nav-color: #1a1a1a;
+  --title-size: 34px;
+  --title-line-height: 35.7px;
+  --title-weight: 400;
+  --content-title-gap: 10px;
+  --description-size: 13px;
+  --description-line-height: 21.13px;
+  --button-height: 54.5px;
+
+  padding-bottom: 67px;
+  gap: 24px;
+}
+
+.onboarding-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-button,
+.skip-button {
+  border: 0;
+  background: transparent;
+  color: var(--nav-color);
+  font-family: var(--font-primary);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.back-button {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.skip-button {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.onboarding-art {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.onboarding-art img {
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.onboarding-art--intro img {
+  width: 371px;
+  height: auto;
+}
+
+.onboarding-art--create img {
+  width: 334px;
+  height: 338px;
+}
+
+.onboarding-art--vault img {
+  width: 370px;
+  height: 374px;
+}
+
+.onboarding-art--growth img {
+  width: 362px;
+  height: 220px;
+}
+
+.onboarding-content {
+  width: 100%;
+}
+
+.onboarding-page--vault .onboarding-content {
+  padding-top: 12px;
+}
+
+.step-label {
+  margin-bottom: 8px;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  line-height: 16.5px;
+  letter-spacing: 3.3px;
+  color: var(--nav-color);
+  opacity: 0.7;
+}
+
+.onboarding-content h1 {
+  max-width: 334px;
+  margin-bottom: var(--content-title-gap);
+  font-size: var(--title-size);
+  line-height: var(--title-line-height);
+  font-weight: var(--title-weight);
+  color: var(--page-text);
+}
+
+.description {
+  max-width: 362px;
+  margin-bottom: 8px;
+  font-family: var(--font-primary);
+  font-size: var(--description-size);
+  line-height: var(--description-line-height);
+  color: var(--page-copy);
+  opacity: 0.85;
+}
+
+.onboarding-page--quiz .description,
+.onboarding-page--vault .description,
+.onboarding-page--growth .description {
+  max-width: 334px;
+  margin-bottom: 0;
+}
+
+.description strong {
+  font-weight: 700;
+}
+
+.support-text {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  line-height: 19.5px;
+  color: var(--page-copy);
+  opacity: 0.65;
+}
+
+.feeling-cards {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feeling-card {
+  width: 100%;
+  min-height: 108px;
+  padding: 20px;
+  border-radius: 24px;
+
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  overflow: hidden;
+}
+
+.feeling-card img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.feeling-card h2 {
+  margin-bottom: 8px;
+  font-family: var(--font-title);
+  font-size: 18px;
+  line-height: 22.5px;
+}
+
+.feeling-card p {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--background);
+}
+
+.feeling-card.seed {
+  background: #ffd1db;
+}
+
+.feeling-card.seed h2 {
+  color: #ffaac3;
+}
+
+.feeling-card.knot {
+  background: #ffd883;
+}
+
+.feeling-card.knot h2 {
+  color: #ffb619;
+}
+
+.feeling-card.burden {
+  background: #9fa8eb;
+}
+
+.feeling-card.burden h2 {
+  color: var(--blue);
+}
+
+.onboarding-footer {
+  width: 100%;
+  margin-top: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.dots span {
+  width: 8px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--dot-idle);
+}
+
+.dots .active {
+  width: 22px;
+  background: var(--dot-active);
+}
+
+.continue-button {
+  border: 0;
+  width: 100%;
+  height: var(--button-height);
+  border-radius: 999px;
+  background: var(--button-background);
+  color: var(--button-text);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.onboarding-page--intro .continue-button {
+  width: 342px;
+  max-width: 100%;
+}
+
+.onboarding-page--create .continue-button {
+  font-weight: 600;
+}
+
+.onboarding-page--growth .continue-button {
+  width: 342px;
+  max-width: 100%;
+  font-weight: 600;
+}

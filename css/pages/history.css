@@ -1,0 +1,254 @@
+body {
+  background: #eaeaea;
+  font-family: var(--font-primary), Arial, Helvetica, sans-serif;
+}
+
+.history-page {
+  width: 402px;
+  min-height: 874px;
+  margin: 0 auto;
+  padding: 72px 20px 48px;
+  background: var(--background);
+  color: var(--purple);
+  overflow: hidden;
+}
+
+.history-header {
+  height: 68px;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+}
+
+.history-header h1 {
+  grid-column: 2;
+  font-family: var(--font-primary), Arial, Helvetica, sans-serif;
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 800;
+  text-align: center;
+  color: var(--purple);
+}
+
+.back-button {
+  width: 44px;
+  height: 44px;
+  position: relative;
+  display: block;
+}
+
+.back-button::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  border-left: 3px solid #111111;
+  border-bottom: 3px solid #111111;
+  position: absolute;
+  left: 14px;
+  top: 13px;
+  transform: rotate(45deg);
+}
+
+.hero {
+  margin-bottom: 24px;
+}
+
+.hero h2 {
+  margin-bottom: 8px;
+  font-family: var(--font-title), var(--font-primary), sans-serif;
+  font-size: 57px;
+  line-height: 0.88;
+  font-weight: 400;
+  color: var(--purple);
+}
+
+.hero p {
+  font-size: 20px;
+  line-height: 1.25;
+  color: #9787ad;
+}
+
+.mood-filters {
+  width: calc(100% + 20px);
+  margin-bottom: 24px;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.mood-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-chip,
+.mood-pill {
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--purple);
+  white-space: nowrap;
+}
+
+.filter-chip {
+  height: 70px;
+  padding: 0 24px;
+  flex: 0 0 auto;
+  font-size: 18px;
+}
+
+.filter-chip.all {
+  width: 70px;
+  padding: 0;
+  color: var(--background);
+  background: var(--purple);
+}
+
+.filter-chip.calm,
+.timeline-item.calm .timeline-dot,
+.timeline-item.calm .mood-pill {
+  background: var(--mint);
+}
+
+.filter-chip.anxious,
+.timeline-item.anxious .timeline-dot,
+.timeline-item.anxious .mood-pill {
+  background: var(--yellow);
+}
+
+.filter-chip.tender,
+.timeline-item.tender .timeline-dot,
+.timeline-item.tender .mood-pill {
+  background: #ffa6c9;
+}
+
+.filter-chip.tired,
+.timeline-item.tired .timeline-dot,
+.timeline-item.tired .mood-pill {
+  background: #bea5ef;
+}
+
+.filter-chip.hopeful,
+.timeline-item.hopeful .timeline-dot,
+.timeline-item.hopeful .mood-pill {
+  background: #63a7f7;
+}
+
+.history-list {
+  padding-top: 4px;
+}
+
+.section-label {
+  margin: 0 0 18px;
+  font-size: 15px;
+  line-height: 1;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #a998bd;
+}
+
+.section-label:not(:first-child) {
+  margin-top: 34px;
+}
+
+.timeline-item {
+  min-height: 84px;
+  padding-left: 48px;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: "";
+  width: 2px;
+  position: absolute;
+  left: 15px;
+  top: 29px;
+  bottom: -2px;
+  background: #e6dfe8;
+}
+
+.timeline-item:last-child::before {
+  display: none;
+}
+
+.timeline-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.timeline-content {
+  min-width: 0;
+  padding-top: 1px;
+}
+
+.timeline-meta {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mood-pill {
+  min-width: 72px;
+  min-height: 34px;
+  padding: 0 15px;
+  font-size: 16px;
+}
+
+.timeline-meta time {
+  font-size: 17px;
+  line-height: 1;
+  color: #a294b8;
+}
+
+.timeline-content p {
+  margin-top: 13px;
+  font-size: 20px;
+  line-height: 1.25;
+  color: #705892;
+}
+
+.timeline-item.overwhelmed {
+  min-height: 56px;
+}
+
+.timeline-item.overwhelmed .timeline-dot,
+.timeline-item.overwhelmed .mood-pill {
+  background: #ef4939;
+}
+
+.timeline-item.overwhelmed .mood-pill {
+  color: var(--white);
+}
+
+.timeline-item.generous .timeline-dot,
+.timeline-item.generous .mood-pill {
+  background: #f04fc6;
+}
+
+.timeline-item.numb {
+  min-height: 56px;
+}
+
+.timeline-item.numb .timeline-dot,
+.timeline-item.numb .mood-pill {
+  background: #6c3f20;
+}
+
+.timeline-item.numb .mood-pill {
+  color: var(--white);
+}
+
+@media (max-width: 420px) {
+  .history-page {
+    width: 100%;
+    min-height: 100svh;
+  }
+}
