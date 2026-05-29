@@ -17,7 +17,7 @@ button {
   gap: 60px;
   padding: 54px 0px 54px 0px;
   position: relative;
-  background-color: #fffcf5;
+  background-color: var(--background);
 }
 
 .login-sign-up .frame {
@@ -40,7 +40,7 @@ button {
   width: 402px;
   font-family: "SF Pro-Regular", Helvetica;
   font-weight: 400;
-  color: #3c393a;
+  color: var(--dark-text);
   font-size: 16px;
   text-align: center;
   letter-spacing: 0;
@@ -98,7 +98,7 @@ button {
   position: relative;
   font-family: var(--font-primary), Helvetica;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--white);
   font-size: 17px;
   letter-spacing: -0.4px;
   z-index: 1;
@@ -149,14 +149,14 @@ button {
   letter-spacing: -0.4px;
 }
 
-.login-sign-up .symbol { color: #1a1a1a; }
-.login-sign-up .symbol-2 { color: #465ae1; }
+.login-sign-up .symbol { color: var(--dark-text); }
+.login-sign-up .symbol-2 { color: var(--blue); }
 
 .login-sign-up .separator {
   position: relative;
   width: 268px;
   height: 1px;
-  background-color: #e6e6e6;
+  background-color: var(--gray-light);
   margin: 10px 0;
 }
 
@@ -169,7 +169,7 @@ button {
   padding: 20px;
   position: relative;
   border-radius: 34px;
-  background: #D2D741;
+  background: var(--light-green);
   border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
 }

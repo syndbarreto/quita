@@ -19,12 +19,21 @@
   --text-secondary: #68655e;
   --placeholder: #727272;
   
+  --gray-light: #e6e6e6;
+  --gray-lighter: #f7f7f7;
+  --gray-lightest: #ededed;
+  --dark-text: #1a1a1a;
+  --medium-text: #878183;
+  --medium-gray: #8b8b90;
+  --body-bg: #eaeaea;
 
   --white: #ffffff;
   --black: #000000;
 
   --font-primary: "SF Pro";
   --font-italic: "SF Pro Italic";
+  --font-medium: "SF Pro Medium";
+  --font-semibold: "SF Pro Semibold";
 
   --font-title: "Tumb Test";
 

@@ -10,7 +10,7 @@ body {
 }
 
 body {
-  background: #eaeaea;
+  background: var(--body-bg);
 
   display: flex;
   justify-content: center;
