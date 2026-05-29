@@ -34,7 +34,7 @@
 }
 
 .greeting-subtitle {
-  color: #878183;
+  color: var(--medium-text);
   font-family: var(--font-primary);
   font-size: 16px;
   font-weight: 400;
@@ -274,7 +274,7 @@
   left: -2px;
   width: 80px;
   height: 54px;
-  background: #ededed;
+  background: var(--gray-lightest);
   border-radius: 100px;
   z-index: -1;
 }
