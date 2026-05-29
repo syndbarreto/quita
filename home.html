@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quita - Home</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/pages/home.css">
+</head>
+<body>
+    <div class="home-container">
+        <!-- Header -->
+        <section class="home-greeting">
+            <h1 class="greeting-title">Hi Manuela</h1>
+            <p class="greeting-subtitle">Tell your worries to the dolls, so<br/>they can worry for you.</p>
+        </section>
+
+        <!-- Doll Illustration -->
+        <div class="doll-wrapper">
+            <img class="doll-image" src="./assets/boneca_homepage.svg" alt="Doll illustration">
+            
+        </div>
+
+        <!-- Emotional Check-in Section -->
+        <section class="feeling-section">
+            <h2 class="feeling-title">How are you feeling?</h2>
+            
+            <div class="emotion-card">
+                <div class="card-background"></div>
+                
+                <div class="card-content">
+                    <div class="emotion-icon-wrapper">
+                        <img class="emotion-icon" src="./assets/coração.svg" alt="Emotion icon">
+                    </div>
+                    
+                    <div class="emotion-text">
+                        <h3 class="emotion-title">Emotional check-in</h3>
+                        <p class="emotion-description">Describe how are you feeling <br/>today in one word.</p>
+                    </div>
+                </div>
+                
+                <div class="card-actions">
+                    <button class="action-button action-button--secondary">Begin</button>
+                    <button class="action-button action-button--primary">History</button>
+                </div>
+            </div>
+        </section>
+
+    
+
+    <script type="module" src="./views/homeView.js"></script>
+</body>
+</html>
