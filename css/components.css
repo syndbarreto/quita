@@ -1,0 +1,68 @@
+/* ===== página para todos os componentes que vão ter muitos usos ===== */
+
+/* ===== Glass Chip - Botão com efeito de vidro ===== */
+.glass-chip {
+  --glass-chip-width: auto;
+  --glass-chip-color: var(--blue);
+  --glass-chip-selected-background: var(--blue);
+  --glass-chip-selected-color: var(--background);
+
+  width: var(--glass-chip-width);
+  height: 48px;
+  padding: 6px 20px;
+  border: 0;
+  border-radius: 1000px;
+  background:
+    linear-gradient(0deg, var(--gray-lighter) 0%, var(--gray-lighter) 100%),
+    linear-gradient(
+      0deg,
+      var(--glass-burn-gray) 0%,
+      var(--glass-burn-gray) 100%
+    ),
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--white) 86%, transparent) 0%,
+      color-mix(in srgb, var(--white) 86%, transparent) 100%
+    );
+  background-blend-mode: darken, color-burn, normal;
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
+  color: var(--glass-chip-color);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  font-family: var(--font-primary);
+  font-size: 17px;
+  font-weight: 510;
+  line-height: 36px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.glass-chip:hover {
+  transform: translateY(-1px);
+}
+
+.glass-chip:active {
+  transform: scale(0.97);
+}
+
+.glass-chip.is-selected,
+.glass-chip[aria-pressed="true"] {
+  background: var(--glass-chip-selected-background);
+  background-blend-mode: normal;
+  color: var(--glass-chip-selected-color);
+  box-shadow:
+    0 8px 40px color-mix(in srgb, var(--blue) 28%, transparent),
+    inset 0 1px 1px color-mix(in srgb, var(--white) 26%, transparent);
+}

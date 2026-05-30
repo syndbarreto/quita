@@ -13,20 +13,32 @@
   --dark-orange: #f55a32;
   --light-orange: #ff7b02;
   --light-pink: #ffaac3;
+  --hot-pink: #fe87eb;
+  --gold: #f9cc00;
+  --glass-tint-blue: #0091ff;
+  --glass-burn-gray: #dddddd;
   --light-grey: #787880;
 
   --text-primary: #3e3c3d;
   --text-secondary: #68655e;
   --placeholder: #727272;
   
+  --gray-light: #e6e6e6;
+  --gray-lighter: #f7f7f7;
+  --gray-lightest: #ededed;
+  --dark-text: #1a1a1a;
+  --medium-text: #878183;
+  --medium-gray: #8b8b90;
+  --body-bg: #eaeaea;
 
   --white: #ffffff;
   --black: #000000;
 
   --font-primary: "SF Pro";
   --font-italic: "SF Pro Italic";
+  --font-medium: "SF Pro Medium";
+  --font-semibold: "SF Pro Semibold";
 
   --font-title: "Tumb Test";
 
 }
-

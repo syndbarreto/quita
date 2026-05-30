@@ -57,6 +57,7 @@ Estrutura esperada:
 assets/
 css/
   global.css
+  components.css
   variables.css
   pages/
     onboarding.css
@@ -94,6 +95,10 @@ Tokens atuais:
 --dark-orange: #f55a32;
 --light-orange: #ff7b02;
 --light-pink: #ffaac3;
+--hot-pink: #fe87eb;
+--gold: #f9cc00;
+--glass-tint-blue: #0091ff;
+--glass-burn-gray: #dddddd;
 --light-grey: #787880;
 --text-primary: #3e3c3d;
 --text-secondary: #68655e;
@@ -285,6 +290,47 @@ Regras:
 - Manter boa área de toque em mobile.
 - Usar transições suaves quando fizer sentido.
 - Não criar botões visualmente desconectados do projeto.
+
+### Botão Glass / Chip de Emoção
+
+O padrão oficial para botões em formato de pílula com efeito glass é:
+
+```css
+.glass-chip
+```
+
+Esse componente fica em:
+
+```txt
+css/components.css
+```
+
+Regras obrigatórias:
+
+- Sempre reutilizar `.glass-chip` para chips, tags selecionáveis, opções de emoção e botões pequenos em formato pílula com efeito glass.
+- Não recriar o efeito glass dentro de CSS de página.
+- Não duplicar `box-shadow`, `background-blend-mode`, `backdrop-filter`, altura, padding, fonte ou transições do chip em arquivos de página.
+- Em páginas específicas, alterar apenas variáveis do componente.
+- O estado selecionado deve usar fundo `var(--blue)` e texto `var(--background)`.
+- O estado default deve manter aparência branca/glass e texto colorido pela variável específica da opção.
+- O texto deve usar `font-size: 17px`, `font-family: var(--font-primary)` e `font-weight: 510`.
+
+Uso esperado:
+
+```html
+<button class="glass-chip emotion-chip emotion-chip--anxious" type="button">
+  Anxious
+</button>
+```
+
+Customização por página:
+
+```css
+.emotion-chip--anxious {
+  --glass-chip-width: 106px;
+  --glass-chip-color: var(--light-orange);
+}
+```
 
 No onboarding, reutilizar:
 

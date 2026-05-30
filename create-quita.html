@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quita - Create your Quita</title>
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/global.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/pages/create-quita.css" />
+</head>
+<body>
+  <main class="create-quita-page">
+    <header class="create-header">
+      <a class="back-link" href="./home.html" aria-label="Back">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15.5307 18.9694C15.6004 19.0391 15.6557 19.1218 15.6934 19.2128C15.7311 19.3039 15.7505 19.4015 15.7505 19.5C15.7505 19.5985 15.7311 19.6961 15.6934 19.7872C15.6557 19.8782 15.6004 19.9609 15.5307 20.0306C15.461 20.1003 15.3783 20.1556 15.2873 20.1933C15.1962 20.231 15.0986 20.2504 15.0001 20.2504C14.9016 20.2504 14.804 20.231 14.7129 20.1933C14.6219 20.1556 14.5392 20.1003 14.4695 20.0306L6.96948 12.5306C6.89974 12.461 6.84443 12.3783 6.80668 12.2872C6.76894 12.1962 6.74951 12.0986 6.74951 12C6.74951 11.9014 6.76894 11.8038 6.80668 11.7128C6.84443 11.6217 6.89974 11.539 6.96948 11.4694L14.4695 3.96937C14.6102 3.82864 14.8011 3.74958 15.0001 3.74958C15.1991 3.74958 15.39 3.82864 15.5307 3.96937C15.6715 4.1101 15.7505 4.30097 15.7505 4.5C15.7505 4.69902 15.6715 4.88989 15.5307 5.03062L8.56041 12L15.5307 18.9694Z" fill="currentColor"/>
+        </svg>
+      </a>
+    </header>
+
+    <section class="create-intro" aria-labelledby="create-title">
+      <h1 id="create-title">I will worry for you!</h1>
+      <p>Tell me what to worry about</p>
+    </section>
+
+    <section class="quitas-preview" aria-label="Quita preview">
+      <div class="live-quita-name" data-live-quita-name aria-live="polite"></div>
+      <div class="doll-stage">
+        <div class="create-doll" role="img" aria-label="Quita doll preview">
+          <img src="./assets/quita_estados.svg" alt="" aria-hidden="true" />
+        </div>
+        <div class="doll-shadow" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <form class="create-form" data-create-quita-form>
+      <section class="form-field">
+        <label for="quita-name">Choose a name for your Quita...</label>
+        <input id="quita-name" name="name" type="text" placeholder="Ex.: Quita" autocomplete="off" data-name-input />
+      </section>
+
+      <section class="form-field">
+        <label for="worry-text">I am worried because...</label>
+        <input id="worry-text" name="worryText" type="text" placeholder="Describe your worry" autocomplete="off" />
+      </section>
+
+      <section class="form-field">
+        <label for="small-step">What small step did you take today?</label>
+        <input id="small-step" name="smallStep" type="text" placeholder="I did..." autocomplete="off" />
+      </section>
+
+      <section class="choice-section" data-choice-group="activity">
+        <p>What are you doing?</p>
+        <div class="choice-grid" data-choice-list></div>
+      </section>
+
+      <section class="choice-section" data-choice-group="people">
+        <p>Who are you with?</p>
+        <div class="choice-grid" data-choice-list></div>
+      </section>
+
+      <section class="choice-section" data-choice-group="location">
+        <p>Where are you?</p>
+        <div class="choice-grid" data-choice-list></div>
+      </section>
+
+      <section class="background-section">
+        <p>Choose a background for your Quita:</p>
+        <div class="background-picker">
+          <div class="swatch-panel">
+            <button class="swatch-heading" type="button" aria-expanded="true">
+              Background
+              <span aria-hidden="true">⌄</span>
+            </button>
+            <div class="swatch-grid" data-background-options></div>
+          </div>
+
+          <div class="background-preview" data-background-preview aria-label="Selected background preview">
+            <span class="preview-shape preview-shape--burst shape-a"></span>
+            <span class="preview-shape preview-shape--burst shape-b"></span>
+            <span class="preview-shape preview-shape--x shape-c"></span>
+            <span class="preview-shape preview-shape--x shape-d"></span>
+            <span class="preview-shape preview-shape--x shape-e"></span>
+            <span class="preview-shape preview-shape--burst shape-f"></span>
+            <span class="preview-shape preview-shape--burst shape-g"></span>
+          </div>
+        </div>
+      </section>
+
+      <button class="complete-button" type="submit">Complete your Quita</button>
+    </form>
+  </main>
+
+  <script type="module" src="./views/createQuitaView.js"></script>
+</body>
+</html>

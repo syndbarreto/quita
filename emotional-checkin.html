@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quita - Emotional Check In</title>
+
+    <link rel="stylesheet" href="./css/variables.css" />
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <link rel="stylesheet" href="./css/pages/emotional-checkin.css" />
+  </head>
+
+  <body>
+    <main class="checkin-page">
+      <header class="checkin-header">
+        <a class="checkin-back" href="./home.html" aria-label="Go back">‹</a>
+      </header>
+
+      <section class="checkin-content" aria-labelledby="checkin-title">
+        <h1 id="checkin-title">Tell us how you feel</h1>
+
+        <label class="feeling-input-label" for="feeling-input">
+          <span class="sr-only">Type your feeling</span>
+          <input
+            id="feeling-input"
+            class="feeling-input"
+            type="text"
+            placeholder="Type your feeling or choose one..."
+          />
+        </label>
+
+        <div class="emotion-chip-grid" aria-label="Choose a feeling">
+          <div class="emotion-chip-row">
+            <button class="glass-chip emotion-chip emotion-chip--numb" type="button">
+              Numb
+            </button>
+            <button class="glass-chip emotion-chip emotion-chip--lonely" type="button">
+              Lonely
+            </button>
+            <button class="glass-chip emotion-chip emotion-chip--overwhelmed" type="button">
+              Overwhelmed
+            </button>
+          </div>
+
+          <div class="emotion-chip-row">
+            <button
+              class="glass-chip emotion-chip emotion-chip--unmotivated is-selected"
+              type="button"
+              aria-pressed="true"
+            >
+              Unmotivated
+            </button>
+            <button class="glass-chip emotion-chip emotion-chip--anxious" type="button">
+              Anxious
+            </button>
+            <button class="glass-chip emotion-chip emotion-chip--drained" type="button">
+              Drained
+            </button>
+          </div>
+
+          <div class="emotion-chip-row">
+            <button class="glass-chip emotion-chip emotion-chip--restless" type="button">
+              Restless
+            </button>
+            <button class="glass-chip emotion-chip emotion-chip--panicked" type="button">
+              Panicked
+            </button>
+            <button class="glass-chip emotion-chip emotion-chip--serene" type="button">
+              Serene
+            </button>
+          </div>
+
+          <div class="emotion-chip-row">
+            <button class="glass-chip emotion-chip emotion-chip--grateful" type="button">
+              Grateful
+            </button>
+            <button class="glass-chip emotion-chip emotion-chip--hyped" type="button">
+              Hyped
+            </button>
+            <button class="glass-chip emotion-chip emotion-chip--frustrated" type="button">
+              Frustrated
+            </button>
+          </div>
+
+          <div class="emotion-chip-row">
+            <button class="glass-chip emotion-chip emotion-chip--radiant" type="button">
+              Radiant
+            </button>
+            <button class="glass-chip emotion-chip emotion-chip--inspired" type="button">
+              Inspired
+            </button>
+            <button class="glass-chip emotion-chip emotion-chip--lost" type="button">
+              Lost
+            </button>
+          </div>
+
+          <div class="emotion-chip-row">
+            <button class="glass-chip emotion-chip emotion-chip--insecure" type="button">
+              Insecure
+            </button>
+            <button class="glass-chip emotion-chip emotion-chip--stuck" type="button">
+              Stuck
+            </button>
+            <button class="glass-chip emotion-chip emotion-chip--content" type="button">
+              Content
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <button class="checkin-done" type="button">Done</button>
+    </main>
+
+    <section
+      class="history-overlay"
+      data-history-overlay
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="history-overlay-title"
+      hidden
+    >
+      <div class="history-modal">
+        <div class="history-modal-content">
+          <div class="history-modal-icon" aria-hidden="true">
+            <img src="./assets/coração.svg" alt="" />
+          </div>
+
+          <div class="history-modal-copy">
+            <h2 id="history-overlay-title">View history?</h2>
+            <p>Do you wish to see your daily past emotional check-ins?</p>
+          </div>
+        </div>
+
+        <a class="glass-chip history-modal-action" href="./history.html">Yes</a>
+
+        <a class="history-modal-later" href="./home.html">
+          Maybe later
+        </a>
+      </div>
+    </section>
+
+    <script type="module" src="./views/emotionalCheckinView.js"></script>
+  </body>
+</html>

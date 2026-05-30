@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quita - Sign Up</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/pages/signupLogin.css">
+</head>
+<body>
+    <div class="signup-page">
+        <!-- Sign Up View -->
+        <div data-step="signup">
+        <!-- Header -->
+        <header class="signup-header">
+            <button class="back-button" onclick="history.back()" aria-label="Go back">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 18L9 12L15 6" stroke="var(--black)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <div class="login-link">
+                <span>Already have an account?</span>
+                <a href="#" data-go-to-step="login">Log in</a>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="signup-main">
+            <div class="signup-intro">
+                <h1>Welcome to Quita</h1>
+                <p>Start your journey of letting go, and turn your worries into something lighter.</p>
+            </div>
+
+            <form class="signup-form" action="./onboarding.html">
+                <div class="form-fields">
+                    <div class="input-wrapper">
+                        <input type="text" placeholder="First name*" required />
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" placeholder="Last name*" required />
+                    </div>
+                    <div class="input-wrapper">
+                        <!-- Usa tipo texto por padrão para manter o placeholder visível e muda para date no focus -->
+                        <input type="text" placeholder="Date of birth*" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'" required />
+                        <div class="icon-calendar">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="4" width="18" height="16" rx="2" stroke="var(--placeholder)" stroke-width="2"/>
+                                <path d="M3 10H21" stroke="var(--placeholder)" stroke-width="2"/>
+                                <path d="M8 2V6" stroke="var(--placeholder)" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M16 2V6" stroke="var(--placeholder)" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="email" placeholder="Email address*" required />
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="password" placeholder="Password (8+ characters)*" required minlength="8" />
+                    </div>
+                </div>
+
+                <div class="terms-text">
+                    <span>By continuing, you agree to Quita’s </span>
+                    <a href="#">Terms & Conditions</a>
+                    <span> and </span>
+                    <a href="#">Privacy Policy</a>
+                    <span>.</span>
+                </div>
+
+                <div class="privacy-card">
+                    <div class="privacy-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 9V7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7V9C5.89543 9 5 9.89543 5 11V20C5 21.1046 5.89543 22 7 22H17C18.1046 22 19 21.1046 19 20V11C19 9.89543 18.1046 9 17 9ZM9 7C9 5.34315 10.3431 4 12 4C13.6569 4 15 5.34315 15 7V9H9V7ZM12 17C11.1716 17 10.5 16.3284 10.5 15.5C10.5 14.6716 11.1716 14 12 14C12.8284 14 13.5 14.6716 13.5 15.5C13.5 16.3284 12.8284 17 12 17Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="privacy-content">
+                        <h3>Your privacy matters</h3>
+                        <p>All your worries and interactions remain completely private and encrypted.<br/>You can delete your account and data at any time. You're always in control.</p>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button">Continue</button>
+            </form>
+        </main>
+        </div>
+        
+        <!-- Login View -->
+        <div data-step="login" hidden>
+            <header class="login-header">
+                <button class="back-button" onclick="history.back()" aria-label="Go back">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="var(--black)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <h2 class="header-title">Log in</h2>
+                <div class="header-spacer"></div>
+            </header>
+
+            <main class="login-main">
+                <div class="login-intro">
+                    <h1>Welcome back!</h1>
+                    <p>Log in to reconnect with your Quita and continue your emotional wellness journey.</p>
+                </div>
+
+                <form class="login-form" action="./home.html">
+                    <div class="form-fields">
+                        <div class="input-wrapper">
+                            <input type="email" placeholder="Email address" required />
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="password" placeholder="Password" required />
+                        </div>
+                    </div>
+
+                    <div class="forgot-password">
+                        <a href="#">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="submit-button">Continue</button>
+                </form>
+            </main>
+        </div>
+    </div>
+    
+    <script type="module" src="./views/signupLoginView.js"></script>
+</body>
+</html>
