@@ -17,7 +17,7 @@
       aria-label="Onboarding step 1"
     >
       <header class="onboarding-header">
-        <button class="skip-button" type="button">Skip</button>
+        <a class="skip-button" href="./login-signup.html">Skip</a>
       </header>
 
       <section class="onboarding-art onboarding-art--intro">
@@ -62,7 +62,7 @@
     >
       <header class="onboarding-header">
         <button class="back-button" type="button" data-go-to-step="1">‹</button>
-        <button class="skip-button" type="button">Skip</button>
+        <a class="skip-button" href="./login-signup.html">Skip</a>
       </header>
 
       <section class="onboarding-art onboarding-art--create">
@@ -106,7 +106,7 @@
     >
       <header class="onboarding-header">
         <button class="back-button" type="button" data-go-to-step="2">‹</button>
-        <button class="skip-button" type="button">Skip</button>
+        <a class="skip-button" href="./login-signup.html">Skip</a>
       </header>
 
       <section class="feeling-cards">
@@ -174,7 +174,7 @@
     >
       <header class="onboarding-header">
         <button class="back-button" type="button" data-go-to-step="3">‹</button>
-        <button class="skip-button" type="button">Skip</button>
+        <a class="skip-button" href="./login-signup.html">Skip</a>
       </header>
 
       <section class="onboarding-art onboarding-art--vault">
@@ -217,7 +217,7 @@
     >
       <header class="onboarding-header">
         <button class="back-button" type="button" data-go-to-step="4">‹</button>
-        <button class="skip-button" type="button">Skip</button>
+        <a class="skip-button" href="./login-signup.html">Skip</a>
       </header>
 
       <section class="onboarding-art onboarding-art--growth">
@@ -247,7 +247,93 @@
           <span></span>
         </div>
 
-        <button class="continue-button" type="button">Continue</button>
+        <button class="continue-button" type="button" data-go-to-step="6">
+          Continue
+        </button>
+      </footer>
+    </main>
+
+    <main
+      class="onboarding-page onboarding-page--companion"
+      data-step="6"
+      aria-label="Onboarding step 6"
+      hidden
+    >
+      <header class="onboarding-header">
+        <button class="back-button" type="button" data-go-to-step="5">‹</button>
+        <a class="skip-button" href="./login-signup.html">Skip</a>
+      </header>
+
+      <section class="onboarding-art onboarding-art--companion">
+        <img src="./assets/chat.svg" alt="Quita support chat preview" />
+      </section>
+
+      <section class="onboarding-content">
+        <p class="step-label">STEP 6 - GROW</p>
+
+        <h1>A quiet companion</h1>
+
+        <p class="description">
+          Whenever you need support, Quita is here to guide you through calming
+          tools, reflections, and gentle conversations.
+        </p>
+      </section>
+
+      <footer class="onboarding-footer">
+        <div class="dots">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span class="active"></span>
+          <span></span>
+        </div>
+
+        <button class="continue-button" type="button" data-go-to-step="7">
+          Continue
+        </button>
+      </footer>
+    </main>
+
+    <main
+      class="onboarding-page onboarding-page--ready"
+      data-step="7"
+      aria-label="Onboarding step 7"
+      hidden
+    >
+      <header class="onboarding-header">
+        <button class="back-button" type="button" data-go-to-step="6">‹</button>
+      </header>
+
+      <section class="onboarding-art onboarding-art--ready">
+        <img src="./assets/Sun.svg" alt="Sun release symbol" />
+      </section>
+
+      <section class="onboarding-content">
+        <p class="step-label">STEP 7 - READY</p>
+
+        <h1>When you're ready</h1>
+
+        <p class="description">
+          To release your Quita, tap the sun or the “Let your Quita rest”
+          button. Resolved Quitas drift into your Bliss - a quiet space of
+          relief.
+        </p>
+      </section>
+
+      <footer class="onboarding-footer">
+        <div class="dots">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span class="active"></span>
+        </div>
+
+        <a class="continue-button" href="./login-signup.html">Let's start</a>
       </footer>
     </main>
 
