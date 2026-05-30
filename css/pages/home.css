@@ -25,11 +25,10 @@
 }
 
 .greeting-title {
-  color: #1a1a1a;
+  color: var(--dark-text);
   font-family: var(--font-primary);
   font-size: 28px;
   font-weight: 590;
-  line-height: 1.2;
   margin: 0;
 }
 
@@ -82,11 +81,10 @@
 }
 
 .feeling-title {
-  color: #1a1a1a;
+  color: var(--dark-text);
   font-family: var(--font-primary);
   font-size: 18px;
   font-weight: 700;
-  line-height: 1.2;
   margin: 0;
 }
 
@@ -162,9 +160,8 @@
 .emotion-description {
   color: var(--blue);
   font-family: var(--font-primary);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 1.4;
   margin: 0;
 }
 
@@ -185,6 +182,7 @@
   font-family: var(--font-primary);
   font-size: 17px;
   font-weight: 510;
+  text-decoration: none;
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
@@ -216,7 +214,7 @@
 }
 
 .action-button--primary {
-  color: white;
+  color: var(--white);
   background: linear-gradient(0deg, var(--blue) 0%, var(--blue) 100%);
   box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.12);
 }
@@ -316,11 +314,11 @@
   }
 
   .greeting-title {
-    font-size: 32px;
+    font-size: 28px;
   }
 
   .greeting-subtitle {
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .doll-wrapper {
@@ -329,11 +327,11 @@
   }
 
   .feeling-title {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .action-button {
-    font-size: 18px;
+    font-size: 17px;
   }
 }
 
@@ -348,7 +346,7 @@
   }
 
   .greeting-title {
-    font-size: 36px;
+    font-size: 28px;
   }
 
   .doll-wrapper {

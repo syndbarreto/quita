@@ -15,7 +15,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 60px;
-  padding: 54px 0px 54px 0px;
+    padding: 72px 0px 54px 0px;
   position: relative;
   background-color: var(--background);
 }

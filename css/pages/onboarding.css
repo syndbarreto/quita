@@ -1,6 +1,12 @@
 body {
   background: #eaeaea;
   font-family: var(--font-primary);
+  min-height: 100vh;
+  display: grid;
+  justify-items: center;
+  align-items: start;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 h1 {
@@ -12,6 +18,7 @@ h1 {
   --page-text: var(--text-primary);
   --page-copy: var(--text-secondary);
   --nav-color: var(--purple);
+  --step-label-color: var(--nav-color);
   --dot-idle: rgba(74, 46, 110, 0.33);
   --dot-active: var(--purple);
   --button-background: var(--blue);
@@ -34,8 +41,17 @@ h1 {
   flex-direction: column;
   align-items: center;
   gap: 44px;
+  grid-area: 1 / 1;
 
   overflow: hidden;
+  opacity: 0;
+  transform: translate3d(0, 18px, 0) scale(0.985);
+  filter: blur(6px);
+  transition:
+    opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform, filter;
 }
 
 .onboarding-page--intro {
@@ -44,6 +60,40 @@ h1 {
 
 .onboarding-page[hidden] {
   display: none;
+}
+
+.onboarding-page.is-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+.onboarding-page.is-entering.is-forward {
+  transform: translate3d(36px, 0, 0) scale(0.985);
+}
+
+.onboarding-page.is-entering.is-backward {
+  transform: translate3d(-36px, 0, 0) scale(0.985);
+}
+
+.onboarding-page.is-entering.is-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+.onboarding-page.is-exiting {
+  opacity: 0;
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.onboarding-page.is-exiting.is-forward {
+  transform: translate3d(-28px, 0, 0) scale(0.99);
+}
+
+.onboarding-page.is-exiting.is-backward {
+  transform: translate3d(28px, 0, 0) scale(0.99);
 }
 
 .onboarding-page--create {
@@ -86,8 +136,8 @@ h1 {
 
 .onboarding-page--growth {
   --page-text: var(--blue);
-  --page-copy: #1a1a1a;
-  --nav-color: #1a1a1a;
+  --page-copy: var(--black);
+  --nav-color: var(--black);
   --title-size: 34px;
   --title-line-height: 35.7px;
   --title-weight: 400;
@@ -97,7 +147,44 @@ h1 {
   --button-height: 54.5px;
 
   padding-bottom: 67px;
-  gap: 24px;
+  gap: 72px;
+}
+
+.onboarding-page--companion {
+  --page-background: var(--light-blue);
+  --page-text: var(--purple);
+  --page-copy: var(--purple);
+  --nav-color: var(--black);
+  --button-background: var(--purple);
+  --button-height: 54.5px;
+  --title-size: 32px;
+  --title-line-height: 33.6px;
+  --title-weight: 400;
+  --content-title-gap: 10px;
+  --description-size: 13px;
+  --description-line-height: 21.13px;
+
+  padding-bottom: 67px;
+  gap: 16px;
+}
+
+.onboarding-page--ready {
+  --page-background: var(--light-orange);
+  --page-text: var(--background);
+  --page-copy: var(--background);
+  --nav-color: var(--black);
+  --step-label-color: var(--background);
+  --button-background: var(--purple);
+  --button-height: 54.5px;
+  --title-size: 34px;
+  --title-line-height: 35.7px;
+  --title-weight: 400;
+  --content-title-gap: 10px;
+  --description-size: 14px;
+  --description-line-height: 22.75px;
+
+  padding-bottom: 67px;
+  gap: 69px;
 }
 
 .onboarding-header {
@@ -159,6 +246,16 @@ h1 {
   height: 220px;
 }
 
+.onboarding-art--companion img {
+  width: 363px;
+  height: 439px;
+}
+
+.onboarding-art--ready img {
+  width: 288px;
+  height: 288px;
+}
+
 .onboarding-content {
   width: 100%;
 }
@@ -173,7 +270,7 @@ h1 {
   font-size: 11px;
   line-height: 16.5px;
   letter-spacing: 3.3px;
-  color: var(--nav-color);
+  color: var(--step-label-color);
   opacity: 0.7;
 }
 
@@ -198,7 +295,9 @@ h1 {
 
 .onboarding-page--quiz .description,
 .onboarding-page--vault .description,
-.onboarding-page--growth .description {
+.onboarding-page--growth .description,
+.onboarding-page--companion .description,
+.onboarding-page--ready .description {
   max-width: 334px;
   margin-bottom: 0;
 }
@@ -325,6 +424,15 @@ h1 {
   font-size: 15px;
   font-weight: 700;
   text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    filter 180ms ease;
+}
+
+.continue-button:active {
+  transform: scale(0.98);
+  filter: brightness(0.97);
 }
 
 .onboarding-page--intro .continue-button {
@@ -340,4 +448,25 @@ h1 {
   width: 342px;
   max-width: 100%;
   font-weight: 600;
+}
+
+.onboarding-page--companion .continue-button {
+  width: 342px;
+  max-width: 100%;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .onboarding-page {
+    width: 100vw;
+    min-height: 100dvh;
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onboarding-page,
+  .continue-button {
+    transition: none;
+  }
 }

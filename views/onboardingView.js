@@ -2,7 +2,10 @@ const steps = [...document.querySelectorAll("[data-step]")];
 
 function showStep(stepNumber) {
   steps.forEach((step) => {
-    step.hidden = step.dataset.step !== stepNumber;
+    const isCurrentStep = step.dataset.step === stepNumber;
+
+    step.hidden = !isCurrentStep;
+    step.classList.toggle("is-active", isCurrentStep);
   });
 }
 
@@ -17,3 +20,4 @@ document.addEventListener("click", (event) => {
 });
 
 showStep("1");
+
