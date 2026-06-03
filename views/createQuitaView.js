@@ -1,10 +1,15 @@
 import {
   BACKGROUND_OPTIONS,
   CHOICE_GROUPS,
+  DOLL_STATES,
+  QUITA_NAME_MAX_LENGTH,
   WORRY_TYPES,
   createChoice,
   createQuita,
   getBackgroundOption,
+  limitQuitaName,
+  normalizeQuitaName,
+  pickRandomDoll,
   saveQuita,
 } from "../models/QuitaModel.js";
 
@@ -13,6 +18,7 @@ const liveName = document.querySelector("[data-live-quita-name]");
 const form = document.querySelector("[data-create-quita-form]");
 const backgroundOptions = document.querySelector("[data-background-options]");
 const backgroundPreview = document.querySelector("[data-background-preview]");
+const dollPreview = document.querySelector("[data-doll-preview]");
 
 const colorOrder = ["blue", "pink", "green", "orange", "yellow"];
 const selectedChoices = {
@@ -20,6 +26,7 @@ const selectedChoices = {
   people: null,
   location: null,
 };
+const selectedDoll = pickRandomDoll();
 let selectedBackgroundId = BACKGROUND_OPTIONS[0].id;
 
 function escapeHtml(value) {
@@ -37,9 +44,8 @@ function escapeHtml(value) {
 }
 
 function renderLiveName(value = "Quita") {
-  const normalizedName = value.trim() || "Quita";
-
-  liveName.innerHTML = Array.from(normalizedName)
+  const normalizedName = normalizeQuitaName(value);
+  const letters = Array.from(normalizedName)
     .map((char, index) => {
       const color = colorOrder[index % colorOrder.length];
       const content = char === " " ? "&nbsp;" : escapeHtml(char);
@@ -47,6 +53,33 @@ function renderLiveName(value = "Quita") {
       return `<span class="name-letter--${color}">${content}</span>`;
     })
     .join("");
+
+  liveName.innerHTML = `<span class="quita-display-name__content">${letters}</span>`;
+
+  fitLiveName();
+}
+
+function fitLiveName() {
+  liveName.style.setProperty("--quita-name-scale", "1");
+
+  requestAnimationFrame(() => {
+    const content = liveName.querySelector(".quita-display-name__content");
+
+    if (!content) {
+      return;
+    }
+
+    const availableWidth = liveName.clientWidth;
+    const contentWidth = content.getBoundingClientRect().width;
+
+    if (contentWidth <= availableWidth) {
+      return;
+    }
+
+    const scale = Math.max(0.72, (availableWidth / contentWidth) * 0.98);
+
+    liveName.style.setProperty("--quita-name-scale", scale.toFixed(3));
+  });
 }
 
 function createChoiceButton(group, value, type = "preset") {
@@ -178,6 +211,11 @@ function setBackground(id) {
   });
 }
 
+function renderDollPreview() {
+  dollPreview.src = selectedDoll.states[DOLL_STATES.WORRIED];
+  dollPreview.alt = `${selectedDoll.label} Quita doll preview`;
+}
+
 function getFormData() {
   const data = new FormData(form);
 
@@ -190,16 +228,34 @@ function getFormData() {
     location: selectedChoices.location,
     gridBackground: selectedBackgroundId,
     worryType: WORRY_TYPES.SEED,
+    dollId: selectedDoll.id,
+    dollState: DOLL_STATES.WORRIED,
   };
 }
 
 renderLiveName();
+renderDollPreview();
 renderChoiceGroups();
 renderBackgroundOptions();
 setBackground(selectedBackgroundId);
+nameInput.maxLength = QUITA_NAME_MAX_LENGTH;
 
 nameInput.addEventListener("input", (event) => {
-  renderLiveName(event.target.value);
+  const limitedValue = limitQuitaName(event.target.value);
+
+  if (event.target.value !== limitedValue) {
+    event.target.value = limitedValue;
+  }
+
+  renderLiveName(limitedValue);
+});
+
+window.addEventListener("resize", () => {
+  renderLiveName(nameInput.value);
+});
+
+document.fonts?.ready.then(() => {
+  renderLiveName(nameInput.value);
 });
 
 document.addEventListener("click", (event) => {

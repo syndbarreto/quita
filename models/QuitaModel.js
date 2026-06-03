@@ -1,11 +1,54 @@
 const STORAGE_KEY = "quita.items";
 const LATEST_STORAGE_KEY = "quita.latest";
 
+export const QUITA_NAME_MAX_LENGTH = 5;
+
 export const WORRY_TYPES = Object.freeze({
   SEED: "seed",
   KNOT: "knot",
   BURDEN: "burden",
 });
+
+export const DOLL_STATES = Object.freeze({
+  WORRIED: "worried",
+  CALM: "calm",
+  HAPPY: "happy",
+});
+
+export const QUITA_STATUS = Object.freeze({
+  VAULT: "vault",
+  BLISS: "bliss",
+});
+
+export const DOLL_CATALOG = Object.freeze([
+  {
+    id: "star",
+    label: "Star",
+    states: {
+      [DOLL_STATES.WORRIED]: "./assets/dolls/star-worried.png",
+      [DOLL_STATES.CALM]: "./assets/dolls/star-calm.png",
+      [DOLL_STATES.HAPPY]: "./assets/dolls/star-happy.png",
+    },
+  },
+  {
+    id: "diamond",
+    label: "Diamond",
+    states: {
+      [DOLL_STATES.WORRIED]: "./assets/dolls/diamond-worried.png",
+      [DOLL_STATES.CALM]: "./assets/dolls/diamond-calm.png",
+      [DOLL_STATES.HAPPY]: "./assets/dolls/diamond-happy.png",
+    },
+  },
+  {
+    id: "flower",
+    label: "Flower",
+    states: {
+      [DOLL_STATES.WORRIED]: "./assets/dolls/flower-worried.png",
+      [DOLL_STATES.CALM]: "./assets/dolls/flower-calm.png",
+      [DOLL_STATES.HAPPY]: "./assets/dolls/flower-happy.png",
+    },
+  },
+]);
 
 export const BACKGROUND_OPTIONS = Object.freeze([
   { id: "blue", label: "Blue", background: "blue", stars: "yellow" },
@@ -79,16 +122,69 @@ export function createChoice(value, type = "preset") {
   };
 }
 
+export function limitQuitaName(name) {
+  return Array.from(name?.trim() || "")
+    .slice(0, QUITA_NAME_MAX_LENGTH)
+    .join("");
+}
+
+export function normalizeQuitaName(name) {
+  const normalizedName = limitQuitaName(name);
+
+  return normalizedName || "Quita";
+}
+
 export function getBackgroundOption(id) {
   return BACKGROUND_OPTIONS.find((option) => option.id === id) ?? BACKGROUND_OPTIONS[0];
 }
 
-export function createQuita(data) {
+export function getDollById(id) {
+  return DOLL_CATALOG.find((doll) => doll.id === id) ?? DOLL_CATALOG[0];
+}
+
+export function getDollAsset(dollId, state = DOLL_STATES.WORRIED) {
+  const doll = getDollById(dollId);
+
+  return doll.states[state] ?? doll.states[DOLL_STATES.WORRIED];
+}
+
+export function pickRandomDoll() {
+  const index = Math.floor(Math.random() * DOLL_CATALOG.length);
+
+  return DOLL_CATALOG[index];
+}
+
+export function createJournalEntry(data) {
   const fallbackId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
   return {
     id: crypto.randomUUID?.() ?? fallbackId,
-    name: data.name?.trim() || "Quita",
+    createdAt: data.createdAt || new Date().toISOString(),
+    text: data.text?.trim() || "",
+    progressStep: data.progressStep ?? null,
+  };
+}
+
+export function getDollStateByProgress(journalCount = 0) {
+  if (journalCount <= 0) {
+    return DOLL_STATES.WORRIED;
+  }
+
+  if (journalCount === 1) {
+    return DOLL_STATES.CALM;
+  }
+
+  return DOLL_STATES.HAPPY;
+}
+
+export function createQuita(data) {
+  const fallbackId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  const journals = Array.isArray(data.journals) ? data.journals : [];
+  const selectedDoll = data.dollId ? getDollById(data.dollId) : pickRandomDoll();
+
+  return {
+    id: crypto.randomUUID?.() ?? fallbackId,
+    name: normalizeQuitaName(data.name),
     worryText: data.worryText?.trim() || "",
     smallStep: data.smallStep?.trim() || "",
     activity: data.activity ?? null,
@@ -96,7 +192,11 @@ export function createQuita(data) {
     location: data.location ?? null,
     gridBackground: data.gridBackground || BACKGROUND_OPTIONS[0].id,
     worryType: data.worryType || WORRY_TYPES.SEED,
-    createdAt: new Date().toISOString(),
+    dollId: selectedDoll.id,
+    dollState: data.dollState || getDollStateByProgress(journals.length),
+    status: data.status || QUITA_STATUS.VAULT,
+    journals,
+    createdAt: data.createdAt || new Date().toISOString(),
   };
 }
 
