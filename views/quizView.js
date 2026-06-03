@@ -13,6 +13,7 @@ document.addEventListener("click", (event) => {
   const nextTrigger = event.target.closest("[data-go-to-next-step]");
   const prevTrigger = event.target.closest("[data-go-to-prev-step]");
   const backTrigger = event.target.closest("[data-back-to-home]");
+  const resultContinueTrigger = event.target.closest("[data-quiz-result-continue]");
 
   if (nextTrigger) {
     const currentStep = nextTrigger.closest("[data-step]").dataset.step;
@@ -34,6 +35,10 @@ document.addEventListener("click", (event) => {
 
   if (backTrigger) {
     window.location.href = "./home.html";
+  }
+
+  if (resultContinueTrigger) {
+    window.location.href = "./create-quita.html";
   }
 });
 

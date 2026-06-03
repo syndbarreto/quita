@@ -66,3 +66,53 @@
     0 8px 40px color-mix(in srgb, var(--blue) 28%, transparent),
     inset 0 1px 1px color-mix(in srgb, var(--white) 26%, transparent);
 }
+
+/* ===== Quita Display Name - Nome colorido da boneca ===== */
+.quita-display-name {
+  --quita-name-font-size: 92px;
+  --quita-name-scale: 1;
+
+  width: min(354px, 100%);
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  font-family: var(--font-title);
+  font-size: var(--quita-name-font-size);
+  line-height: 0.95;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.quita-display-name__content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(var(--quita-name-scale));
+  transform-origin: center;
+}
+
+.quita-display-name span {
+  display: inline-block;
+}
+
+.name-letter--blue {
+  color: var(--blue);
+}
+
+.name-letter--pink {
+  color: var(--hot-pink);
+}
+
+.name-letter--green {
+  color: var(--light-green);
+}
+
+.name-letter--orange {
+  color: var(--dark-orange);
+}
+
+.name-letter--yellow {
+  color: var(--yellow);
+}

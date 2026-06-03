@@ -62,43 +62,6 @@ body {
   gap: 7px;
 }
 
-.live-quita-name {
-  width: min(318px, 100%);
-  min-height: 91px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-title);
-  font-size: clamp(70px, 20vw, 92px);
-  line-height: 0.95;
-  letter-spacing: 0;
-  overflow: hidden;
-}
-
-.live-quita-name span {
-  display: inline-block;
-}
-
-.name-letter--blue {
-  color: var(--blue);
-}
-
-.name-letter--pink {
-  color: var(--hot-pink);
-}
-
-.name-letter--green {
-  color: var(--light-green);
-}
-
-.name-letter--orange {
-  color: var(--dark-orange);
-}
-
-.name-letter--yellow {
-  color: var(--yellow);
-}
-
 .doll-stage {
   width: 234px;
   height: 417px;
@@ -109,19 +72,11 @@ body {
 }
 
 .create-doll {
-  width: 172px;
-  height: 414px;
-  position: relative;
+  width: 234px;
+  height: 417px;
+  object-fit: contain;
+  object-position: center bottom;
   z-index: 1;
-  overflow: hidden;
-}
-
-.create-doll img {
-  width: 948px;
-  max-width: none;
-  position: absolute;
-  left: -389px;
-  top: -47px;
 }
 
 .doll-shadow {
@@ -321,47 +276,26 @@ body {
   position: absolute;
   color: var(--preview-star);
   background: currentColor;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
 }
 
 .preview-shape--burst {
-  width: 24px;
+  width: 25px;
   height: 24px;
-  clip-path: polygon(
-    50% 0,
-    60% 34%,
-    92% 18%,
-    72% 48%,
-    100% 63%,
-    65% 64%,
-    78% 100%,
-    50% 75%,
-    22% 100%,
-    35% 64%,
-    0 63%,
-    28% 48%,
-    8% 18%,
-    40% 34%
-  );
+  mask-image: url("../../assets/star-7-points.svg");
+  -webkit-mask-image: url("../../assets/star-7-points.svg");
 }
 
 .preview-shape--x {
-  width: 25px;
-  height: 25px;
-  border-radius: 8px;
-  clip-path: polygon(
-    15% 0,
-    50% 28%,
-    85% 0,
-    100% 15%,
-    72% 50%,
-    100% 85%,
-    85% 100%,
-    50% 72%,
-    15% 100%,
-    0 85%,
-    28% 50%,
-    0 15%
-  );
+  width: 24px;
+  height: 24px;
+  mask-image: url("../../assets/star-4-points.svg");
+  -webkit-mask-image: url("../../assets/star-4-points.svg");
 }
 
 .shape-a {

@@ -50,6 +50,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.24s ease;
+}
+
+.doll-wrapper:active {
+  transform: scale(0.98);
 }
 
 .doll-image {
