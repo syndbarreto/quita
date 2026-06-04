@@ -1,0 +1,42 @@
+{
+  "users": [
+    {
+      "email": "syndbarreto@gmail.com",
+      "password": "$2a$10$L1Ar90SqJESfwVCBbgtrqOte.iYb6wpzQDmyoTwM8juZ/DVMXwgP6",
+      "firstName": "Synd",
+      "lastName": "Barreto",
+      "birthDate": "2004-09-13",
+      "id": 1
+    }
+  ],
+  "quitas": [
+    {
+      "id": "0cb8a965-44a7-4fa4-918d-7232e3d23a5d",
+      "name": "teste",
+      "worryText": "linda",
+      "smallStep": "synda",
+      "activity": {
+        "type": "preset",
+        "value": "Driving"
+      },
+      "people": {
+        "type": "preset",
+        "value": "Family"
+      },
+      "location": {
+        "type": "preset",
+        "value": "Outside"
+      },
+      "gridBackground": "light-pink",
+      "worryType": "seed",
+      "dollId": "star",
+      "dollState": "worried",
+      "status": "vault",
+      "journals": [],
+      "createdAt": "2026-06-03T17:50:36.613Z",
+      "userId": 1
+    }
+  ],
+  "emotionalCheckins": [],
+  "journals": []
+}

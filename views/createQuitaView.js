@@ -10,8 +10,8 @@ import {
   limitQuitaName,
   normalizeQuitaName,
   pickRandomDoll,
-  saveQuita,
 } from "../models/QuitaModel.js";
+import { createQuitaRecord } from "../models/ApiModel.js";
 
 const nameInput = document.querySelector("[data-name-input]");
 const liveName = document.querySelector("[data-live-quita-name]");
@@ -279,11 +279,20 @@ document.addEventListener("click", (event) => {
   }
 });
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const quita = createQuita(getFormData());
-  saveQuita(quita);
 
-  window.location.href = "./vault.html";
+  try {
+    await createQuitaRecord(quita);
+    window.location.href = "./vault.html";
+  } catch (error) {
+    if (error.message.includes("logged in")) {
+      window.location.href = "./signupLogin.html?view=login";
+      return;
+    }
+
+    console.error(error);
+  }
 });

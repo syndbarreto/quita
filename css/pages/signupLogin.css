@@ -209,6 +209,20 @@
   box-shadow: 0px 2px 8px rgba(70, 90, 225, 0.2);
 }
 
+.auth-message {
+  min-height: 18px;
+  color: var(--light-red);
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 510;
+  line-height: 18px;
+  margin: 0;
+}
+
+.auth-message:empty {
+  display: none;
+}
+
 /* --- Login Section --- */
 
 .login-header {

@@ -32,17 +32,16 @@
                 <p>Start your journey of letting go, and turn your worries into something lighter.</p>
             </div>
 
-            <form class="signup-form" action="./onboarding.html">
+            <form class="signup-form" data-auth-form="signup">
                 <div class="form-fields">
                     <div class="input-wrapper">
-                        <input type="text" placeholder="First name*" required />
+                        <input name="firstName" type="text" placeholder="First name*" required />
                     </div>
                     <div class="input-wrapper">
-                        <input type="text" placeholder="Last name*" required />
+                        <input name="lastName" type="text" placeholder="Last name*" required />
                     </div>
                     <div class="input-wrapper">
-                        <!-- Usa tipo texto por padrão para manter o placeholder visível e muda para date no focus -->
-                        <input type="text" placeholder="Date of birth*" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'" required />
+                        <input name="birthDate" type="text" placeholder="Date of birth*" required data-date-input />
                         <div class="icon-calendar">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="3" y="4" width="18" height="16" rx="2" stroke="var(--placeholder)" stroke-width="2"/>
@@ -53,10 +52,10 @@
                         </div>
                     </div>
                     <div class="input-wrapper">
-                        <input type="email" placeholder="Email address*" required />
+                        <input name="email" type="email" placeholder="Email address*" required />
                     </div>
                     <div class="input-wrapper">
-                        <input type="password" placeholder="Password (8+ characters)*" required minlength="8" />
+                        <input name="password" type="password" placeholder="Password (8+ characters)*" required minlength="8" />
                     </div>
                 </div>
 
@@ -80,6 +79,7 @@
                     </div>
                 </div>
 
+                <p class="auth-message" data-auth-message="signup" aria-live="polite"></p>
                 <button type="submit" class="submit-button">Continue</button>
             </form>
         </main>
@@ -103,13 +103,13 @@
                     <p>Log in to reconnect with your Quita and continue your emotional wellness journey.</p>
                 </div>
 
-                <form class="login-form" action="./home.html">
+                <form class="login-form" data-auth-form="login">
                     <div class="form-fields">
                         <div class="input-wrapper">
-                            <input type="email" placeholder="Email address" required />
+                            <input name="email" type="email" placeholder="Email address" required />
                         </div>
                         <div class="input-wrapper">
-                            <input type="password" placeholder="Password" required />
+                            <input name="password" type="password" placeholder="Password" required />
                         </div>
                     </div>
 
@@ -117,6 +117,7 @@
                         <a href="#">Forgot password?</a>
                     </div>
 
+                    <p class="auth-message" data-auth-message="login" aria-live="polite"></p>
                     <button type="submit" class="submit-button">Continue</button>
                 </form>
             </main>
