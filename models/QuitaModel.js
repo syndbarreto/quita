@@ -1,6 +1,3 @@
-const STORAGE_KEY = "quita.items";
-const LATEST_STORAGE_KEY = "quita.latest";
-
 export const QUITA_NAME_MAX_LENGTH = 5;
 
 export const WORRY_TYPES = Object.freeze({
@@ -198,22 +195,4 @@ export function createQuita(data) {
     journals,
     createdAt: data.createdAt || new Date().toISOString(),
   };
-}
-
-export function getQuitas() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) ?? [];
-  } catch {
-    return [];
-  }
-}
-
-export function saveQuita(quita) {
-  const quitas = getQuitas();
-  const updatedQuitas = [quita, ...quitas];
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedQuitas));
-  localStorage.setItem(LATEST_STORAGE_KEY, JSON.stringify(quita));
-
-  return quita;
 }
