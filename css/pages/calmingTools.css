@@ -201,17 +201,15 @@
 .search-view {
   width: 100%;
   min-height: 100vh;
-  padding: 72px 20px 120px;
+  padding: 72px 0px 120px 20px;
   position: relative;
   background: var(--background);
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 20px;
   box-sizing: border-box;
-  display: none;
-  padding: 72px 0px 120px 20px;
 }
 
 .search-header-bar {
