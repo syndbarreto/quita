@@ -211,6 +211,10 @@ function addLike(button) {
 
     } else {
         img.src = "./assets/like.svg";
+
+        const updatedFavTools = (currentUser?.favTools ?? []).map(String).filter(id => id !== toolId);
+        if (currentUser) currentUser.favTools = updatedFavTools;
+
         // remove chosen calming tool from user's favTools in db.json
         fetch(`http://localhost:3000/users/${userId}`, {
           method: "PATCH",
@@ -219,7 +223,7 @@ function addLike(button) {
                 "Authorization": `Bearer ${getAuthToken()}`
             },
             body: JSON.stringify({
-                favTools: getCurrentUser2().favTools.filter(id => id !== toolId),
+                favTools: updatedFavTools,
             }),
         })
         .then(response => response.json())
