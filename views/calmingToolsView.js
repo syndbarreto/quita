@@ -90,19 +90,19 @@ fetch(`http://localhost:3000/users/${userId}`, {
   .then(response => response.json())
   .then(user => {
     const favTools = user.favTools || [];
+    const addToolsScroll = document.getElementById('addToolsScroll');
+
     favTools.forEach(toolId => {
         // add buttons for each favorite tool in the saved tools view to id addToolsScroll
-        const addToolsScroll = document.getElementById('addToolsScroll');
         addToolsScroll.innerHTML += `
         <button class="add-tool-btn" type="button" onclick="openFavoriteView()">
-            <img src="./assets/tool${toolId}.jpg" alt="Saved Tool" style="opacity: 1; border-radius: 16px; object-fit: cover;">
+            <img src="./assets/tool${toolId}.png" alt="Saved Tool" style="opacity: 1; border-radius: 16px; object-fit: cover;">
         </button>
         `;
     });
     
     // fill out the remaining slots with empty buttons until there are at least 5 buttons or 1 empty slot to add more
     const currentButtons = addToolsScroll.querySelectorAll('.add-tool-btn').length;
-    const emptySlotsCount = Math.max(5 - currentButtons, 1);
     for (let i = 0; i < emptySlotsCount; i++) {
         addToolsScroll.innerHTML += `
         <button class="add-tool-btn" type="button" onclick="openFavoriteView()">
