@@ -7,6 +7,27 @@
       "lastName": "Barreto",
       "birthDate": "2004-09-13",
       "id": 1
+    },
+    {
+      "email": "lara007cunha@gmail.com",
+      "password": "$2a$10$9QVdusDoaXsmPi1xqCu0O.fSW/iZ9zO/k8IJLkw9DuSK7qgGI4DRm",
+      "firstName": "Lara",
+      "lastName": "Cunha",
+      "birthDate": "2026-06-03",
+      "id": 2
+    },
+    {
+      "email": "necanuno@gmail.com",
+      "password": "$2a$10$EhtnfCALWnst69WaZ..DZe8CgkP3VJ.NLjDkbfjZXJ/FJjv8fb8RK",
+      "firstName": "Nuno",
+      "lastName": "Neca",
+      "birthDate": "1997-08-30",
+      "favTools": [
+        "1",
+        "2",
+        "3"
+      ],
+      "id": 3
     }
   ],
   "quitas": [
