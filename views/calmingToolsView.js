@@ -188,9 +188,13 @@ function openFavoriteView() {
 function addLike(button) {
     // toggle between like.svg and like-active.svg
     const img = button.querySelector("img");
-    const toolId = button.dataset.id;
+    const toolId = String(button.dataset.id);
     if (img.src.includes("like.svg")) {
         img.src = "./assets/like-active.svg";
+
+        const updatedFavTools = [...new Set([...(currentUser?.favTools ?? []).map(String), toolId])];
+        if (currentUser) currentUser.favTools = updatedFavTools;
+
         // add chosen calming tool to user's favTools in db.json
         fetch(`http://localhost:3000/users/${userId}`, {
           method: "PATCH",
@@ -199,7 +203,7 @@ function addLike(button) {
             "Authorization": `Bearer ${getAuthToken()}`
           },
             body: JSON.stringify({
-                favTools: [...getCurrentUser2().favTools, toolId],
+                favTools: updatedFavTools,
             }),
         })
         .then(response => response.json())
