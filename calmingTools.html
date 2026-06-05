@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quita - Calming Tools</title>
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/pages/calmingTools.css">
+</head>
+<body>
+    <main class="calming-tools-page" id="calmingToolPage">
+        <!-- Header -->
+        <header class="calming-header">
+            <h1 class="calming-title">Calming Tools</h1>
+            <button class="search-button" type="button" data-open-search>
+                <img src="./assets/lupa.svg" alt="Search">
+            </button>
+        </header>
+
+        <!-- Add Tools Horizontal Scroll -->
+        <div class="add-tools-container">
+            <div class="add-tools-scroll" id="addToolsScroll">
+            </div>
+        </div>
+
+        <!-- Tools Gallery -->
+        <div class="tools-gallery">
+            <!-- Breathing -->
+            <div class="tool-card">
+                <img src="./assets/breathing.svg" alt="Breathing">
+            </div>
+
+            <!-- Quotes -->
+            <div class="tool-card">
+                <img src="./assets/quotes.svg" alt="Quotes">
+            </div>
+
+            <!-- Grounding -->
+            <div class="tool-card">
+                <img src="./assets/grounding.svg" alt="Grounding">
+            </div>
+
+            <!-- Sounds -->
+            <div class="tool-card">
+                <img src="./assets/sounds.svg" alt="Sounds">
+            </div>
+        </div>
+    </main>
+
+    <!-- Search View -->
+    <main class="search-view" id="searchView" >
+        <!-- Header / Search Bar -->
+        <div class="search-header-bar">
+            <button class="search-back-btn" type="button" data-close-search>
+                <img src="./assets/back_seta.svg" alt="Back">
+            </button>
+            <input class="search-input-wrapper" type="text" placeholder="Search Calming Tools">
+        </div>
+
+        <!-- Filters -->
+        <div class="search-filters-container">
+            <div class="filter-chip active">
+                <span class="chip-text">All</span>
+            </div>
+            <div class="filter-chip">
+                <span class="chip-text">Quotes</span>
+            </div>
+            <div class="filter-chip">
+                <span class="chip-text">Breathing</span>
+            </div>
+            <div class="filter-chip">
+                <span class="chip-text">Grounding</span>
+            </div>
+            <div class="filter-chip">
+                <span class="chip-text">Sounds</span>
+            </div>
+        </div>
+
+        <!-- Results List -->
+        <div class="search-results-list" id="searchResultsList">
+            
+        </div>
+
+    </main>
+
+    <!-- Saved/Favorite Tools View -->
+    <main class="search-view saved-tools-view" id="savedToolsView" style="display: none;">
+        <!-- Header / Search Bar -->
+        <div class="search-header-bar">
+            <button class="search-back-btn" type="button" data-close-saved>
+                <img src="./assets/back_seta.svg" alt="Back">
+                <span>Back</span>
+            </button>
+            <input class="search-input-wrapper" type="text" placeholder="Search Calming Tools">
+        </div>
+
+        <!-- Filters -->
+        <div class="search-filters-container">
+            <div class="filter-chip active"><span class="chip-text">All</span></div>
+            <div class="filter-chip"><span class="chip-text">Quotes</span></div>
+            <div class="filter-chip"><span class="chip-text">Breathing</span></div>
+            <div class="filter-chip"><span class="chip-text">Grounding</span></div>
+            <div class="filter-chip"><span class="chip-text">Sounds</span></div>
+        </div>
+
+        <!-- Results List -->
+        <div class="search-results-list" id="favsResultsList">
+            
+        </div>
+
+        <button class="done-button-container" type="button" data-close-saved>
+            <span class="done-button-text">Done</span>
+        </button>
+    </main>
+
+    <script src="./views/calmingToolsView.js" type="module"></script>
+</body>
+</html>

@@ -87,6 +87,7 @@ export async function registerUser({ firstName, lastName, birthDate, email, pass
     birthDate,
     email: email.trim(),
     password,
+    favTools: [],
   });
 }
 
