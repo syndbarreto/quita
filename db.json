@@ -56,6 +56,32 @@
       "journals": [],
       "createdAt": "2026-06-03T17:50:36.613Z",
       "userId": 1
+    },
+    {
+      "id": "30297842-3165-4eaa-9427-6ab7191ed17d",
+      "name": "pedro",
+      "worryText": "doi muito",
+      "smallStep": "asdasdafa",
+      "activity": {
+        "type": "custom",
+        "value": "lacre"
+      },
+      "people": {
+        "type": "custom",
+        "value": "muito sozinha"
+      },
+      "location": {
+        "type": "preset",
+        "value": "Home"
+      },
+      "gridBackground": "dark-red",
+      "worryType": "burden",
+      "dollId": "star",
+      "dollState": "worried",
+      "status": "vault",
+      "journals": [],
+      "createdAt": "2026-06-04T14:19:21.085Z",
+      "userId": 1
     }
   ],
   "emotionalCheckins": [],
