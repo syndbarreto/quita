@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quita - Vault</title>
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/global.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/pages/vault.css" />
+</head>
+<body>
+  <main class="vault-page">
+    <header class="vault-header">
+      <div>
+        <h1>Vault</h1>
+        <p data-vault-subtitle>Held with care</p>
+      </div>
+
+      <div class="vault-view-toggle" aria-label="Vault view">
+        <button class="vault-toggle-button is-selected" type="button" data-vault-view="list" aria-label="List view">
+          <span class="vault-toggle-icon vault-toggle-icon--list" aria-hidden="true"></span>
+        </button>
+        <button class="vault-toggle-button" type="button" data-vault-view="grid" aria-label="Grid view">
+          <span class="vault-toggle-icon vault-toggle-icon--grid" aria-hidden="true"></span>
+        </button>
+      </div>
+    </header>
+
+    <section class="vault-empty" data-vault-empty hidden>
+      <div class="vault-empty-doll">
+        <img src="./assets/doll-vault.png" alt="" aria-hidden="true" />
+      </div>
+      <div class="vault-empty-copy">
+        <h2>Your vault is quiet</h2>
+        <p>When something weighs on you,<br />place it here.</p>
+      </div>
+      <a class="vault-primary-button" href="./home.html">Add a guardian</a>
+    </section>
+
+    <section class="vault-grid-view" data-vault-grid hidden aria-label="Quita cards grid">
+      <div class="vault-grid-track" data-vault-grid-list></div>
+    </section>
+
+    <section class="vault-list-view" data-vault-list hidden aria-label="Quita list">
+      <div class="vault-filter-row" aria-label="Worry type filters">
+        <button class="glass-chip vault-filter is-selected" type="button" data-vault-filter="all" aria-pressed="true">All</button>
+        <button class="glass-chip vault-filter" type="button" data-vault-filter="seed" aria-pressed="false">Seed</button>
+        <button class="glass-chip vault-filter" type="button" data-vault-filter="knot" aria-pressed="false">Knot</button>
+        <button class="glass-chip vault-filter" type="button" data-vault-filter="burden" aria-pressed="false">Burden</button>
+      </div>
+
+      <div class="vault-list-stack" data-vault-list-stack></div>
+    </section>
+
+  </main>
+
+  <script type="module" src="./views/vaultView.js"></script>
+</body>
+</html>

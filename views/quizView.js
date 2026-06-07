@@ -1,6 +1,10 @@
-console.log('quizView.js carregado!');
-
 const quizSteps = [...document.querySelectorAll("[data-step]")];
+const resultTypeByStep = {
+  5: "burden",
+  6: "seed",
+  7: "knot",
+};
+let currentWorryType = "seed";
 
 function showQuizStep(stepNumber) {
   quizSteps.forEach((step) => {
@@ -38,15 +42,16 @@ document.addEventListener("click", (event) => {
   }
 
   if (resultContinueTrigger) {
-    window.location.href = "./create-quita.html";
+    const currentStep = resultContinueTrigger.closest("[data-step]").dataset.step;
+    const worryType = resultTypeByStep[currentStep] || currentWorryType;
+
+    window.location.href = `./create-quita.html?worryType=${encodeURIComponent(worryType)}`;
   }
 });
 
 // Handle radio button changes with event delegation
 document.addEventListener('change', (event) => {
   if (event.target.type === 'radio') {
-    console.log(`Pergunta: ${event.target.name}, Opção: ${event.target.value}`);
-    
     // Remove 'selected' class from all labels with same name
     document.querySelectorAll(`input[name="${event.target.name}"]`).forEach((radio) => {
       radio.closest('.quiz-option').classList.remove('selected');
@@ -79,22 +84,24 @@ function getQuizResult() {
   }
 
   // Determina o resultado baseado nos pontos totais
-  let resultStep;
+  let result;
   if (totalPoints <= 4) {
-    resultStep = "6"; // Seed
+    result = { step: "6", worryType: "seed" };
   } else if (totalPoints <= 8) {
-    resultStep = "7"; // Knot
+    result = { step: "7", worryType: "knot" };
   } else {
-    resultStep = "5"; // Burden
+    result = { step: "5", worryType: "burden" };
   }
 
-  return resultStep;
+  return result;
 }
 
 document.addEventListener("click", (event) => {
   const submitTrigger = event.target.closest("[data-quiz-finish]");
   if (submitTrigger) {
-    const resultStep = getQuizResult();
-    showQuizStep(resultStep);
+    const result = getQuizResult();
+
+    currentWorryType = result.worryType;
+    showQuizStep(result.step);
   }
 });

@@ -21,12 +21,17 @@ const backgroundPreview = document.querySelector("[data-background-preview]");
 const dollPreview = document.querySelector("[data-doll-preview]");
 
 const colorOrder = ["blue", "pink", "green", "orange", "yellow"];
+const validWorryTypes = Object.values(WORRY_TYPES);
 const selectedChoices = {
   activity: null,
   people: null,
   location: null,
 };
 const selectedDoll = pickRandomDoll();
+const urlParams = new URLSearchParams(window.location.search);
+const selectedWorryType = validWorryTypes.includes(urlParams.get("worryType"))
+  ? urlParams.get("worryType")
+  : WORRY_TYPES.SEED;
 let selectedBackgroundId = BACKGROUND_OPTIONS[0].id;
 
 function escapeHtml(value) {
@@ -227,7 +232,7 @@ function getFormData() {
     people: selectedChoices.people,
     location: selectedChoices.location,
     gridBackground: selectedBackgroundId,
-    worryType: WORRY_TYPES.SEED,
+    worryType: selectedWorryType,
     dollId: selectedDoll.id,
     dollState: DOLL_STATES.WORRIED,
   };
@@ -288,7 +293,7 @@ form.addEventListener("submit", async (event) => {
     await createQuitaRecord(quita);
     window.location.href = "./vault.html";
   } catch (error) {
-    if (error.message.includes("logged in")) {
+    if (error.message.includes("logged in") || error.message.includes("session expired")) {
       window.location.href = "./signupLogin.html?view=login";
       return;
     }
