@@ -10,23 +10,7 @@
   <link rel="stylesheet" href="./css/pages/vault.css" />
 </head>
 <body>
-  <main class="vault-page">
-    <header class="vault-header">
-      <div>
-        <h1>Vault</h1>
-        <p data-vault-subtitle>Held with care</p>
-      </div>
-
-      <div class="vault-view-toggle" aria-label="Vault view">
-        <button class="vault-toggle-button is-selected" type="button" data-vault-view="list" aria-label="List view">
-          <span class="vault-toggle-icon vault-toggle-icon--list" aria-hidden="true"></span>
-        </button>
-        <button class="vault-toggle-button" type="button" data-vault-view="grid" aria-label="Grid view">
-          <span class="vault-toggle-icon vault-toggle-icon--grid" aria-hidden="true"></span>
-        </button>
-      </div>
-    </header>
-
+  <main class="vault-page is-grid">
     <section class="vault-empty" data-vault-empty hidden>
       <div class="vault-empty-doll">
         <img src="./assets/doll-vault.png" alt="" aria-hidden="true" />
@@ -43,6 +27,13 @@
     </section>
 
     <section class="vault-list-view" data-vault-list hidden aria-label="Quita list">
+      <header class="vault-list-header">
+        <div>
+          <h1>Vault</h1>
+          <p>Held with care</p>
+        </div>
+      </header>
+
       <div class="vault-filter-row" aria-label="Worry type filters">
         <button class="glass-chip vault-filter is-selected" type="button" data-vault-filter="all" aria-pressed="true">All</button>
         <button class="glass-chip vault-filter" type="button" data-vault-filter="seed" aria-pressed="false">Seed</button>
@@ -52,6 +43,15 @@
 
       <div class="vault-list-stack" data-vault-list-stack></div>
     </section>
+
+    <div class="vault-view-toggle vault-view-toggle--floating" aria-label="Vault view">
+      <button class="vault-toggle-button" type="button" data-vault-view="list" aria-label="List view">
+        <span class="vault-toggle-icon vault-toggle-icon--list" aria-hidden="true"></span>
+      </button>
+      <button class="vault-toggle-button is-selected" type="button" data-vault-view="grid" aria-label="Grid view">
+        <span class="vault-toggle-icon vault-toggle-icon--grid" aria-hidden="true"></span>
+      </button>
+    </div>
 
   </main>
 

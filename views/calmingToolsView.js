@@ -207,10 +207,6 @@ function addLike(button) {
             }),
         })
         .then(response => response.json())
-        .then(data => {
-            console.log("Tool added to favorites:", data);
-        }
-        )
         .catch(error => console.error("Error adding tool to favorites:", error));
 
     } else {
@@ -231,10 +227,6 @@ function addLike(button) {
             }),
         })
         .then(response => response.json())
-        .then(data => {
-            console.log("Tool removed from favorites:", data);
-        }
-        )
         .catch(error => console.error("Error removing tool from favorites:", error));       
     }
 }
