@@ -28,22 +28,22 @@
         <!-- Tools Gallery -->
         <div class="tools-gallery">
             <!-- Breathing -->
-            <div class="tool-card">
+            <div class="tool-card" data-open-category="breathing">
                 <img src="./assets/Breathing.svg" alt="Breathing">
             </div>
 
             <!-- Quotes -->
-            <div class="tool-card">
+            <div class="tool-card" data-open-category="quotes">
                 <img src="./assets/quotes.svg" alt="Quotes">
             </div>
 
             <!-- Grounding -->
-            <div class="tool-card">
+            <div class="tool-card" data-open-category="grounding">
                 <img src="./assets/Grounding.svg" alt="Grounding">
             </div>
 
             <!-- Sounds -->
-            <div class="tool-card">
+            <div class="tool-card" data-open-category="sounds">
                 <img src="./assets/Sounds.svg" alt="Sounds">
             </div>
         </div>
@@ -112,6 +112,66 @@
         <button class="done-button-container" type="button" data-close-saved>
             <span class="done-button-text">Done</span>
         </button>
+    </main>
+
+    <main id="breathingInfoView" style="display: none;">
+        <div class="info-container">
+            <header class="info-header">
+                <button class="search-back-btn" type="button" data-close-info>
+                    <img src="./assets/back_seta.svg" alt="Back" style="width: 48px; height: 48px;" />
+                </button>
+                <h2 class="info-title">Breathing</h2>
+            </header>
+            <img class="info-image" src="./assets/breathing_description.svg" alt="Breathing" />
+
+            <!-- Results List (Filtered by Breathing) -->
+            <div class="search-results-list" id="breathingResultsList" style="padding-bottom: 40px; margin-top: 20px;"></div>
+        </div>
+    </main>
+
+    <main id="quotesInfoView" style="display: none;">
+        <div class="info-container">
+            <header class="info-header">
+                <button class="search-back-btn" type="button" data-close-info>
+                    <img src="./assets/back_seta.svg" alt="Back" style="width: 48px; height: 48px;" />
+                </button>
+                <h2 class="info-title">Quotes</h2>
+            </header>
+            <img class="info-image" src="./assets/Quotes_description.svg" alt="Quotes" />
+
+            <!-- Results List (Filtered by Quotes) -->
+            <div class="search-results-list" id="quotesResultsList" style="padding-bottom: 40px; margin-top: 20px;"></div>
+        </div>
+    </main>
+
+    <main id="groundingInfoView" style="display: none;">
+        <div class="info-container">
+            <header class="info-header">
+                <button class="search-back-btn" type="button" data-close-info>
+                    <img src="./assets/back_seta.svg" alt="Back" style="width: 48px; height: 48px;" />
+                </button>
+                <h2 class="info-title">Grounding</h2>
+            </header>
+            <img class="info-image" src="./assets/grounding_description.svg" alt="Grounding" />
+
+            <!-- Results List (Filtered by Grounding) -->
+            <div class="search-results-list" id="groundingResultsList" style="padding-bottom: 40px; margin-top: 20px;"></div>
+        </div>
+    </main>
+
+    <main id="soundsInfoView" style="display: none;">
+        <div class="info-container">
+            <header class="info-header">
+                <button class="search-back-btn" type="button" data-close-info>
+                    <img src="./assets/back_seta.svg" alt="Back" style="width: 48px; height: 48px;" />
+                </button>
+                <h2 class="info-title">Sounds</h2>
+            </header>
+            <img class="info-image" src="./assets/Sounds_description.svg" alt="Sounds" />
+
+            <!-- Results List (Filtered by Sounds) -->
+            <div class="search-results-list" id="soundsResultsList" style="padding-bottom: 40px; margin-top: 20px;"></div>
+        </div>
     </main>
 
     <script src="./views/calmingToolsView.js" type="module"></script>

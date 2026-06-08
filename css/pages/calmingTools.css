@@ -408,3 +408,36 @@
 
     color: var(--dark-red);
 }
+
+/* Info Category Views (Breathing, Quotes, etc) */
+.info-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 72px 20px 0px;
+  position: relative;
+  background-color: var(--background);
+}
+
+.info-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 40px;
+}
+
+.info-title {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  color: var(--black);
+  font-size: 16px;
+  margin: 0;
+}
+
+.info-image {
+  width: 362px;
+  height: auto;
+  align-self: center;
+}

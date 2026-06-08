@@ -26,6 +26,12 @@ fetch('./calmingTools.json')
 
     let todoOHTML = '';
     let todoOHTML2 = '';
+    let categoryHTML = {
+        breathing: '',
+        quotes: '',
+        grounding: '',
+        sounds: ''
+    };
 
     data.tools.forEach(tool => {
         todoOHTML += `
@@ -74,11 +80,43 @@ fetch('./calmingTools.json')
             `;
         }
 
+        
+        const isLiked = currentUser?.favTools?.includes(String(tool.id));
+        const heartIcon = isLiked ? './assets/like-active.svg' : './assets/like.svg';
+        const activeClass = isLiked ? 'active' : '';
+
+        const categoryCardHTML = `
+        <div class="result-card" data-name="${tool.name.toLowerCase()}" data-category="${tool.category}">
+            <div class="result-info">
+                <img class="result-image" src="${tool.imageUrl || 'https://placehold.co/72x72'}" alt="${tool.name}">
+                <div class="result-text">
+                    <h3 class="result-title">${tool.name}</h3>
+                    <p class="result-author">${tool.description || ''}</p>
+                </div>
+            </div>
+            <button class="favorite-btn ${activeClass}" type="button" aria-label="Favorite" onclick="addLike(this)" data-id="${tool.id}">
+                <img src="${heartIcon}" alt="Favorite">
+            </button>
+        </div>
+        `;
+
+        
+        if (tool.category && categoryHTML[tool.category] !== undefined) {
+            categoryHTML[tool.category] += categoryCardHTML;
+        }
 
     });
 
     searchResultsList.innerHTML = todoOHTML;
     favsResultsList.innerHTML = todoOHTML2;
+    
+    // Injeta automaticamente o HTML nas listas de categorias que existirem na página
+    Object.keys(categoryHTML).forEach(category => {
+        const listElement = document.getElementById(`${category}ResultsList`);
+        if (listElement) {
+            listElement.innerHTML = categoryHTML[category];
+        }
+    });
   })
   .catch(error => console.error("Error loading tools:", error));
   
@@ -91,7 +129,7 @@ fetch(`http://localhost:3000/users/${userId}`, {
   .then(user => {
     const favTools = user.favTools || [];
     const addToolsScroll = document.getElementById('addToolsScroll');
-
+    
     favTools.forEach(toolId => {
         // add buttons for each favorite tool in the saved tools view to id addToolsScroll
         addToolsScroll.innerHTML += `
@@ -103,6 +141,7 @@ fetch(`http://localhost:3000/users/${userId}`, {
     
     // fill out the remaining slots with empty buttons until there are at least 5 buttons or 1 empty slot to add more
     const currentButtons = addToolsScroll.querySelectorAll('.add-tool-btn').length;
+    const emptySlotsCount = Math.max(5 - currentButtons, 1);
     for (let i = 0; i < emptySlotsCount; i++) {
         addToolsScroll.innerHTML += `
         <button class="add-tool-btn" type="button" onclick="openFavoriteView()">
@@ -120,6 +159,9 @@ document.addEventListener("click", (event) => {
   const closeSearchBtn = event.target.closest("[data-close-search]");
   const closeSavedBtn = event.target.closest("[data-close-saved]");
   const filterChip = event.target.closest(".filter-chip");
+  const closeInfoBtn = event.target.closest("[data-close-info]");
+  const openCategoryBtn = event.target.closest("[data-open-category]");
+
 
   const favoriteBtn = event.target.closest(".favorite-btn");
   if (favoriteBtn) {
@@ -168,6 +210,7 @@ document.addEventListener("click", (event) => {
 
     // Updates the home screen bar
     addToolsScroll.innerHTML = updatedScrollHTML;
+    updatePinnedTools();
   }
 
   if (filterChip) {
@@ -178,65 +221,97 @@ document.addEventListener("click", (event) => {
       filterResults(currentView);
     }
   }
+
+  if (openCategoryBtn) {
+    const category = openCategoryBtn.dataset.openCategory; 
+    const view = document.getElementById(`${category}InfoView`); 
+    if (view) {
+      view.style.display = "block";
+      const mainPage = document.getElementById("calmingToolPage");
+      if (mainPage) mainPage.style.display = "none";
+    }
+  }
+
+  if (closeInfoBtn) {
+    const currentInfoView = event.target.closest("main");
+    if (currentInfoView) currentInfoView.style.display = "none";
+    
+    document.getElementById("calmingToolPage").style.display = "flex";
+  }
 });
 
-function openFavoriteView() {
+function openFavoriteView() { 
   document.getElementById("savedToolsView").style.display = "flex";
   document.getElementById("calmingToolPage").style.display = "none";
 }
 
+function updatePinnedTools() {
+  const addToolsScroll = document.querySelector('.add-tools-scroll');
+  if (!addToolsScroll) return;
+
+  const likedImages = Array.from(document.querySelectorAll('#favsResultsList .favorite-btn img[src*="like-active.svg"]'))
+    .map(icon => icon.closest('.result-card').querySelector('.result-image').src);
+
+  let updatedScrollHTML = '';
+
+  likedImages.forEach(imgSrc => {
+    updatedScrollHTML += `
+      <button class="add-tool-btn" type="button" onclick="openFavoriteView()">
+          <img src="${imgSrc}" alt="Saved Tool" style="opacity: 1; border-radius: 16px; object-fit: cover;">
+      </button>
+    `;
+  });
+
+  const emptySlotsCount = Math.max(5 - likedImages.length, 1);
+  for (let i = 0; i < emptySlotsCount; i++) {
+    updatedScrollHTML += `
+      <button class="add-tool-btn" type="button" onclick="openFavoriteView()">
+          <img src="./assets/fixar.svg" alt="Add">
+      </button>
+    `;
+  }
+
+  addToolsScroll.innerHTML = updatedScrollHTML;
+}
+
 function addLike(button) {
-    // toggle between like.svg and like-active.svg
-    const img = button.querySelector("img");
-    const toolId = String(button.dataset.id);
-    if (img.src.includes("like.svg")) {
-        img.src = "./assets/like-active.svg";
+  const img = button.querySelector("img");
+  const toolId = String(button.dataset.id);
+  const isLiking = img.src.includes("like.svg");
 
-        const updatedFavTools = [...new Set([...(currentUser?.favTools ?? []).map(String), toolId])];
-        if (currentUser) currentUser.favTools = updatedFavTools;
-
-        // add chosen calming tool to user's favTools in db.json
-        fetch(`http://localhost:3000/users/${userId}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getAuthToken()}`
-          },
-            body: JSON.stringify({
-                favTools: updatedFavTools,
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Tool added to favorites:", data);
-        }
-        )
-        .catch(error => console.error("Error adding tool to favorites:", error));
-
+  document.querySelectorAll(`.favorite-btn[data-id="${toolId}"]`).forEach(btn => {
+    const btnImg = btn.querySelector("img");
+    if (isLiking) {
+      btnImg.src = "./assets/like-active.svg";
+      btn.classList.add("active");
     } else {
-        img.src = "./assets/like.svg";
-
-        const updatedFavTools = (currentUser?.favTools ?? []).map(String).filter(id => id !== toolId);
-        if (currentUser) currentUser.favTools = updatedFavTools;
-
-        // remove chosen calming tool from user's favTools in db.json
-        fetch(`http://localhost:3000/users/${userId}`, {
-          method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${getAuthToken()}`
-            },
-            body: JSON.stringify({
-                favTools: updatedFavTools,
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Tool removed from favorites:", data);
-        }
-        )
-        .catch(error => console.error("Error removing tool from favorites:", error));       
+      btnImg.src = "./assets/like.svg";
+      btn.classList.remove("active");
     }
+  });
+
+  let updatedFavTools = (currentUser?.favTools ?? []).map(String);
+  
+  if (isLiking) {
+    updatedFavTools = [...new Set([...updatedFavTools, toolId])];
+  } else {
+    updatedFavTools = updatedFavTools.filter(id => id !== toolId);
+  }
+  
+  if (currentUser) currentUser.favTools = updatedFavTools;
+
+  updatePinnedTools();
+
+  fetch(`http://localhost:3000/users/${userId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${getAuthToken()}`
+    },
+    body: JSON.stringify({
+      favTools: updatedFavTools,
+    }),
+  }).catch(error => console.error("Error updating favorites:", error));
 }
 
 // Helper function to filter results based on search input and active category
@@ -275,5 +350,3 @@ document.addEventListener("input", (event) => {
 window.filterResults = filterResults;
 window.addLike = addLike;
 window.openFavoriteView = openFavoriteView;
-
-//
