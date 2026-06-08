@@ -1,0 +1,232 @@
+body {
+  align-items: flex-start;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.release-reflection-page {
+  width: min(100vw, 402px);
+  min-height: 100dvh;
+  padding: 70px 28px 34px;
+  position: relative;
+  overflow: hidden;
+  background: var(--yellow);
+  color: var(--black);
+  font-family: var(--font-primary);
+}
+
+.release-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+.release-back-link {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  color: var(--black);
+  text-decoration: none;
+}
+
+.release-reflection-form {
+  min-height: calc(100dvh - 104px);
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.release-copy {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.release-copy h1 {
+  width: min(100%, 306px);
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.release-copy p {
+  width: min(100%, 304px);
+  margin: 0;
+  font-size: 16px;
+  font-weight: 1000;
+  line-height: 20px;
+}
+
+.release-journal-field {
+  width: 100%;
+  height: 363px;
+  margin-top: 72px;
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      color-mix(in srgb, var(--gray-lightest) 74%, transparent) 0%,
+      color-mix(in srgb, var(--gray-lightest) 74%, transparent) 63%,
+      color-mix(in srgb, var(--background) 90%, transparent) 100%
+    ),
+    color-mix(in srgb, var(--background) 82%, transparent);
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
+  display: block;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.release-journal-field textarea {
+  width: 100%;
+  height: 100%;
+  padding: 64px 44px;
+  border: 0;
+  outline: 0;
+  resize: none;
+  background: transparent;
+  color: var(--black);
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.release-journal-field textarea::placeholder {
+  color: var(--placeholder);
+}
+
+.release-done-button {
+  --glass-chip-width: 100%;
+  --glass-chip-color: var(--black);
+  --glass-chip-selected-background: color-mix(in srgb, var(--background) 18%, var(--yellow));
+  --glass-chip-selected-color: var(--black);
+
+  min-height: 68px;
+  margin-top: 64px;
+  padding: 0 28px;
+  border: 1px solid color-mix(in srgb, var(--background) 72%, transparent);
+  background:
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--background) 18%, var(--yellow)) 0%,
+      color-mix(in srgb, var(--background) 18%, var(--yellow)) 100%
+    ),
+    linear-gradient(0deg, var(--glass-burn-gray) 0%, var(--glass-burn-gray) 100%),
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--white) 28%, transparent) 0%,
+      color-mix(in srgb, var(--white) 28%, transparent) 100%
+    );
+  background-blend-mode: darken, color-burn, normal;
+  font-size: 17px;
+  font-weight: 510;
+}
+
+.release-done-button:disabled {
+  cursor: default;
+  opacity: 0.48;
+  transform: none;
+}
+
+.release-shape {
+  position: absolute;
+  display: block;
+  background: var(--dark-orange);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  pointer-events: none;
+}
+
+.release-shape--x {
+  width: 82px;
+  height: 82px;
+  mask-image: url("../../assets/star-4-points.svg");
+  -webkit-mask-image: url("../../assets/star-4-points.svg");
+}
+
+.release-shape--burst {
+  width: 82px;
+  height: 82px;
+  mask-image: url("../../assets/star-7-points.svg");
+  -webkit-mask-image: url("../../assets/star-7-points.svg");
+}
+
+.release-shape--diamond {
+  width: 13px;
+  height: 13px;
+  transform: rotate(45deg);
+}
+
+.shape-a {
+  top: -30px;
+  left: 192px;
+}
+
+.shape-b {
+  top: 110px;
+  right: -2px;
+}
+
+.shape-c {
+  top: 250px;
+  left: -33px;
+}
+
+.shape-d {
+  top: 382px;
+  right: 36px;
+}
+
+.shape-e {
+  bottom: 248px;
+  right: 91px;
+}
+
+.shape-f {
+  bottom: 167px;
+  right: 121px;
+}
+
+.shape-g {
+  right: -7px;
+  bottom: 94px;
+}
+
+.sr-only {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-height: 760px) {
+  .release-reflection-page {
+    padding-top: 44px;
+  }
+
+  .release-journal-field {
+    height: 300px;
+    margin-top: 48px;
+  }
+
+  .release-done-button {
+    min-height: 58px;
+    margin-top: 44px;
+  }
+}

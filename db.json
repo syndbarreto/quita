@@ -58,29 +58,29 @@
       "userId": 1
     },
     {
-      "id": "30297842-3165-4eaa-9427-6ab7191ed17d",
+      "id": "1cb8a965-44a7-4fa4-918d-7232e3d23a5d",
       "name": "pedro",
-      "worryText": "doi muito",
-      "smallStep": "asdasdafa",
+      "worryText": "linda",
+      "smallStep": "synda",
       "activity": {
-        "type": "custom",
-        "value": "lacre"
+        "type": "preset",
+        "value": "Driving"
       },
       "people": {
-        "type": "custom",
-        "value": "muito sozinha"
+        "type": "preset",
+        "value": "Family"
       },
       "location": {
         "type": "preset",
-        "value": "Home"
+        "value": "Outside"
       },
-      "gridBackground": "dark-red",
-      "worryType": "burden",
+      "gridBackground": "light-pink",
+      "worryType": "seed",
       "dollId": "star",
       "dollState": "worried",
       "status": "vault",
       "journals": [],
-      "createdAt": "2026-06-04T14:19:21.085Z",
+      "createdAt": "2026-06-03T17:50:36.613Z",
       "userId": 1
     }
   ],
