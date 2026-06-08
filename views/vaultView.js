@@ -1,4 +1,8 @@
-import { getQuitaRecords } from "../models/ApiModel.js";
+import {
+  deleteQuitaRecord,
+  getQuitaRecords,
+} from "../models/ApiModel.js";
+import { getCalmingToolsByIds } from "../models/CalmingToolsModel.js";
 import {
   DOLL_STATES,
   QUITA_STATUS,
@@ -15,13 +19,51 @@ const listView = document.querySelector("[data-vault-list]");
 const listStack = document.querySelector("[data-vault-list-stack]");
 const viewButtons = [...document.querySelectorAll("[data-vault-view]")];
 const filterButtons = [...document.querySelectorAll("[data-vault-filter]")];
+const toolsOverlay = document.querySelector("[data-vault-tools-overlay]");
+const toolsContent = document.querySelector("[data-vault-tools-content]");
+const confirmOverlay = document.querySelector("[data-vault-confirm-overlay]");
+const confirmTitle = document.querySelector("[data-vault-confirm-title]");
+const confirmYesButton = document.querySelector("[data-vault-confirm-yes]");
+const vaultParams = new URLSearchParams(window.location.search);
+
+const VAULT_TOOLS_BY_TYPE = {
+  [WORRY_TYPES.KNOT]: {
+    accent: "knot",
+    ids: [12, 3, 11],
+    title: `Tools for when you're feeling tied in <span>knot</span>`,
+  },
+  [WORRY_TYPES.SEED]: {
+    accent: "seed",
+    ids: [6, 1, 9],
+    title: `Tools for when something is just <span>beginning</span>`,
+  },
+  [WORRY_TYPES.BURDEN]: {
+    accent: "burden",
+    ids: [13, 2, 10],
+    title: `Tools for when you're feeling <span>weighed down</span>`,
+  },
+};
+
+const CONFIRMATION_CONTENT = {
+  delete: {
+    accent: "delete",
+    title: `Are you sure you want to <span>delete</span> this Quita?`,
+  },
+  release: {
+    accent: "release",
+    title: `Are you sure you want to <span>release</span> this Quita?`,
+  },
+};
 
 let quitas = [];
-let currentView = "grid";
+console.log("quantas quitas tem?");
+
+let currentView = vaultParams.get("view") === "list" ? "list" : "grid";
 let currentFilter = "all";
 let gridDragState = null;
 let gridOffset = { x: 0, y: 0 };
 let activeGridCard = null;
+let pendingConfirmation = null;
 
 function escapeHtml(value = "") {
   return String(value).replace(/[&<>"']/g, (char) => {
@@ -94,13 +136,13 @@ function renderListCard(quita) {
         <button class="vault-card-action" type="button" aria-label="Open Quita chat">
           <span class="vault-card-action-icon vault-card-action-icon--chatbot" aria-hidden="true"></span>
         </button>
-        <button class="vault-card-action" type="button" aria-label="Open calming tools">
+        <button class="vault-card-action" type="button" aria-label="Open calming tools" data-vault-open-tools data-quita-id="${escapeHtml(quita.id)}">
           <span class="vault-card-action-icon vault-card-action-icon--calming" aria-hidden="true"></span>
         </button>
-        <button class="vault-card-action" type="button" aria-label="Move to Bliss">
+        <button class="vault-card-action" type="button" aria-label="Release Quita" data-vault-confirm-action="release" data-quita-id="${escapeHtml(quita.id)}">
           <span class="vault-card-action-icon vault-card-action-icon--bliss" aria-hidden="true"></span>
         </button>
-        <button class="vault-card-action" type="button" aria-label="Delete Quita">
+        <button class="vault-card-action" type="button" aria-label="Delete Quita" data-vault-confirm-action="delete" data-quita-id="${escapeHtml(quita.id)}">
           <span class="vault-card-action-icon vault-card-action-icon--delete" aria-hidden="true"></span>
         </button>
       </div>
@@ -112,6 +154,110 @@ function renderListCard(quita) {
       <img class="vault-list-doll" src="${getQuitaDollAsset(quita)}" alt="${escapeHtml(dollAlt)}" />
     </article>
   `;
+}
+
+function renderToolItem(tool) {
+  return `
+    <article class="vault-tools-item">
+      <img class="vault-tools-image" src="${escapeHtml(tool.imageUrl)}" alt="${escapeHtml(tool.name)}" />
+      <div class="vault-tools-text">
+        <h3>${escapeHtml(tool.name)}</h3>
+        ${tool.description ? `<p>${escapeHtml(tool.description)}</p>` : ""}
+      </div>
+    </article>
+  `;
+}
+
+async function openToolsOverlay(quitaId) {
+  if (currentView !== "list") {
+    return;
+  }
+
+  const quita = quitas.find((item) => String(item.id) === String(quitaId));
+
+  if (!quita) {
+    return;
+  }
+
+  const worryType = quita.worryType || WORRY_TYPES.SEED;
+  const config = VAULT_TOOLS_BY_TYPE[worryType] || VAULT_TOOLS_BY_TYPE[WORRY_TYPES.SEED];
+  const tools = await getCalmingToolsByIds(config.ids);
+
+  toolsContent.innerHTML = `
+    <div class="vault-tools-copy vault-tools-copy--${config.accent}">
+      <h2 id="vault-tools-title">${config.title}</h2>
+      <p>A curated selection of tools designed to meet you where you are.</p>
+    </div>
+    <div class="vault-tools-list">
+      ${tools.map(renderToolItem).join("")}
+    </div>
+  `;
+
+  toolsOverlay.hidden = false;
+  vaultPage.classList.add("is-tools-open");
+}
+
+function closeToolsOverlay() {
+  toolsOverlay.hidden = true;
+  vaultPage.classList.remove("is-tools-open");
+}
+
+function openConfirmationOverlay(action, quitaId) {
+  if (currentView !== "list") {
+    return;
+  }
+
+  const quita = quitas.find((item) => String(item.id) === String(quitaId));
+  const content = CONFIRMATION_CONTENT[action];
+
+  if (!quita || !content) {
+    return;
+  }
+
+  pendingConfirmation = {
+    action,
+    quitaId: quita.id,
+  };
+
+  confirmTitle.innerHTML = content.title;
+  confirmOverlay.classList.toggle("is-delete", action === "delete");
+  confirmOverlay.classList.toggle("is-release", action === "release");
+  confirmYesButton.disabled = false;
+  confirmOverlay.hidden = false;
+  vaultPage.classList.add("is-confirm-open");
+}
+
+function closeConfirmationOverlay() {
+  confirmOverlay.hidden = true;
+  vaultPage.classList.remove("is-confirm-open");
+  pendingConfirmation = null;
+  confirmYesButton.disabled = false;
+}
+
+async function runConfirmedAction() {
+  if (!pendingConfirmation) {
+    return;
+  }
+
+  const { action, quitaId } = pendingConfirmation;
+  confirmYesButton.disabled = true;
+
+  try {
+    if (action === "delete") {
+      await deleteQuitaRecord(quitaId);
+    }
+
+    if (action === "release") {
+      window.location.href = `./release-reflection.html?quitaId=${encodeURIComponent(quitaId)}`;
+      return;
+    }
+
+    quitas = quitas.filter((quita) => String(quita.id) !== String(quitaId));
+    closeConfirmationOverlay();
+    render();
+  } catch (error) {
+    confirmYesButton.disabled = false;
+  }
 }
 
 function getVisibleQuitas() {
@@ -274,6 +420,11 @@ function setView(nextView) {
   vaultPage.classList.toggle("is-grid", currentView === "grid");
   vaultPage.classList.toggle("is-list", currentView === "list");
 
+  if (currentView !== "list") {
+    closeToolsOverlay();
+    closeConfirmationOverlay();
+  }
+
   viewButtons.forEach((button) => {
     const isSelected = button.dataset.vaultView === currentView;
 
@@ -341,6 +492,11 @@ async function loadVault() {
 document.addEventListener("click", (event) => {
   const viewButton = event.target.closest("[data-vault-view]");
   const filterButton = event.target.closest("[data-vault-filter]");
+  const toolsButton = event.target.closest("[data-vault-open-tools]");
+  const closeToolsButton = event.target.closest("[data-vault-tools-close]");
+  const confirmActionButton = event.target.closest("[data-vault-confirm-action]");
+  const confirmNoButton = event.target.closest("[data-vault-confirm-no]");
+  const confirmYesButtonTarget = event.target.closest("[data-vault-confirm-yes]");
 
   if (viewButton) {
     setView(viewButton.dataset.vaultView);
@@ -348,6 +504,29 @@ document.addEventListener("click", (event) => {
 
   if (filterButton) {
     setFilter(filterButton.dataset.vaultFilter);
+  }
+
+  if (toolsButton) {
+    openToolsOverlay(toolsButton.dataset.quitaId);
+  }
+
+  if (closeToolsButton) {
+    closeToolsOverlay();
+  }
+
+  if (confirmActionButton) {
+    openConfirmationOverlay(
+      confirmActionButton.dataset.vaultConfirmAction,
+      confirmActionButton.dataset.quitaId
+    );
+  }
+
+  if (confirmNoButton) {
+    closeConfirmationOverlay();
+  }
+
+  if (confirmYesButtonTarget) {
+    runConfirmedAction();
   }
 });
 
@@ -405,4 +584,5 @@ function finishGridDrag(event) {
 gridView.addEventListener("pointerup", finishGridDrag);
 gridView.addEventListener("pointercancel", finishGridDrag);
 
+setView(currentView);
 loadVault();

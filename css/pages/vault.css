@@ -19,6 +19,11 @@ body {
   overflow-y: auto;
 }
 
+.vault-page.is-tools-open,
+.vault-page.is-confirm-open {
+  overflow: hidden;
+}
+
 .vault-page [hidden] {
   display: none;
 }
@@ -597,6 +602,284 @@ body {
   color: var(--placeholder);
   text-align: center;
   font-size: 15px;
+}
+
+.vault-tools-overlay {
+  position: fixed;
+  inset: 0 auto 0 50%;
+  width: min(100vw, 402px);
+  z-index: 80;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.vault-tools-overlay[hidden] {
+  display: none;
+}
+
+.vault-tools-backdrop {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--black) 48%, transparent);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  pointer-events: auto;
+}
+
+.vault-tools-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 66dvh;
+  padding: 10px 20px 24px;
+  border-radius: 28px 28px 0 0;
+  background: var(--background);
+  color: var(--text-primary);
+  box-shadow: 0 -12px 40px color-mix(in srgb, var(--black) 14%, transparent);
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  animation: vaultSheetIn 280ms cubic-bezier(0.2, 0.85, 0.2, 1);
+}
+
+.vault-tools-handle {
+  width: 32px;
+  height: 4px;
+  margin: 0 auto 22px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--placeholder) 42%, transparent);
+}
+
+.vault-tools-content {
+  overflow-y: auto;
+  padding-bottom: 18px;
+}
+
+.vault-tools-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.vault-tools-copy h2 {
+  max-width: 306px;
+  margin: 0;
+  color: var(--black);
+  font-size: 17px;
+  font-weight: 1000;
+  line-height: 20px;
+}
+
+.vault-tools-copy h2 span {
+  color: var(--vault-tools-accent);
+}
+
+.vault-tools-copy--seed {
+  --vault-tools-accent: var(--light-pink);
+}
+
+.vault-tools-copy--knot {
+  --vault-tools-accent: var(--vault-knot-card);
+}
+
+.vault-tools-copy--burden {
+  --vault-tools-accent: var(--blue);
+}
+
+.vault-tools-copy p,
+.vault-tools-support {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.vault-tools-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.vault-tools-item {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.vault-tools-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+.vault-tools-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.vault-tools-text h3 {
+  margin: 0;
+  color: var(--black);
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 20px;
+}
+
+.vault-tools-text p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.vault-tools-done {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 1000px;
+  background: var(--blue);
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
+  color: var(--background);
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 510;
+  cursor: pointer;
+}
+
+.vault-tools-support {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.vault-tools-support a {
+  color: var(--blue);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+@keyframes vaultSheetIn {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.vault-confirm-overlay {
+  position: fixed;
+  inset: 0 auto 0 50%;
+  width: min(100vw, 402px);
+  z-index: 90;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.vault-confirm-overlay[hidden] {
+  display: none;
+}
+
+.vault-confirm-backdrop {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--black) 48%, transparent);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  pointer-events: auto;
+}
+
+.vault-confirm-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 278px;
+  padding: 10px 20px 64px;
+  border-radius: 28px 28px 0 0;
+  background: var(--background);
+  color: var(--text-primary);
+  box-shadow: 0 -12px 40px color-mix(in srgb, var(--black) 14%, transparent);
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  animation: vaultSheetIn 280ms cubic-bezier(0.2, 0.85, 0.2, 1);
+}
+
+.vault-confirm-handle {
+  width: 32px;
+  height: 4px;
+  margin: 0 auto 40px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--placeholder) 42%, transparent);
+}
+
+.vault-confirm-title {
+  width: min(100%, 320px);
+  margin: 0;
+  color: var(--black);
+  font-size: 24px;
+  font-weight: 1000;
+  line-height: 29px;
+}
+
+.vault-confirm-title span {
+  color: var(--vault-confirm-accent);
+}
+
+.vault-confirm-overlay.is-delete {
+  --vault-confirm-accent: var(--light-red);
+  --vault-confirm-yes-bg: var(--light-red);
+  --vault-confirm-yes-color: var(--background);
+}
+
+.vault-confirm-overlay.is-release {
+  --vault-confirm-accent: var(--yellow);
+  --vault-confirm-yes-bg: var(--yellow);
+  --vault-confirm-yes-color: var(--black);
+}
+
+.vault-confirm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: auto;
+}
+
+.vault-confirm-button {
+  min-height: 48px;
+  border: 0;
+  border-radius: 1000px;
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 510;
+  cursor: pointer;
+}
+
+.vault-confirm-button--yes {
+  background: var(--vault-confirm-yes-bg);
+  color: var(--vault-confirm-yes-color);
+}
+
+.vault-confirm-button--no {
+  background: var(--blue);
+  color: var(--background);
+}
+
+.vault-confirm-button:disabled {
+  cursor: default;
+  opacity: 0.65;
 }
 
 .background-option--blue {

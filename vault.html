@@ -53,6 +53,28 @@
       </button>
     </div>
 
+    <div class="vault-tools-overlay" data-vault-tools-overlay hidden>
+      <div class="vault-tools-backdrop" data-vault-tools-close></div>
+      <section class="vault-tools-sheet" aria-modal="true" aria-labelledby="vault-tools-title" role="dialog">
+        <div class="vault-tools-handle" aria-hidden="true"></div>
+        <div class="vault-tools-content" data-vault-tools-content></div>
+        <button class="vault-tools-done" type="button" data-vault-tools-close>Done</button>
+        <p class="vault-tools-support">If you are in crisis, get professional support <a href="#" aria-label="Professional support resources">here</a></p>
+      </section>
+    </div>
+
+    <div class="vault-confirm-overlay" data-vault-confirm-overlay hidden>
+      <div class="vault-confirm-backdrop" data-vault-confirm-no></div>
+      <section class="vault-confirm-sheet" aria-modal="true" aria-labelledby="vault-confirm-title" role="dialog">
+        <div class="vault-confirm-handle" aria-hidden="true"></div>
+        <h2 class="vault-confirm-title" id="vault-confirm-title" data-vault-confirm-title></h2>
+        <div class="vault-confirm-actions">
+          <button class="vault-confirm-button vault-confirm-button--yes" type="button" data-vault-confirm-yes>Yes</button>
+          <button class="vault-confirm-button vault-confirm-button--no" type="button" data-vault-confirm-no>No</button>
+        </div>
+      </section>
+    </div>
+
   </main>
 
   <script type="module" src="./views/vaultView.js"></script>

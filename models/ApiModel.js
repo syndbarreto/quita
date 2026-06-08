@@ -63,3 +63,20 @@ export function createQuitaRecord(quita) {
 export function getQuitaRecords() {
   return getOwnedRecords("quitas");
 }
+
+export function getQuitaRecord(id) {
+  return apiRequest(`/quitas/${id}`);
+}
+
+export function updateQuitaRecord(id, payload) {
+  return apiRequest(`/quitas/${id}`, {
+    method: "PATCH",
+    body: payload,
+  });
+}
+
+export function deleteQuitaRecord(id) {
+  return apiRequest(`/quitas/${id}`, {
+    method: "DELETE",
+  });
+}
