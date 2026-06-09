@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from "../models/AuthModel.js";
+import { loginUser, registerUser } from "../services/auth-service.js";
 
 const views = [...document.querySelectorAll("[data-step]")];
 const authForms = [...document.querySelectorAll("[data-auth-form]")];

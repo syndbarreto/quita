@@ -1,3 +1,5 @@
+import { getToolRecords } from "./api-service.js";
+
 let cachedTools = null;
 
 function normalizeTool(tool) {
@@ -12,10 +14,9 @@ export async function getCalmingTools() {
     return cachedTools;
   }
 
-  const response = await fetch("./calmingTools.json");
-  const data = await response.json();
+  const tools = await getToolRecords();
 
-  cachedTools = (data.tools || []).map(normalizeTool);
+  cachedTools = (tools || []).map(normalizeTool);
 
   return cachedTools;
 }

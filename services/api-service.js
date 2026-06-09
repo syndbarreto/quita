@@ -1,4 +1,4 @@
-import { getAuthToken, getCurrentUser, logoutUser } from "./AuthModel.js";
+import { getAuthToken, getCurrentUser, logoutUser } from "./auth-service.js";
 
 const API_BASE_URL = "http://localhost:3000";
 
@@ -79,4 +79,19 @@ export function deleteQuitaRecord(id) {
   return apiRequest(`/quitas/${id}`, {
     method: "DELETE",
   });
+}
+
+export function getUserRecord(id) {
+  return apiRequest(`/users/${id}`);
+}
+
+export function updateUserRecord(id, payload) {
+  return apiRequest(`/users/${id}`, {
+    method: "PATCH",
+    body: payload,
+  });
+}
+
+export function getToolRecords() {
+  return apiRequest("/tools");
 }
