@@ -127,7 +127,8 @@ function renderGridCard(quita) {
 }
 
 function renderListCard(quita) {
-  const worryType = quita.worryType || WORRY_TYPES.SEED;
+  const validWorryTypes = Object.values(WORRY_TYPES);
+  const worryType = validWorryTypes.includes(quita.worryType) ? quita.worryType : WORRY_TYPES.SEED;
   const dollAlt = `${quita.name} Quita`;
 
   return `
