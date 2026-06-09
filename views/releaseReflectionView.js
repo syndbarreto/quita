@@ -1,4 +1,4 @@
-import { getQuitaRecord, updateQuitaRecord } from "../models/ApiModel.js";
+import { getQuitaRecord, updateQuitaRecord } from "../services/api-service.js";
 import { QUITA_STATUS } from "../models/QuitaModel.js";
 
 const form = document.querySelector("[data-release-form]");

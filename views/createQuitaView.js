@@ -11,7 +11,7 @@ import {
   normalizeQuitaName,
   pickRandomDoll,
 } from "../models/QuitaModel.js";
-import { createQuitaRecord } from "../models/ApiModel.js";
+import { createQuitaRecord } from "../services/api-service.js";
 
 const nameInput = document.querySelector("[data-name-input]");
 const liveName = document.querySelector("[data-live-quita-name]");
