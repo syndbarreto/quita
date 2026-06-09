@@ -1,8 +1,8 @@
 import {
   deleteQuitaRecord,
   getQuitaRecords,
-} from "../models/ApiModel.js";
-import { getCalmingToolsByIds } from "../models/CalmingToolsModel.js";
+} from "../services/api-service.js";
+import { getCalmingToolsByIds } from "../services/tools-service.js";
 import {
   DOLL_STATES,
   QUITA_STATUS,
@@ -56,7 +56,6 @@ const CONFIRMATION_CONTENT = {
 };
 
 let quitas = [];
-console.log("quantas quitas tem?");
 
 let currentView = vaultParams.get("view") === "list" ? "list" : "grid";
 let currentFilter = "all";

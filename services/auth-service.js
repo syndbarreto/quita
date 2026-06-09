@@ -18,24 +18,13 @@ function decodeTokenPayload(token) {
   }
 }
 
-function createSession(data) {
-  const token = data.accessToken;
-  const payload = token ? decodeTokenPayload(token) : null;
-  const user = data.user ?? {
-    id: payload?.sub ?? null,
-    email: payload?.email ?? null,
-  };
+function saveToken(token) {
+  localStorage.setItem(AUTH_STORAGE_KEY, token);
 
   return {
     accessToken: token,
-    user,
+    user: getCurrentUser(),
   };
-}
-
-function saveSession(session) {
-  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(session));
-
-  return session;
 }
 
 async function requestAuth(endpoint, payload) {
@@ -53,27 +42,43 @@ async function requestAuth(endpoint, payload) {
     throw new Error(data.message || "Authentication failed. Please try again.");
   }
 
-  return saveSession(createSession(data));
-}
-
-export function getAuthSession() {
-  try {
-    return JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY));
-  } catch {
-    return null;
-  }
+  return saveToken(data.accessToken);
 }
 
 export function getAuthToken() {
-  return getAuthSession()?.accessToken ?? null;
+  const session = localStorage.getItem(AUTH_STORAGE_KEY);
+
+  if (!session) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(session)?.accessToken ?? session;
+  } catch {
+    return session;
+  }
 }
 
 export function getCurrentUser() {
-  return getAuthSession()?.user ?? null;
+  const token = getAuthToken();
+  const payload = token ? decodeTokenPayload(token) : null;
+
+  return payload
+    ? {
+        id: Number(payload.sub),
+        email: payload.email ?? null,
+      }
+    : null;
 }
 
 export function isAuthenticated() {
   return Boolean(getAuthToken());
+}
+
+export function requireAuth() {
+  if (!isAuthenticated()) {
+    window.location.href = "./signupLogin.html?view=login";
+  }
 }
 
 export function logoutUser() {
