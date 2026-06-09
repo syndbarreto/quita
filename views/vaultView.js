@@ -9,7 +9,8 @@ import {
   WORRY_TYPES,
   getBackgroundOption,
   getDollAsset,
-} from "../models/QuitaModel.js";
+} from "../models/constants.js";
+import { QuitaCollection } from "../models/QuitaCollection.js";
 
 const emptyState = document.querySelector("[data-vault-empty]");
 const vaultPage = document.querySelector(".vault-page");
@@ -479,9 +480,7 @@ async function loadVault() {
   try {
     const records = await getQuitaRecords();
 
-    quitas = records
-      .filter((quita) => quita.status !== QUITA_STATUS.BLISS)
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    quitas = new QuitaCollection(records).newestVaultItems;
 
     render();
   } catch (error) {
