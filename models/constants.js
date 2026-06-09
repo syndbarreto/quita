@@ -112,25 +112,6 @@ export const CHOICE_GROUPS = Object.freeze({
   location: ["Home", "Outside", "Work", "School", "Commuting"],
 });
 
-export function createChoice(value, type = "preset") {
-  return {
-    type,
-    value: value.trim(),
-  };
-}
-
-export function limitQuitaName(name) {
-  return Array.from(name?.trim() || "")
-    .slice(0, QUITA_NAME_MAX_LENGTH)
-    .join("");
-}
-
-export function normalizeQuitaName(name) {
-  const normalizedName = limitQuitaName(name);
-
-  return normalizedName || "Quita";
-}
-
 export function getBackgroundOption(id) {
   return BACKGROUND_OPTIONS.find((option) => option.id === id) ?? BACKGROUND_OPTIONS[0];
 }
@@ -149,50 +130,4 @@ export function pickRandomDoll() {
   const index = Math.floor(Math.random() * DOLL_CATALOG.length);
 
   return DOLL_CATALOG[index];
-}
-
-export function createJournalEntry(data) {
-  const fallbackId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-
-  return {
-    id: crypto.randomUUID?.() ?? fallbackId,
-    createdAt: data.createdAt || new Date().toISOString(),
-    text: data.text?.trim() || "",
-    progressStep: data.progressStep ?? null,
-  };
-}
-
-export function getDollStateByProgress(journalCount = 0) {
-  if (journalCount <= 0) {
-    return DOLL_STATES.WORRIED;
-  }
-
-  if (journalCount === 1) {
-    return DOLL_STATES.CALM;
-  }
-
-  return DOLL_STATES.HAPPY;
-}
-
-export function createQuita(data) {
-  const fallbackId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-  const journals = Array.isArray(data.journals) ? data.journals : [];
-  const selectedDoll = data.dollId ? getDollById(data.dollId) : pickRandomDoll();
-
-  return {
-    id: crypto.randomUUID?.() ?? fallbackId,
-    name: normalizeQuitaName(data.name),
-    worryText: data.worryText?.trim() || "",
-    smallStep: data.smallStep?.trim() || "",
-    activity: data.activity ?? null,
-    people: data.people ?? null,
-    location: data.location ?? null,
-    gridBackground: data.gridBackground || BACKGROUND_OPTIONS[0].id,
-    worryType: data.worryType || WORRY_TYPES.SEED,
-    dollId: selectedDoll.id,
-    dollState: data.dollState || getDollStateByProgress(journals.length),
-    status: data.status || QUITA_STATUS.VAULT,
-    journals,
-    createdAt: data.createdAt || new Date().toISOString(),
-  };
 }

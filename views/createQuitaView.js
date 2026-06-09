@@ -4,13 +4,10 @@ import {
   DOLL_STATES,
   QUITA_NAME_MAX_LENGTH,
   WORRY_TYPES,
-  createChoice,
-  createQuita,
   getBackgroundOption,
-  limitQuitaName,
-  normalizeQuitaName,
   pickRandomDoll,
-} from "../models/QuitaModel.js";
+} from "../models/constants.js";
+import { Quita } from "../models/Quita.js";
 import { createQuitaRecord } from "../services/api-service.js";
 
 const nameInput = document.querySelector("[data-name-input]");
@@ -33,6 +30,23 @@ const selectedWorryType = validWorryTypes.includes(urlParams.get("worryType"))
   ? urlParams.get("worryType")
   : WORRY_TYPES.SEED;
 let selectedBackgroundId = BACKGROUND_OPTIONS[0].id;
+
+function createChoice(value, type = "preset") {
+  return {
+    type,
+    value: value.trim(),
+  };
+}
+
+function limitQuitaName(name) {
+  return Array.from(name?.trim() || "")
+    .slice(0, QUITA_NAME_MAX_LENGTH)
+    .join("");
+}
+
+function normalizeQuitaName(name) {
+  return limitQuitaName(name) || "Quita";
+}
 
 function escapeHtml(value) {
   return value.replace(/[&<>"']/g, (char) => {
@@ -287,7 +301,7 @@ document.addEventListener("click", (event) => {
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const quita = createQuita(getFormData());
+  const quita = new Quita(getFormData());
 
   try {
     await createQuitaRecord(quita);

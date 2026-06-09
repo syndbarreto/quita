@@ -1,5 +1,5 @@
 import { getQuitaRecord, updateQuitaRecord } from "../services/api-service.js";
-import { QUITA_STATUS } from "../models/QuitaModel.js";
+import { QUITA_STATUS } from "../models/constants.js";
 
 const form = document.querySelector("[data-release-form]");
 const textarea = document.querySelector("[data-release-textarea]");
