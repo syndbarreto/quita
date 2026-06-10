@@ -1,252 +1,352 @@
 import { getCurrentUser } from "../services/auth-service.js";
-import { getCalmingTools } from "../services/tools-service.js";
 import { getUserRecord, updateUserRecord } from "../services/api-service.js";
+import { getCalmingTools } from "../services/tools-service.js";
+
+const DEFAULT_CATEGORY = "all";
+const DEFAULT_TOOL_IMAGE = "https://placehold.co/72x72";
+const EMPTY_TOOL_IMAGE = "./assets/fixar.svg";
+const LIKE_ICON = "./assets/like.svg";
+const LIKE_ACTIVE_ICON = "./assets/like-active.svg";
+
+const calmingToolPage = document.getElementById("calmingToolPage");
+const searchView = document.getElementById("searchView");
+const savedToolsView = document.getElementById("savedToolsView");
+const addToolsScroll = document.getElementById("addToolsScroll");
+const searchResultsList = document.getElementById("searchResultsList");
+const favsResultsList = document.getElementById("favsResultsList");
 
 const authUser = getCurrentUser();
 let currentUser = null;
+let tools = [];
+let favoriteToolIds = new Set();
 
-if (authUser?.id) {
-  currentUser = await getUserRecord(authUser.id).catch(error => {
-    console.error("Error loading user:", error);
-    return null;
+const filters = {
+  searchView: {
+    category: DEFAULT_CATEGORY,
+    query: "",
+  },
+  savedToolsView: {
+    category: DEFAULT_CATEGORY,
+    query: "",
+  },
+};
+
+function createElement(tagName, classNames = [], attributes = {}) {
+  const element = document.createElement(tagName);
+  const normalizedClassNames = Array.isArray(classNames) ? classNames : [classNames];
+
+  normalizedClassNames.filter(Boolean).forEach(className => element.classList.add(className));
+
+  Object.entries(attributes).forEach(([name, value]) => {
+    if (value !== null && value !== undefined) {
+      element.setAttribute(name, value);
+    }
+  });
+
+  return element;
+}
+
+function appendTextElement(parent, tagName, className, text) {
+  const element = createElement(tagName, className);
+  element.textContent = text;
+  parent.appendChild(element);
+
+  return element;
+}
+
+function getToolId(tool) {
+  return Number(tool.id);
+}
+
+function getFavoriteTools() {
+  return [...favoriteToolIds]
+    .map(id => tools.find(tool => getToolId(tool) === id))
+    .filter(Boolean);
+}
+
+function getViewState(view) {
+  return filters[view.id] ?? filters.searchView;
+}
+
+function normalizeSearchValue(value) {
+  return value.toLowerCase().trim();
+}
+
+function matchesFilters(tool, state) {
+  const name = normalizeSearchValue(tool.name ?? "");
+  const category = normalizeSearchValue(tool.category ?? "");
+  const description = normalizeSearchValue(tool.description ?? "");
+  const query = normalizeSearchValue(state.query);
+  const selectedCategory = normalizeSearchValue(state.category);
+  const matchesQuery = !query || name.includes(query) || category.includes(query) || description.includes(query);
+  const matchesCategory = selectedCategory === DEFAULT_CATEGORY || category === selectedCategory;
+
+  return matchesQuery && matchesCategory;
+}
+
+function clearChildren(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
+function createToolImage(tool) {
+  return createElement("img", "result-image", {
+    src: tool.imageUrl || DEFAULT_TOOL_IMAGE,
+    alt: tool.name,
   });
 }
 
-const userId = currentUser?.id ?? authUser?.id;
+function createFavoriteButton(tool) {
+  const toolId = getToolId(tool);
+  const isFavorite = favoriteToolIds.has(toolId);
+  const button = createElement("button", "favorite-btn", {
+    type: "button",
+    "aria-label": isFavorite ? "Remove favorite" : "Add favorite",
+    "data-tool-id": String(toolId),
+  });
+  const icon = createElement("img", "", {
+    src: isFavorite ? LIKE_ACTIVE_ICON : LIKE_ICON,
+    alt: "",
+  });
 
-// get calming tools data and display it in the search results list
-getCalmingTools()
-  .then(tools => {
-    const searchResultsList = document.getElementById('searchResultsList');
-    const favsResultsList = document.getElementById('favsResultsList');
+  icon.setAttribute("aria-hidden", "true");
+  button.classList.toggle("active", isFavorite);
+  button.appendChild(icon);
 
-    let todoOHTML = '';
-    let todoOHTML2 = '';
-    const favoriteIds = (currentUser?.favTools ?? []).map(Number);
+  return button;
+}
 
-    tools.forEach(tool => {
-        todoOHTML += `
-        <div class="result-card" data-name="${tool.name.toLowerCase()}" data-category="${tool.category}">
-            <div class="result-info">
-                <img class="result-image" src="${tool.imageUrl || 'https://placehold.co/72x72'}" alt="${tool.name}">
-                <div class="result-text">
-                    <h3 class="result-title">${tool.name}</h3>
-                    <p class="result-author">${tool.description || ''}</p>
-                </div>
-            </div>
-        </div>
-        `;
+function createToolResultCard(tool, { showFavoriteButton = false } = {}) {
+  const card = createElement("article", "result-card", {
+    "data-tool-id": String(getToolId(tool)),
+    "data-name": normalizeSearchValue(tool.name ?? ""),
+    "data-category": normalizeSearchValue(tool.category ?? ""),
+  });
+  const info = createElement("div", "result-info");
+  const text = createElement("div", "result-text");
 
-        // if tool belongs to user favorites, also add it to the favorites results list with a like button
-        if (favoriteIds.includes(Number(tool.id))) {
-            todoOHTML2 += `
-            <div class="result-card" data-name="${tool.name.toLowerCase()}" data-category="${tool.category}">
-                <div class="result-info">
-                    <img class="result-image" src="${tool.imageUrl || 'https://placehold.co/72x72'}" alt="${tool.name}">
-                    <div class="result-text">
-                        <h3 class="result-title">${tool.name}</h3>
-                        <p class="result-author">${tool.description || ''}</p>
-                    </div>
-                </div>
-                <button class="favorite-btn" type="button" aria-label="Favorite" onclick="addLike(this)" data-id="${tool.id}">
-                    <img src="./assets/like-active.svg" alt="Favorite">
-                </button>
-            </div>
-            `;
-        }
-        else {
-            todoOHTML2 += `
-            <div class="result-card" data-name="${tool.name.toLowerCase()}" data-category="${tool.category}">
-                <div class="result-info">
-                    <img class="result-image" src="${tool.imageUrl || 'https://placehold.co/72x72'}" alt="${tool.name}">
-                    <div class="result-text">
-                        <h3 class="result-title">${tool.name}</h3>
-                        <p class="result-author">${tool.description || ''}</p>
-                    </div>
-                </div>
-                <button class="favorite-btn" type="button" aria-label="Favorite" onclick="addLike(this)" data-id="${tool.id}">
-                    <img src="./assets/like.svg" alt="Favorite">
-                </button>
-            </div>
-            `;
-        }
+  info.appendChild(createToolImage(tool));
+  appendTextElement(text, "h3", "result-title", tool.name ?? "");
+  appendTextElement(text, "p", "result-author", tool.description ?? "");
+  info.appendChild(text);
+  card.appendChild(info);
 
-
-    });
-
-    searchResultsList.innerHTML = todoOHTML;
-    favsResultsList.innerHTML = todoOHTML2;
-  })
-  .catch(error => console.error("Error loading tools:", error));
-  
-Promise.resolve(currentUser)
-  .then(user => {
-    const favTools = (user?.favTools || []).map(Number);
-    const addToolsScroll = document.getElementById('addToolsScroll');
-
-    favTools.forEach(toolId => {
-        // add buttons for each favorite tool in the saved tools view to id addToolsScroll
-        addToolsScroll.innerHTML += `
-        <button class="add-tool-btn" type="button" onclick="openFavoriteView()">
-            <img src="./assets/tool${toolId}.png" alt="Saved Tool" style="opacity: 1; border-radius: 16px; object-fit: cover;">
-        </button>
-        `;
-    });
-    
-    // fill out the remaining slots with empty buttons until there are at least 5 buttons or 1 empty slot to add more
-    const currentButtons = addToolsScroll.querySelectorAll('.add-tool-btn').length;
-    const emptySlotsCount = Math.max(5 - currentButtons, 1);
-    for (let i = 0; i < emptySlotsCount; i++) {
-        addToolsScroll.innerHTML += `
-        <button class="add-tool-btn" type="button" onclick="openFavoriteView()">
-            <img src="./assets/fixar.svg" alt="Add">
-        </button>
-        `;
-    }
-  })
-  .catch(error => console.error("Error loading user:", error));
-
-//
-
-document.addEventListener("click", (event) => {
-  const openSearchBtn = event.target.closest("[data-open-search]");
-  const closeSearchBtn = event.target.closest("[data-close-search]");
-  const closeSavedBtn = event.target.closest("[data-close-saved]");
-  const filterChip = event.target.closest(".filter-chip");
-
-  const favoriteBtn = event.target.closest(".favorite-btn");
-  if (favoriteBtn) {
-    favoriteBtn.classList.toggle("active");
+  if (showFavoriteButton) {
+    card.appendChild(createFavoriteButton(tool));
   }
 
+  return card;
+}
+
+function createSavedToolButton(tool) {
+  const button = createElement("button", "add-tool-btn", {
+    type: "button",
+    "data-open-saved": "",
+  });
+  const image = createElement("img", "add-tool-image--saved", {
+    src: tool.imageUrl || DEFAULT_TOOL_IMAGE,
+    alt: tool.name,
+  });
+
+  button.appendChild(image);
+
+  return button;
+}
+
+function createEmptyToolButton() {
+  const button = createElement("button", "add-tool-btn", {
+    type: "button",
+    "data-open-saved": "",
+    "aria-label": "Add calming tool",
+  });
+  const image = createElement("img", "add-tool-image--empty", {
+    src: EMPTY_TOOL_IMAGE,
+    alt: "",
+  });
+
+  image.setAttribute("aria-hidden", "true");
+  button.appendChild(image);
+
+  return button;
+}
+
+function renderSavedToolStrip() {
+  const favoriteTools = getFavoriteTools();
+  const emptySlotsCount = Math.max(5 - favoriteTools.length, 1);
+
+  clearChildren(addToolsScroll);
+  favoriteTools.forEach(tool => addToolsScroll.appendChild(createSavedToolButton(tool)));
+
+  for (let index = 0; index < emptySlotsCount; index += 1) {
+    addToolsScroll.appendChild(createEmptyToolButton());
+  }
+}
+
+function renderResultList(container, sourceTools, state, options = {}) {
+  clearChildren(container);
+
+  sourceTools
+    .filter(tool => matchesFilters(tool, state))
+    .forEach(tool => container.appendChild(createToolResultCard(tool, options)));
+}
+
+function renderSearchResults() {
+  renderResultList(searchResultsList, tools, filters.searchView);
+}
+
+function renderFavoriteResults() {
+  renderResultList(favsResultsList, tools, filters.savedToolsView, {
+    showFavoriteButton: true,
+  });
+}
+
+function renderAll() {
+  renderSavedToolStrip();
+  renderSearchResults();
+  renderFavoriteResults();
+}
+
+function setCurrentPage(nextPage) {
+  calmingToolPage.hidden = nextPage !== "home";
+  searchView.hidden = nextPage !== "search";
+  savedToolsView.hidden = nextPage !== "saved";
+
+  searchView.classList.toggle("is-active", nextPage === "search");
+  savedToolsView.classList.toggle("is-active", nextPage === "saved");
+}
+
+function setActiveFilter(chip) {
+  const view = chip.closest(".search-view");
+  const state = getViewState(view);
+
+  state.category = chip.dataset.filterCategory ?? DEFAULT_CATEGORY;
+  view.querySelectorAll(".filter-chip").forEach(filterChip => {
+    filterChip.classList.toggle("active", filterChip === chip);
+  });
+
+  if (view.id === "savedToolsView") {
+    renderFavoriteResults();
+  } else {
+    renderSearchResults();
+  }
+}
+
+function setSearchQuery(input) {
+  const view = input.closest(".search-view");
+  const state = getViewState(view);
+
+  state.query = input.value;
+
+  if (view.id === "savedToolsView") {
+    renderFavoriteResults();
+  } else {
+    renderSearchResults();
+  }
+}
+
+async function persistFavoriteTools() {
+  if (!currentUser?.id) {
+    return;
+  }
+
+  const favTools = [...favoriteToolIds];
+
+  currentUser = {
+    ...currentUser,
+    favTools,
+  };
+
+  await updateUserRecord(currentUser.id, { favTools });
+}
+
+async function toggleFavorite(toolId) {
+  if (!toolId || !currentUser?.id) {
+    return;
+  }
+
+  if (favoriteToolIds.has(toolId)) {
+    favoriteToolIds.delete(toolId);
+  } else {
+    favoriteToolIds.add(toolId);
+  }
+
+  renderAll();
+
+  try {
+    await persistFavoriteTools();
+  } catch (error) {
+    console.error("Error updating favorite tools:", error);
+  }
+}
+
+async function loadCurrentUser() {
+  if (!authUser?.id) {
+    return null;
+  }
+
+  try {
+    return await getUserRecord(authUser.id);
+  } catch (error) {
+    console.error("Error loading user:", error);
+    return null;
+  }
+}
+
+async function init() {
+  currentUser = await loadCurrentUser();
+  favoriteToolIds = new Set((currentUser?.favTools ?? []).map(Number));
+
+  try {
+    tools = await getCalmingTools();
+    renderAll();
+  } catch (error) {
+    console.error("Error loading tools:", error);
+  }
+}
+
+document.addEventListener("click", event => {
+  const openSearchBtn = event.target.closest("[data-open-search]");
+  const closeSearchBtn = event.target.closest("[data-close-search]");
+  const openSavedBtn = event.target.closest("[data-open-saved]");
+  const closeSavedBtn = event.target.closest("[data-close-saved]");
+  const filterChip = event.target.closest(".filter-chip");
+  const favoriteBtn = event.target.closest(".favorite-btn");
+
   if (openSearchBtn) {
-    document.getElementById("searchView").style.display = "flex";
-    document.getElementById("calmingToolPage").style.display = "none";
+    setCurrentPage("search");
+    return;
   }
 
   if (closeSearchBtn) {
-    document.getElementById("searchView").style.display = "none";
-    document.getElementById("calmingToolPage").style.display = "flex";
+    setCurrentPage("home");
+    return;
+  }
+
+  if (openSavedBtn) {
+    setCurrentPage("saved");
+    return;
   }
 
   if (closeSavedBtn) {
-    document.getElementById("savedToolsView").style.display = "none";
-    document.getElementById("calmingToolPage").style.display = "flex";
-
-    // Gets all images marked with "like-active" and extracts the SRC of the respective tool image
-    const addToolsScroll = document.querySelector('.add-tools-scroll');
-    const likedImages = Array.from(document.querySelectorAll('#favsResultsList .favorite-btn img[src*="like-active.svg"]'))
-      .map(icon => icon.closest('.result-card').querySelector('.result-image').src);
-
-    let updatedScrollHTML = '';
-
-    // Creates a button for each saved tool
-    likedImages.forEach(imgSrc => {
-      updatedScrollHTML += `
-        <button class="add-tool-btn" type="button" onclick="openFavoriteView()">
-            <img src="${imgSrc}" alt="Saved Tool" style="opacity: 1; border-radius: 16px; object-fit: cover;">
-        </button>
-      `;
-    });
-
-    // Fills the remaining slots (ensures it shows at least 5 buttons or 1 empty slot to add more)
-    const emptySlotsCount = Math.max(5 - likedImages.length, 1);
-    for (let i = 0; i < emptySlotsCount; i++) {
-      updatedScrollHTML += `
-        <button class="add-tool-btn" type="button" onclick="openFavoriteView()">
-            <img src="./assets/fixar.svg" alt="Add">
-        </button>
-      `;
-    }
-
-    // Updates the home screen bar
-    addToolsScroll.innerHTML = updatedScrollHTML;
+    setCurrentPage("home");
+    return;
   }
 
   if (filterChip) {
-    const currentView = filterChip.closest(".search-view");
-    if (currentView) {
-      currentView.querySelectorAll(".filter-chip").forEach(chip => chip.classList.remove("active"));
-      filterChip.classList.add("active");
-      filterResults(currentView);
-    }
+    setActiveFilter(filterChip);
+    return;
+  }
+
+  if (favoriteBtn) {
+    toggleFavorite(Number(favoriteBtn.dataset.toolId));
   }
 });
 
-function openFavoriteView() {
-  document.getElementById("savedToolsView").style.display = "flex";
-  document.getElementById("calmingToolPage").style.display = "none";
-}
-
-function addLike(button) {
-    if (!userId) {
-      return;
-    }
-
-    // toggle between like.svg and like-active.svg
-    const img = button.querySelector("img");
-    const toolId = Number(button.dataset.id);
-    if (img.src.includes("like.svg")) {
-        img.src = "./assets/like-active.svg";
-
-        const updatedFavTools = [...new Set([...(currentUser?.favTools ?? []).map(Number), toolId])];
-        if (currentUser) currentUser.favTools = updatedFavTools;
-
-        // add chosen calming tool to user's favTools in db.json
-        updateUserRecord(userId, {
-          favTools: updatedFavTools,
-        })
-        .catch(error => console.error("Error adding tool to favorites:", error));
-
-    } else {
-        img.src = "./assets/like.svg";
-
-        const updatedFavTools = (currentUser?.favTools ?? []).map(Number).filter(id => id !== toolId);
-        if (currentUser) currentUser.favTools = updatedFavTools;
-
-        // remove chosen calming tool from user's favTools in db.json
-        updateUserRecord(userId, {
-          favTools: updatedFavTools,
-        })
-        .catch(error => console.error("Error removing tool from favorites:", error));       
-    }
-}
-
-// Helper function to filter results based on search input and active category
-function filterResults(view) {
-  const query = (view.querySelector("input.search-input-wrapper")?.value || "").toLowerCase().trim();
-  const activeChip = view.querySelector(".filter-chip.active .chip-text");
-  const selectedCategory = activeChip ? activeChip.textContent.toLowerCase().trim() : "all";
-
-  const resultCards = view.querySelectorAll(".result-card");
-
-  resultCards.forEach(card => {
-    const name = card.dataset.name || "";
-    const category = card.dataset.category || "";
-
-    const matchesSearch = name.includes(query) || category.includes(query);
-    const matchesCategory = selectedCategory === "all" || category === selectedCategory;
-
-    // Shows the card if both the search text and selected category match
-    if (matchesSearch && matchesCategory) {
-      card.style.display = "flex";
-    } else {
-      card.style.display = "none";
-    }
-  });
-}
-
-// Event listener for when the user types in the search input
-document.addEventListener("input", (event) => {
-  if (event.target.matches("input.search-input-wrapper")) {
-    const currentView = event.target.closest(".search-view");
-    if (currentView) {
-      filterResults(currentView);
-    }
+document.addEventListener("input", event => {
+  if (event.target.matches(".search-input-wrapper")) {
+    setSearchQuery(event.target);
   }
 });
-window.filterResults = filterResults;
-window.addLike = addLike;
-window.openFavoriteView = openFavoriteView;
 
-//
+init();
