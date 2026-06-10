@@ -1,5 +1,10 @@
 import { getQuitaRecord, updateQuitaRecord } from "../services/api-service.js";
 import { QUITA_STATUS } from "../models/constants.js";
+import { requireAuth } from "../services/auth-service.js";
+
+if (!requireAuth()) {
+  throw new Error("Authentication required.");
+}
 
 const form = document.querySelector("[data-release-form]");
 const textarea = document.querySelector("[data-release-textarea]");

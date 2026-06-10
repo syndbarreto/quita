@@ -1,12 +1,16 @@
-import { getCurrentUser } from "../services/auth-service.js";
+import { getCurrentUser, requireAuth } from "../services/auth-service.js";
 import { getUserRecord, updateUserRecord } from "../services/api-service.js";
 import { getCalmingTools } from "../services/tools-service.js";
 
+if (!requireAuth()) {
+  throw new Error("Authentication required.");
+}
+
 const DEFAULT_CATEGORY = "all";
 const DEFAULT_TOOL_IMAGE = "https://placehold.co/72x72";
-const EMPTY_TOOL_IMAGE = "./assets/fixar.svg";
-const LIKE_ICON = "./assets/like.svg";
-const LIKE_ACTIVE_ICON = "./assets/like-active.svg";
+const EMPTY_TOOL_IMAGE = "../assets/fixar.svg";
+const LIKE_ICON = "../assets/like.svg";
+const LIKE_ACTIVE_ICON = "../assets/like-active.svg";
 
 const calmingToolPage = document.getElementById("calmingToolPage");
 const searchView = document.getElementById("searchView");

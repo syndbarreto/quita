@@ -78,7 +78,10 @@ export function isAuthenticated() {
 export function requireAuth() {
   if (!isAuthenticated()) {
     window.location.href = "./signupLogin.html?view=login";
+    return false;
   }
+
+  return true;
 }
 
 export function logoutUser() {

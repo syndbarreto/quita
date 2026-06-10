@@ -1,3 +1,9 @@
+import { requireAuth } from "../services/auth-service.js";
+
+if (!requireAuth()) {
+  throw new Error("Authentication required.");
+}
+
 const quizSteps = [...document.querySelectorAll("[data-step]")];
 const resultTypeByStep = {
   5: "burden",

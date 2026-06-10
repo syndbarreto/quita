@@ -5,7 +5,9 @@ let cachedTools = null;
 function normalizeTool(tool) {
   return {
     ...tool,
-    imageUrl: tool.imageUrl?.replace("../assets/", "./assets/"),
+    imageUrl: tool.imageUrl
+      ?.replace("../assets/", "../assets/")
+      .replace("./assets/", "../assets/"),
   };
 }
 
