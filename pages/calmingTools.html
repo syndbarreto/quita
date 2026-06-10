@@ -28,24 +28,24 @@
         <!-- Tools Gallery -->
         <div class="tools-gallery">
             <!-- Breathing -->
-            <div class="tool-card">
+            <button class="tool-card" type="button" data-open-category="breathing">
                 <img src="../assets/Breathing.svg" alt="Breathing">
-            </div>
+            </button>
 
             <!-- Quotes -->
-            <div class="tool-card">
+            <button class="tool-card" type="button" data-open-category="quotes">
                 <img src="../assets/quotes.svg" alt="Quotes">
-            </div>
+            </button>
 
             <!-- Grounding -->
-            <div class="tool-card">
+            <button class="tool-card" type="button" data-open-category="grounding">
                 <img src="../assets/Grounding.svg" alt="Grounding">
-            </div>
+            </button>
 
             <!-- Sounds -->
-            <div class="tool-card">
+            <button class="tool-card" type="button" data-open-category="sounds">
                 <img src="../assets/Sounds.svg" alt="Sounds">
-            </div>
+            </button>
         </div>
     </main>
 
@@ -112,6 +112,20 @@
         <button class="done-button-container" type="button" data-close-saved>
             <span class="done-button-text">Done</span>
         </button>
+    </main>
+
+    <!-- Tool Detail View -->
+    <main class="search-view tool-detail-view" id="toolDetailView" hidden>
+        <div class="tool-detail-header">
+            <button class="search-back-btn" type="button" data-close-detail>
+                <img src="../assets/back_seta.svg" alt="Back">
+            </button>
+            <button class="favorite-btn tool-detail-favorite" type="button" data-detail-favorite>
+            </button>
+        </div>
+
+        <section class="tool-detail-content" id="toolDetailContent">
+        </section>
     </main>
 
     <script src="../views/calmingToolsView.js" type="module"></script>
