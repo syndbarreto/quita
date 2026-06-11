@@ -7,7 +7,10 @@
       "lastName": "Barreto",
       "birthDate": "2004-09-13",
       "id": 1,
-      "favTools": []
+      "favTools": [
+        8,
+        14
+      ]
     },
     {
       "email": "lara007cunha@gmail.com",
@@ -34,55 +37,72 @@
   ],
   "quitas": [
     {
-      "id": "0cb8a965-44a7-4fa4-918d-7232e3d23a5d",
-      "name": "teste",
-      "worryText": "linda",
-      "smallStep": "synda",
+      "id": "c12141e1-f307-47be-bc20-2fcb38aab07c",
+      "name": "dor",
+      "worryText": "werk",
+      "smallStep": "qweq",
       "activity": {
         "type": "preset",
-        "value": "Driving"
+        "value": "Hanging Out"
       },
       "people": {
         "type": "preset",
-        "value": "Family"
+        "value": "Pets"
       },
       "location": {
         "type": "preset",
         "value": "Outside"
       },
-      "gridBackground": "light-pink",
-      "worryType": "seed",
+      "gridBackground": "blue",
+      "worryType": "burden",
       "dollId": "star",
       "dollState": "worried",
       "status": "vault",
       "journals": [],
-      "createdAt": "2026-06-03T17:50:36.613Z",
+      "createdAt": "2026-06-11T11:34:43.701Z",
       "userId": 1
     },
     {
-      "id": "1cb8a965-44a7-4fa4-918d-7232e3d23a5d",
-      "name": "pedro",
-      "worryText": "linda",
-      "smallStep": "synda",
+      "id": "d8d78380-d41d-4be8-833a-463b24623d78",
+      "name": "Prom",
+      "worryText": "dor fisica",
+      "smallStep": "doi",
       "activity": {
         "type": "preset",
         "value": "Driving"
       },
       "people": {
         "type": "preset",
-        "value": "Family"
+        "value": "Co-Workers"
       },
       "location": {
         "type": "preset",
         "value": "Outside"
       },
       "gridBackground": "light-pink",
-      "worryType": "seed",
-      "dollId": "star",
+      "worryType": "knot",
+      "dollId": "diamond",
       "dollState": "worried",
       "status": "vault",
       "journals": [],
-      "createdAt": "2026-06-03T17:50:36.613Z",
+      "createdAt": "2026-06-11T11:36:17.116Z",
+      "userId": 1
+    },
+    {
+      "id": "68172892-9402-42f8-8b07-2d2ab112ac7f",
+      "name": "Lara",
+      "worryText": "",
+      "smallStep": "",
+      "activity": null,
+      "people": null,
+      "location": null,
+      "gridBackground": "dark-red",
+      "worryType": "seed",
+      "dollId": "diamond",
+      "dollState": "worried",
+      "status": "vault",
+      "journals": [],
+      "createdAt": "2026-06-11T11:37:12.273Z",
       "userId": 1
     }
   ],

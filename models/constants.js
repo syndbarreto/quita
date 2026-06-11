@@ -6,6 +6,14 @@ export const WORRY_TYPES = Object.freeze({
   BURDEN: "burden",
 });
 
+export function isValidWorryType(worryType) {
+  return Object.values(WORRY_TYPES).includes(worryType);
+}
+
+export function normalizeWorryType(worryType, fallback = WORRY_TYPES.SEED) {
+  return isValidWorryType(worryType) ? worryType : fallback;
+}
+
 export const DOLL_STATES = Object.freeze({
   WORRIED: "worried",
   CALM: "calm",

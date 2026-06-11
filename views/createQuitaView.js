@@ -3,8 +3,8 @@ import {
   CHOICE_GROUPS,
   DOLL_STATES,
   QUITA_NAME_MAX_LENGTH,
-  WORRY_TYPES,
   getBackgroundOption,
+  isValidWorryType,
   pickRandomDoll,
 } from "../models/constants.js";
 import { Quita } from "../models/Quita.js";
@@ -23,7 +23,6 @@ const backgroundPreview = document.querySelector("[data-background-preview]");
 const dollPreview = document.querySelector("[data-doll-preview]");
 
 const colorOrder = ["blue", "pink", "green", "orange", "yellow"];
-const validWorryTypes = Object.values(WORRY_TYPES);
 const selectedChoices = {
   activity: null,
   people: null,
@@ -31,9 +30,13 @@ const selectedChoices = {
 };
 const selectedDoll = pickRandomDoll();
 const urlParams = new URLSearchParams(window.location.search);
-const selectedWorryType = validWorryTypes.includes(urlParams.get("worryType"))
-  ? urlParams.get("worryType")
-  : WORRY_TYPES.SEED;
+const selectedWorryType = urlParams.get("worryType");
+
+if (!isValidWorryType(selectedWorryType)) {
+  window.location.replace("./quiz.html");
+  throw new Error("A valid worry type is required to create a Quita.");
+}
+
 let selectedBackgroundId = BACKGROUND_OPTIONS[0].id;
 
 function createChoice(value, type = "preset") {

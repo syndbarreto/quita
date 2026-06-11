@@ -3,8 +3,8 @@ import {
   DOLL_STATES,
   QUITA_NAME_MAX_LENGTH,
   QUITA_STATUS,
-  WORRY_TYPES,
   getDollById,
+  normalizeWorryType,
   pickRandomDoll,
 } from "./constants.js";
 
@@ -71,7 +71,7 @@ export class Quita {
     this.#people = data.people ?? null;
     this.#location = data.location ?? null;
     this.#gridBackground = data.gridBackground || BACKGROUND_OPTIONS[0].id;
-    this.#worryType = data.worryType || WORRY_TYPES.SEED;
+    this.#worryType = normalizeWorryType(data.worryType);
     this.#dollId = selectedDoll.id;
     this.#dollState = data.dollState || getDollStateByProgress(journals.length);
     this.#status = data.status || QUITA_STATUS.VAULT;

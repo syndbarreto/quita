@@ -10,6 +10,7 @@ import {
   WORRY_TYPES,
   getBackgroundOption,
   getDollAsset,
+  normalizeWorryType,
 } from "../models/constants.js";
 import { QuitaCollection } from "../models/QuitaCollection.js";
 
@@ -65,6 +66,7 @@ let quitas = [];
 
 let currentView = vaultParams.get("view") === "list" ? "list" : "grid";
 let currentFilter = "all";
+let isVaultLoaded = false;
 let gridDragState = null;
 let gridOffset = { x: 0, y: 0 };
 let activeGridCard = null;
@@ -179,8 +181,7 @@ function createCardAction({ label, iconClass, attributes = {} }) {
 }
 
 function renderListCard(quita) {
-  const validWorryTypes = Object.values(WORRY_TYPES);
-  const worryType = validWorryTypes.includes(quita.worryType) ? quita.worryType : WORRY_TYPES.SEED;
+  const worryType = normalizeWorryType(quita.worryType);
   const dollAlt = `${quita.name} Quita`;
   const card = createElement("article", ["vault-list-card", `vault-list-card--${worryType}`]);
   const actions = createElement("div", "vault-card-actions");
@@ -539,6 +540,13 @@ function setFilter(nextFilter) {
 }
 
 function render() {
+  if (!isVaultLoaded) {
+    emptyState.hidden = true;
+    gridView.hidden = true;
+    listView.hidden = true;
+    return;
+  }
+
   const hasQuitas = quitas.length > 0;
   const visibleQuitas = getVisibleQuitas();
 
@@ -572,6 +580,7 @@ async function loadVault() {
     const records = await getQuitaRecords();
 
     quitas = new QuitaCollection(records).newestVaultItems;
+    isVaultLoaded = true;
 
     render();
   } catch (error) {
