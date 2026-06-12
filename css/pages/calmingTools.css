@@ -18,6 +18,11 @@
   --grounding-height: 393px;
 }
 
+.calming-tools-page[hidden],
+.search-view[hidden] {
+  display: none;
+}
+
 /* Header */
 .calming-header {
   display: flex;
@@ -106,6 +111,17 @@
   width: 100%;
   object-fit: contain;
   opacity: 0.7;
+}
+
+.add-tool-btn .add-tool-image--saved {
+  height: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+  opacity: 1;
+}
+
+.add-tool-btn .add-tool-image--empty {
+  height: 100%;
 }
 
 /* Tools Gallery */
@@ -212,6 +228,10 @@
   box-sizing: border-box;
 }
 
+.search-view.is-active {
+  display: flex;
+}
+
 .search-header-bar {
   align-self: stretch;
   display: flex;
@@ -269,6 +289,7 @@
   padding: 6px 20px;
   position: relative;
   background: #F5F2EB;
+  border: none;
   border-radius: 1000px;
   display: flex;
   justify-content: center;
