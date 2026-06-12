@@ -71,6 +71,7 @@ let gridDragState = null;
 let gridOffset = { x: 0, y: 0 };
 let activeGridCard = null;
 let pendingConfirmation = null;
+let shouldIgnoreNextGridClick = false;
 
 function createElement(tagName, classNames = [], attributes = {}) {
   const element = document.createElement(tagName);
@@ -147,7 +148,11 @@ function getQuitaDollAsset(quita) {
 function renderGridCard(quita) {
   const background = getBackgroundOption(quita.gridBackground);
   const dollAlt = `${quita.name} Quita`;
-  const card = createElement("article", ["vault-grid-card", `background-option--${background.id}`]);
+  const card = createElement("article", ["vault-grid-card", `background-option--${background.id}`], {
+    "data-quita-detail-id": quita.id,
+    role: "link",
+    tabindex: "0",
+  });
   const doll = createElement("img", "vault-grid-doll", {
     src: getQuitaDollAsset(quita),
     alt: dollAlt,
@@ -183,7 +188,11 @@ function createCardAction({ label, iconClass, attributes = {} }) {
 function renderListCard(quita) {
   const worryType = normalizeWorryType(quita.worryType);
   const dollAlt = `${quita.name} Quita`;
-  const card = createElement("article", ["vault-list-card", `vault-list-card--${worryType}`]);
+  const card = createElement("article", ["vault-list-card", `vault-list-card--${worryType}`], {
+    "data-quita-detail-id": quita.id,
+    role: "link",
+    tabindex: "0",
+  });
   const actions = createElement("div", "vault-card-actions");
   const copy = createElement("div", "vault-list-copy");
   const time = createElement("time", "", {
@@ -232,6 +241,14 @@ function renderListCard(quita) {
   card.append(actions, copy, doll);
 
   return card;
+}
+
+function openQuitaDetail(quitaId) {
+  if (!quitaId) {
+    return;
+  }
+
+  window.location.href = `./quita-detail.html?quitaId=${encodeURIComponent(quitaId)}`;
 }
 
 function renderToolItem(tool) {
@@ -596,6 +613,7 @@ document.addEventListener("click", (event) => {
   const confirmActionButton = event.target.closest("[data-vault-confirm-action]");
   const confirmNoButton = event.target.closest("[data-vault-confirm-no]");
   const confirmYesButtonTarget = event.target.closest("[data-vault-confirm-yes]");
+  const detailCard = event.target.closest("[data-quita-detail-id]");
 
   if (viewButton) {
     setView(viewButton.dataset.vaultView);
@@ -627,6 +645,26 @@ document.addEventListener("click", (event) => {
   if (confirmYesButtonTarget) {
     runConfirmedAction();
   }
+
+  if (detailCard && !event.target.closest(".vault-card-action")) {
+    if (currentView === "grid" && shouldIgnoreNextGridClick) {
+      shouldIgnoreNextGridClick = false;
+      return;
+    }
+
+    openQuitaDetail(detailCard.dataset.quitaDetailId);
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  const detailCard = event.target.closest("[data-quita-detail-id]");
+
+  if (!detailCard || event.target.closest(".vault-card-action") || !["Enter", " "].includes(event.key)) {
+    return;
+  }
+
+  event.preventDefault();
+  openQuitaDetail(detailCard.dataset.quitaDetailId);
 });
 
 gridView.addEventListener("pointerdown", (event) => {
@@ -654,6 +692,11 @@ gridView.addEventListener("pointermove", (event) => {
 
   event.preventDefault();
   const dragFactor = quitas.length === 1 ? 0.18 : 1;
+  const distance = Math.hypot(event.clientX - gridDragState.startX, event.clientY - gridDragState.startY);
+
+  if (distance > 6) {
+    shouldIgnoreNextGridClick = true;
+  }
 
   setGridTrackPosition(
     {
@@ -678,6 +721,12 @@ function finishGridDrag(event) {
   }
 
   snapGridToCard();
+
+  if (shouldIgnoreNextGridClick) {
+    window.setTimeout(() => {
+      shouldIgnoreNextGridClick = false;
+    }, 120);
+  }
 }
 
 gridView.addEventListener("pointerup", finishGridDrag);

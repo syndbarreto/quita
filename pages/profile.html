@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quita - Profile</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages/profile.css">
+</head>
+<body>
+  <main class="profile-page">
+    <header class="profile-hero">
+      <h1>Profile</h1>
+
+      <section class="profile-summary-card" aria-label="Profile summary">
+        <span class="profile-summary-shape profile-summary-shape--pink" aria-hidden="true"></span>
+        <span class="profile-summary-shape profile-summary-shape--blue" aria-hidden="true"></span>
+
+        <div class="profile-avatar" data-profile-initials>SJ</div>
+        <h2 data-profile-name>Quita friend</h2>
+        <p>A gentle space, just for you.</p>
+      </section>
+    </header>
+
+    <section class="profile-section" aria-labelledby="about-you-title">
+      <h2 id="about-you-title">About you</h2>
+
+      <dl class="profile-info-card">
+        <div class="profile-info-row">
+          <dt>Name</dt>
+          <dd data-profile-full-name>Not set yet</dd>
+        </div>
+        <div class="profile-info-row">
+          <dt>Date of birth</dt>
+          <dd data-profile-birth-date>Not set yet</dd>
+        </div>
+        <div class="profile-info-row">
+          <dt>Sex</dt>
+          <dd data-profile-sex>Not set yet</dd>
+        </div>
+        <div class="profile-info-row">
+          <dt>Email</dt>
+          <dd data-profile-email>Not set yet</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="profile-section profile-safety-section" aria-labelledby="safety-title">
+      <h2 id="safety-title">Safety &amp; support</h2>
+      <p>You're not alone. Support is always within reach.</p>
+
+      <article class="emergency-contact-card" data-emergency-card>
+        <div>
+          <p class="emergency-contact-label">Emergency contact</p>
+          <h3 data-emergency-name>Not set yet</h3>
+          <p data-emergency-phone>Add a trusted contact</p>
+        </div>
+
+        <button class="emergency-edit-button" type="button" aria-label="Edit emergency contact" data-emergency-open>
+          <img src="../assets/pencil.svg" alt="">
+        </button>
+      </article>
+
+      <div class="helpline-grid" aria-label="Support helplines">
+        <a class="helpline-card" href="./support.html?type=mental" aria-label="Open mental health support helpline details">
+          <img src="../assets/helpline-mental-support.svg" alt="Helpline mental health support">
+        </a>
+        <a class="helpline-card" href="./support.html?type=crisis" aria-label="Open crisis lifeline details">
+          <img src="../assets/helpline-crisis.svg" alt="Helpline crisis lifeline">
+        </a>
+      </div>
+    </section>
+
+    <section class="profile-actions" aria-label="Profile actions">
+      <a class="glass-chip profile-edit-profile" href="./edit-profile.html">Edit profile</a>
+      <button class="profile-logout-button" type="button" data-profile-logout>Log out</button>
+    </section>
+  </main>
+
+  <div class="emergency-sheet-overlay" data-emergency-overlay hidden>
+    <section class="emergency-sheet" aria-labelledby="emergency-sheet-title" role="dialog" aria-modal="true">
+      <span class="emergency-sheet-shape" aria-hidden="true"></span>
+
+      <button class="emergency-sheet-close" type="button" aria-label="Close emergency contact editor" data-emergency-close>
+        ×
+      </button>
+
+      <h2 id="emergency-sheet-title">Emergency contact</h2>
+      <p>Choose someone you'd want by your side in a hard moment.</p>
+
+      <form class="emergency-sheet-form" data-emergency-form>
+        <div class="emergency-sheet-card">
+          <label class="emergency-sheet-field">
+            <span>Name</span>
+            <input name="emergencyName" type="text" autocomplete="off" placeholder="Mom" data-emergency-input-name>
+          </label>
+
+          <label class="emergency-sheet-field">
+            <span>Phone</span>
+            <input name="emergencyPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="(351) 933 495 767" maxlength="18" data-emergency-input-phone>
+          </label>
+        </div>
+
+        <button class="glass-chip emergency-sheet-save" type="submit" data-emergency-save>Save contact</button>
+      </form>
+
+      <button class="emergency-sheet-remove" type="button" data-emergency-remove>
+        <span aria-hidden="true">􀈒</span>
+        Remove contact
+      </button>
+    </section>
+  </div>
+
+  <nav class="app-bottom-nav" aria-label="Main navigation">
+    <a class="app-bottom-nav__item app-bottom-nav__item--tools" href="./calmingTools.html">
+      <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+      <span>Tools</span>
+    </a>
+    <a class="app-bottom-nav__item app-bottom-nav__item--vault" href="./vault.html?view=list">
+      <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+      <span>Vault</span>
+    </a>
+    <a class="app-bottom-nav__item app-bottom-nav__item--home" href="./home.html">
+      <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+      <span>Home</span>
+    </a>
+    <a class="app-bottom-nav__item app-bottom-nav__item--bliss" aria-disabled="true">
+      <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+      <span>Bliss</span>
+    </a>
+    <a class="app-bottom-nav__item app-bottom-nav__item--profile" href="./profile.html" aria-current="page">
+      <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+      <span>Profile</span>
+    </a>
+  </nav>
+
+  <script type="module" src="../views/profileView.js"></script>
+</body>
+</html>

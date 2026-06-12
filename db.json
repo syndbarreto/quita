@@ -10,7 +10,12 @@
       "favTools": [
         8,
         14
-      ]
+      ],
+      "sex": "Female",
+      "emergencyContact": {
+        "name": "Pedro",
+        "phone": "3519887546"
+      }
     },
     {
       "email": "lara007cunha@gmail.com",
@@ -56,9 +61,16 @@
       "gridBackground": "blue",
       "worryType": "burden",
       "dollId": "star",
-      "dollState": "worried",
+      "dollState": "calm",
       "status": "vault",
-      "journals": [],
+      "journals": [
+        {
+          "id": "94482a23-d594-432a-a0a5-acb90c1a380a",
+          "title": "k",
+          "text": "jjkk",
+          "createdAt": "2026-06-11T18:57:03.696Z"
+        }
+      ],
       "createdAt": "2026-06-11T11:34:43.701Z",
       "userId": 1
     },
@@ -82,9 +94,22 @@
       "gridBackground": "light-pink",
       "worryType": "knot",
       "dollId": "diamond",
-      "dollState": "worried",
+      "dollState": "happy",
       "status": "vault",
-      "journals": [],
+      "journals": [
+        {
+          "id": "d02fdf89-a1e5-4591-8aee-1e898ab06a0e",
+          "title": "Progress note",
+          "text": "muito legal eu amei hoje",
+          "createdAt": "2026-06-11T18:27:34.017Z"
+        },
+        {
+          "id": "63817544-edd5-4588-b6bf-b226c927f1fc",
+          "title": "Muito bom",
+          "text": "hj eu comi melhor",
+          "createdAt": "2026-06-11T18:56:45.030Z"
+        }
+      ],
       "createdAt": "2026-06-11T11:36:17.116Z",
       "userId": 1
     },

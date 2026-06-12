@@ -14,13 +14,17 @@ const LIKE_ACTIVE_ICON = "../assets/like-active.svg";
 
 const calmingToolPage = document.getElementById("calmingToolPage");
 const searchView = document.getElementById("searchView");
+const categoryView = document.getElementById("categoryView");
 const savedToolsView = document.getElementById("savedToolsView");
 const toolDetailView = document.getElementById("toolDetailView");
 const addToolsScroll = document.getElementById("addToolsScroll");
 const searchResultsList = document.getElementById("searchResultsList");
+const categoryResultsList = document.getElementById("categoryResultsList");
 const favsResultsList = document.getElementById("favsResultsList");
 const toolDetailContent = document.getElementById("toolDetailContent");
 const detailFavoriteButton = document.querySelector("[data-detail-favorite]");
+const categoryTitle = document.querySelector("[data-category-title]");
+const categoryImage = document.querySelector("[data-category-image]");
 
 const authUser = getCurrentUser();
 let currentUser = null;
@@ -28,6 +32,30 @@ let tools = [];
 let favoriteToolIds = new Set();
 let previousPage = "home";
 let selectedToolId = null;
+let selectedCategory = DEFAULT_CATEGORY;
+
+const CATEGORY_DETAILS = {
+  breathing: {
+    title: "Breathing",
+    image: "../assets/info-breathing.svg",
+    alt: "Breathing category",
+  },
+  quotes: {
+    title: "Quotes",
+    image: "../assets/info-quotes.svg",
+    alt: "Quotes category",
+  },
+  grounding: {
+    title: "Grounding",
+    image: "../assets/info-grounding.svg",
+    alt: "Grounding category",
+  },
+  sounds: {
+    title: "Sounds",
+    image: "../assets/info-sounds.svg",
+    alt: "Sounds category",
+  },
+};
 
 const filters = {
   searchView: {
@@ -238,6 +266,17 @@ function renderFavoriteResults() {
   });
 }
 
+function renderCategoryResults(category) {
+  const state = {
+    category,
+    query: "",
+  };
+
+  renderResultList(categoryResultsList, tools, state, {
+    showFavoriteButton: true,
+  });
+}
+
 function renderAll() {
   renderSavedToolStrip();
   renderSearchResults();
@@ -247,10 +286,12 @@ function renderAll() {
 function setCurrentPage(nextPage) {
   calmingToolPage.hidden = nextPage !== "home";
   searchView.hidden = nextPage !== "search";
+  categoryView.hidden = nextPage !== "category";
   savedToolsView.hidden = nextPage !== "saved";
   toolDetailView.hidden = nextPage !== "detail";
 
   searchView.classList.toggle("is-active", nextPage === "search");
+  categoryView.classList.toggle("is-active", nextPage === "category");
   savedToolsView.classList.toggle("is-active", nextPage === "saved");
   toolDetailView.classList.toggle("is-active", nextPage === "detail");
 }
@@ -286,8 +327,14 @@ function setViewFilter(view, category = DEFAULT_CATEGORY, query = "") {
 }
 
 function openCategory(category) {
-  setViewFilter(searchView, category);
-  setCurrentPage("search");
+  const details = CATEGORY_DETAILS[category] ?? CATEGORY_DETAILS.breathing;
+
+  selectedCategory = category;
+  categoryTitle.textContent = details.title;
+  categoryImage.src = details.image;
+  categoryImage.alt = details.alt;
+  renderCategoryResults(category);
+  setCurrentPage("category");
 }
 
 function setActiveFilter(chip) {
@@ -408,6 +455,7 @@ async function init() {
 document.addEventListener("click", event => {
   const openSearchBtn = event.target.closest("[data-open-search]");
   const closeSearchBtn = event.target.closest("[data-close-search]");
+  const closeCategoryBtn = event.target.closest("[data-close-category]");
   const openSavedBtn = event.target.closest("[data-open-saved]");
   const closeSavedBtn = event.target.closest("[data-close-saved]");
   const closeDetailBtn = event.target.closest("[data-close-detail]");
@@ -424,6 +472,11 @@ document.addEventListener("click", event => {
   }
 
   if (closeSearchBtn) {
+    setCurrentPage("home");
+    return;
+  }
+
+  if (closeCategoryBtn) {
     setCurrentPage("home");
     return;
   }
@@ -460,11 +513,19 @@ document.addEventListener("click", event => {
       updateFavoriteButton(detailFavoriteButton, getToolById(selectedToolId));
     }
 
+    if (!categoryView.hidden) {
+      renderCategoryResults(selectedCategory);
+    }
+
     return;
   }
 
   if (resultCard) {
-    const originPage = resultCard.closest("#savedToolsView") ? "saved" : "search";
+    const originPage = resultCard.closest("#savedToolsView")
+      ? "saved"
+      : resultCard.closest("#categoryView")
+        ? "category"
+        : "search";
 
     openToolDetail(resultCard.dataset.toolId, originPage);
     return;
@@ -487,7 +548,14 @@ document.addEventListener("keydown", event => {
   }
 
   event.preventDefault();
-  openToolDetail(resultCard.dataset.toolId, resultCard.closest("#savedToolsView") ? "saved" : "search");
+  openToolDetail(
+    resultCard.dataset.toolId,
+    resultCard.closest("#savedToolsView")
+      ? "saved"
+      : resultCard.closest("#categoryView")
+        ? "category"
+        : "search"
+  );
 });
 
 document.addEventListener("input", event => {

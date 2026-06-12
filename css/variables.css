@@ -48,6 +48,15 @@
   --quiz-result-knot-button: #ffba27;
   --quiz-result-burden-name: #9fa8eb;
   --quiz-result-burden-button: #384dde;
+  --detail-chip-seed-bg: #ffdadd;
+  --detail-chip-seed-text: #724d50;
+  --detail-chip-knot-bg: #ffe2a3;
+  --detail-chip-knot-text: #725516;
+  --detail-chip-burden-bg: #b5bae9;
+  --detail-chip-burden-text: #282d5c;
+  --detail-timeline-seed-title: #ffbacd;
+  --detail-timeline-knot-title: #ffc547;
+  --detail-timeline-burden-title: #6b7ae5;
 
   --white: #ffffff;
   --black: #000000;

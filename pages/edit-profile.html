@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quita - Edit profile</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages/edit-profile.css">
+</head>
+<body>
+  <main class="edit-profile-page">
+    <header class="edit-profile-header">
+      <a class="edit-profile-back" href="./profile.html" aria-label="Back to profile">
+        <img src="../assets/arrow.svg" alt="">
+      </a>
+      <h1>Edit profile</h1>
+      <span aria-hidden="true"></span>
+    </header>
+
+    <form class="edit-profile-form" data-edit-profile-form>
+      <section class="edit-profile-section" aria-labelledby="edit-about-title">
+        <h2 id="edit-about-title">About you</h2>
+
+        <div class="edit-profile-card">
+          <label class="edit-profile-field">
+            <span>Name</span>
+            <input name="fullName" type="text" autocomplete="name" placeholder="Your name" data-full-name>
+          </label>
+
+          <label class="edit-profile-field">
+            <span>Date of birth</span>
+            <input name="birthDate" type="date" autocomplete="bday" data-birth-date>
+          </label>
+
+          <fieldset class="edit-profile-sex-group">
+            <legend>Sex</legend>
+            <div class="edit-profile-segmented">
+              <label>
+                <input type="radio" name="sex" value="Female">
+                <span>Female</span>
+              </label>
+              <label>
+                <input type="radio" name="sex" value="Male">
+                <span>Male</span>
+              </label>
+              <label>
+                <input type="radio" name="sex" value="Other">
+                <span>Other</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <label class="edit-profile-field">
+            <span>Email</span>
+            <input name="email" type="email" autocomplete="email" placeholder="you@example.com" data-email>
+          </label>
+        </div>
+      </section>
+
+      <section class="edit-profile-section edit-profile-emergency-section" aria-labelledby="edit-emergency-title">
+        <h2 id="edit-emergency-title">Emergency contact</h2>
+
+        <div class="edit-profile-card edit-profile-emergency-card">
+          <label class="edit-profile-field">
+            <span>Contact name</span>
+            <input name="emergencyName" type="text" autocomplete="off" placeholder="Trusted person" data-emergency-name>
+          </label>
+
+          <label class="edit-profile-field">
+            <span>Phone number</span>
+            <input name="emergencyPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="(351) 933 495 767" maxlength="18" data-emergency-phone>
+          </label>
+        </div>
+
+        <p class="edit-profile-help">Optional, but having a trusted person listed can be a comfort in difficult moments.</p>
+      </section>
+
+      <p class="edit-profile-message" data-edit-message hidden></p>
+
+      <button class="glass-chip edit-profile-save" type="submit" data-edit-save>Save changes</button>
+    </form>
+  </main>
+
+  <script type="module" src="../views/editProfileView.js"></script>
+</body>
+</html>

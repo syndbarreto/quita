@@ -31,6 +31,12 @@ body {
   text-decoration: none;
 }
 
+.release-back-link img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
 .release-reflection-form {
   min-height: calc(100dvh - 104px);
   position: relative;

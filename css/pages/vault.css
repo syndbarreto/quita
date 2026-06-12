@@ -250,6 +250,16 @@ body {
   overflow: hidden;
 }
 
+.vault-list-card {
+  cursor: pointer;
+}
+
+.vault-grid-card:focus-visible,
+.vault-list-card:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--blue) 72%, var(--white));
+  outline-offset: 4px;
+}
+
 .vault-grid-card {
   border-radius: 20px;
   background: var(--preview-bg);

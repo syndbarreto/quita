@@ -84,7 +84,7 @@
 
 .quiz-finish-text {
   color: var(--white);
-  font-family: var(--font-medium);
+  font-family: var(--font-primary);
   font-size: 14px;
   font-weight: 600;
   position: relative;
@@ -327,6 +327,7 @@ justify-content: flex-start;
   height: 24px;
   position: relative;
   z-index: 1;
+  transform: rotate(180deg);
 }
 
 .quiz-footer-icon-back {
@@ -334,7 +335,6 @@ justify-content: flex-start;
   height: 24px;
   position: relative;
   z-index: 1;
-  transform: rotate(180deg);
 }
 
 .quiz-back-footer-btn {
