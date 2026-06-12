@@ -1,0 +1,491 @@
+body {
+  align-items: flex-start;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.profile-page {
+  width: min(100vw, 402px);
+  height: 100dvh;
+  padding: 0 20px 124px;
+  overflow-y: auto;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+}
+
+.profile-page-label {
+  margin: 0 0 16px;
+  color: var(--medium-text);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.profile-hero {
+  padding-top: 40px;
+}
+
+.profile-hero h1 {
+  margin: 0 0 30px 6px;
+  color: var(--text-primary);
+  font-size: 24px;
+  font-weight: 1000;
+  line-height: 1.1;
+}
+
+.profile-summary-card {
+  min-height: 248px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  background: var(--light-yellow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px 28px;
+}
+
+.profile-summary-shape {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.profile-summary-shape--pink {
+  width: 126px;
+  height: 126px;
+  top: -18px;
+  right: -8px;
+  background: var(--light-pink);
+}
+
+.profile-summary-shape--blue {
+  width: 92px;
+  height: 92px;
+  left: -34px;
+  bottom: 22px;
+  background: color-mix(in srgb, var(--blue) 86%, var(--white));
+}
+
+.profile-avatar {
+  width: 110px;
+  height: 110px;
+  position: relative;
+  z-index: 1;
+  border-radius: 999px;
+  background: var(--background);
+  display: grid;
+  place-items: center;
+  color: var(--text-primary);
+  font-family: var(--font-title);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.profile-summary-card h2 {
+  max-width: 100%;
+  margin: 24px 0 4px;
+  position: relative;
+  z-index: 1;
+  color: var(--text-primary);
+  font-family: var(--font-title);
+  font-size: 31px;
+  font-weight: 400;
+  line-height: 0.9;
+  text-align: center;
+  word-break: break-word;
+}
+
+.profile-summary-card p {
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.profile-section {
+  margin-top: 30px;
+}
+
+.profile-section h2 {
+  margin: 0 0 22px;
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 1000;
+  line-height: 1.1;
+}
+
+.profile-info-card {
+  margin: 0;
+  padding: 0 18px;
+  border-radius: 28px;
+  background: var(--vault-filter-bg);
+}
+
+.profile-info-row {
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--text-secondary) 18%, transparent);
+}
+
+.profile-info-row:last-child {
+  border-bottom: 0;
+}
+
+.profile-info-row dt {
+  color: color-mix(in srgb, var(--text-primary) 60%, transparent);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.profile-info-row dd {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 400;
+  text-align: right;
+}
+
+.profile-safety-section > p {
+  margin: -12px 0 28px;
+  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.emergency-contact-card {
+  min-height: 112px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: var(--light-pink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 30px 20px;
+}
+
+.emergency-contact-card > div {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.emergency-contact-card::after {
+  content: "";
+  width: 104px;
+  height: 104px;
+  position: absolute;
+  right: -16px;
+  bottom: -28px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--dark-orange) 64%, var(--white));
+}
+
+.emergency-contact-label {
+  margin: 0 0 14px;
+  color: var(--background);
+  font-size: 11px;
+  font-weight: 510;
+  letter-spacing: 2.2px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.emergency-contact-card h3 {
+  margin: 0 0 4px;
+  color: var(--background);
+  font-family: var(--font-title);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 0.9;
+}
+
+.emergency-contact-card p:last-child {
+  margin: 0;
+  color: var(--background);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.emergency-contact-card:not(.is-saved) h3,
+.emergency-contact-card:not(.is-saved) p:last-child {
+  color: color-mix(in srgb, var(--background) 78%, transparent);
+}
+
+.emergency-contact-card.is-saved {
+  padding-left: 30px;
+}
+
+.emergency-contact-card.is-saved .emergency-contact-label {
+  margin-bottom: 16px;
+  color: var(--background);
+}
+
+.emergency-contact-card.is-saved h3 {
+  color: var(--background);
+  font-size: 33px;
+  line-height: 0.9;
+}
+
+.emergency-contact-card.is-saved p:last-child {
+  color: var(--background);
+  font-size: 16px;
+  line-height: 1.1;
+}
+
+.emergency-edit-button {
+  width: 51px;
+  height: 51px;
+  position: relative;
+  z-index: 1;
+  border: 0;
+  border-radius: 999px;
+  background: var(--background);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.emergency-edit-button img {
+  width: 18px;
+  height: 18px;
+}
+
+.helpline-grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.helpline-card {
+  min-height: 208px;
+  display: block;
+  border-radius: 24px;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.helpline-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.profile-actions {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-edit-profile {
+  --glass-chip-width: 100%;
+  --glass-chip-color: var(--background);
+  --glass-chip-selected-background: var(--blue);
+  --glass-chip-selected-color: var(--background);
+
+  height: 62px;
+  background: var(--blue);
+  background-blend-mode: normal;
+  color: var(--background);
+  font-size: 16px;
+  font-weight: 590;
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--blue) 28%, transparent);
+}
+
+.profile-logout-button {
+  border: 0;
+  background: transparent;
+  color: var(--medium-text);
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.emergency-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  background: color-mix(in srgb, var(--black) 36%, transparent);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.emergency-sheet-overlay[hidden] {
+  display: none;
+}
+
+.emergency-sheet {
+  width: min(100vw, 402px);
+  min-height: 515px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px 30px 0 0;
+  background: var(--light-pink);
+  padding: 40px 28px 34px;
+  color: var(--background);
+  transform: translateY(16px);
+  animation: emergency-sheet-in 220ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.emergency-sheet-shape {
+  width: 112px;
+  height: 112px;
+  position: absolute;
+  top: -18px;
+  right: -22px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--dark-orange) 62%, var(--background));
+}
+
+.emergency-sheet-close {
+  width: 51px;
+  height: 51px;
+  position: absolute;
+  top: 30px;
+  right: 34px;
+  z-index: 1;
+  border: 0;
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--light-pink);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-primary);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.emergency-sheet h2 {
+  max-width: 280px;
+  margin: 0 0 14px;
+  position: relative;
+  z-index: 1;
+  color: var(--background);
+  font-family: var(--font-title);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 0.92;
+}
+
+.emergency-sheet > p {
+  max-width: 312px;
+  margin: 0 0 30px;
+  position: relative;
+  z-index: 1;
+  color: var(--background);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.emergency-sheet-card {
+  position: relative;
+  z-index: 1;
+  border-radius: 18px;
+  background: var(--background);
+  padding: 0 22px;
+}
+
+.emergency-sheet-field {
+  min-height: 86px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--text-secondary) 15%, transparent);
+}
+
+.emergency-sheet-field:last-child {
+  border-bottom: 0;
+}
+
+.emergency-sheet-field span {
+  color: var(--medium-text);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.emergency-sheet-field input {
+  width: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  font-size: 20px;
+  font-weight: 400;
+  outline: 0;
+}
+
+.emergency-sheet-field input::placeholder {
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+}
+
+.emergency-sheet-save {
+  --glass-chip-width: 100%;
+  --glass-chip-color: var(--background);
+  --glass-chip-selected-background: var(--blue);
+  --glass-chip-selected-color: var(--background);
+
+  height: 62px;
+  margin-top: 28px;
+  background: var(--blue);
+  background-blend-mode: normal;
+  color: var(--background);
+  font-size: 16px;
+  font-weight: 590;
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--blue) 28%, transparent);
+}
+
+.emergency-sheet-save:disabled,
+.emergency-sheet-remove:disabled {
+  opacity: 0.72;
+  cursor: wait;
+}
+
+.emergency-sheet-remove {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 22px;
+  border: 0;
+  background: transparent;
+  color: var(--background);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 590;
+  cursor: pointer;
+}
+
+.emergency-sheet-remove span {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  line-height: 1;
+}
+
+@keyframes emergency-sheet-in {
+  to {
+    transform: translateY(0);
+  }
+}

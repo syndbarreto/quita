@@ -4,16 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quita - Vault</title>
-  <link rel="stylesheet" href="./css/variables.css" />
-  <link rel="stylesheet" href="./css/global.css" />
-  <link rel="stylesheet" href="./css/components.css" />
-  <link rel="stylesheet" href="./css/pages/vault.css" />
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/pages/vault.css" />
 </head>
 <body>
   <main class="vault-page is-grid">
     <section class="vault-empty" data-vault-empty hidden>
       <div class="vault-empty-doll">
-        <img src="./assets/doll-vault.png" alt="" aria-hidden="true" />
+        <img src="../assets/doll-vault.png" alt="" aria-hidden="true" />
       </div>
       <div class="vault-empty-copy">
         <h2>Your vault is quiet</h2>
@@ -75,8 +75,31 @@
       </section>
     </div>
 
+    <nav class="app-bottom-nav" aria-label="Main navigation">
+      <a class="app-bottom-nav__item app-bottom-nav__item--tools" href="./calmingTools.html">
+        <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+        <span>Tools</span>
+      </a>
+      <a class="app-bottom-nav__item app-bottom-nav__item--vault" href="./vault.html?view=list" aria-current="page">
+        <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+        <span>Vault</span>
+      </a>
+      <a class="app-bottom-nav__item app-bottom-nav__item--home" href="./home.html">
+        <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+        <span>Home</span>
+      </a>
+      <a class="app-bottom-nav__item app-bottom-nav__item--bliss" aria-disabled="true">
+        <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+        <span>Bliss</span>
+      </a>
+      <a class="app-bottom-nav__item app-bottom-nav__item--profile" href="./profile.html">
+        <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+        <span>Profile</span>
+      </a>
+    </nav>
+
   </main>
 
-  <script type="module" src="./views/vaultView.js"></script>
+  <script type="module" src="../views/vaultView.js"></script>
 </body>
 </html>

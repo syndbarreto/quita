@@ -1,0 +1,222 @@
+body {
+  align-items: flex-start;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.edit-profile-page {
+  width: min(100vw, 402px);
+  height: 100dvh;
+  padding: 64px 20px 52px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+}
+
+.edit-profile-form {
+  padding-bottom: 8px;
+}
+
+.edit-profile-header {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  margin-bottom: 62px;
+}
+
+.edit-profile-header h1 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 1000;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.edit-profile-back {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+}
+
+.edit-profile-back img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.edit-profile-section {
+  margin-top: 40px;
+}
+
+.edit-profile-section:first-child {
+  margin-top: 0;
+}
+
+.edit-profile-section h2 {
+  margin: 0 0 16px;
+  color: var(--medium-text);
+  font-size: 16px;
+  font-weight: 510;
+  letter-spacing: 2.2px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.edit-profile-card {
+  border-radius: 28px;
+  background: var(--vault-filter-bg);
+  padding: 0 24px;
+}
+
+.edit-profile-field {
+  min-height: 86px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--text-secondary) 15%, transparent);
+}
+
+.edit-profile-field:last-child,
+.edit-profile-sex-group + .edit-profile-field {
+  border-bottom: 0;
+}
+
+.edit-profile-field span,
+.edit-profile-sex-group legend {
+  color: color-mix(in srgb, var(--text-primary) 60%, transparent);
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.edit-profile-field input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.2;
+  outline: 0;
+}
+
+.edit-profile-field input::placeholder {
+  color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+}
+
+.edit-profile-sex-group {
+  min-width: 0;
+  margin: 0;
+  padding: 22px 0;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--text-secondary) 15%, transparent);
+}
+
+.edit-profile-segmented {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.edit-profile-segmented label {
+  min-width: 0;
+}
+
+.edit-profile-segmented input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.edit-profile-segmented span {
+  width: 100%;
+  min-height: 54px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--white) 76%, transparent);
+  color: var(--text-secondary);
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  font-weight: 510;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.edit-profile-segmented input:checked + span {
+  background: var(--text-primary);
+  color: var(--background);
+}
+
+.edit-profile-segmented span:active {
+  transform: scale(0.96);
+}
+
+.edit-profile-emergency-section {
+  margin-top: 56px;
+}
+
+.edit-profile-emergency-section h2 {
+  color: var(--light-orange);
+}
+
+.edit-profile-emergency-card {
+  background: color-mix(in srgb, var(--light-pink) 30%, transparent);
+}
+
+.edit-profile-emergency-card .edit-profile-field {
+  border-bottom-color: color-mix(in srgb, var(--light-orange) 15%, transparent);
+}
+
+.edit-profile-help {
+  max-width: 335px;
+  margin: 16px 6px 0;
+  color: var(--medium-text);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.edit-profile-message {
+  margin: 22px 6px 0;
+  color: var(--light-red);
+  font-size: 14px;
+  font-weight: 510;
+}
+
+.edit-profile-save {
+  --glass-chip-width: 100%;
+  --glass-chip-color: var(--background);
+  --glass-chip-selected-background: var(--blue);
+  --glass-chip-selected-color: var(--background);
+
+  height: 62px;
+  margin-top: 48px;
+  background: var(--blue);
+  background-blend-mode: normal;
+  color: var(--background);
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 590;
+  line-height: 1;
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--blue) 28%, transparent);
+}
+
+.edit-profile-save:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+}

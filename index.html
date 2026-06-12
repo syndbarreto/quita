@@ -12,19 +12,6 @@
     <link rel="stylesheet" href="./css/pages/welcome.css" />
   </head>
 
-  <script>
-    const splashDuration = 2000;
-    const transitionDuration = 450;
-
-    setTimeout(() => {
-      document.body.classList.add("is-leaving");
-    }, splashDuration - transitionDuration);
-
-    setTimeout(() => {
-      window.location.href = "./onboarding.html";
-    }, splashDuration);
-  </script>
-
   <body>
     <main class="welcome-page">
       <img
@@ -33,5 +20,6 @@
         alt="Logo Quita"
       />
     </main>
+    <script type="module" src="./views/welcomeView.js"></script>
   </body>
 </html>

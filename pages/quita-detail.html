@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quita - Details</title>
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/pages/quita-detail.css" />
+</head>
+<body>
+  <main class="quita-detail-page" data-quita-detail-page>
+    <header class="quita-detail-header">
+      <a class="quita-detail-close" href="./vault.html?view=list" aria-label="Back to Vault">
+        <span class="quita-detail-close-icon" aria-hidden="true"></span>
+      </a>
+      <div class="quita-detail-actions" aria-label="Quita actions">
+        <button class="quita-detail-action" type="button" aria-label="Open Quita chat">
+          <span class="quita-detail-action-icon quita-detail-action-icon--chatbot" aria-hidden="true"></span>
+        </button>
+        <button class="quita-detail-action" type="button" aria-label="Delete Quita">
+          <span class="quita-detail-action-icon quita-detail-action-icon--delete" aria-hidden="true"></span>
+        </button>
+      </div>
+    </header>
+
+    <section class="quita-detail-hero" data-quita-detail-hero></section>
+
+    <section class="quita-detail-section" data-quita-description-section hidden>
+      <h2>Description</h2>
+      <p data-quita-description></p>
+      <div class="quita-detail-chip-row" data-quita-choice-chips></div>
+    </section>
+
+    <section class="quita-detail-section quita-detail-journal" data-quita-journal-section>
+      <h2>Your journal</h2>
+      <div class="quita-detail-timeline" data-quita-timeline></div>
+    </section>
+
+    <section class="quita-detail-section quita-detail-tools">
+      <h2>Recommended Tools</h2>
+      <div class="quita-detail-tools-list" data-quita-tools></div>
+      <a class="quita-detail-see-more" href="./calmingTools.html">See more</a>
+    </section>
+
+    <a class="glass-chip quita-detail-rest-button" href="./vault.html?view=list" data-quita-rest-link>Let your quita rest</a>
+  </main>
+
+  <div class="quita-progress-overlay" data-progress-overlay hidden>
+    <button class="quita-progress-backdrop" type="button" aria-label="Close progress form" data-progress-close></button>
+    <section class="quita-progress-sheet" aria-modal="true" aria-labelledby="progress-title" role="dialog">
+      <span class="quita-progress-handle" aria-hidden="true"></span>
+      <h2 id="progress-title">Add new progress</h2>
+      <label class="quita-progress-field" for="progress-name">
+        <span>Progress title</span>
+        <input id="progress-name" name="progress-name" type="text" placeholder="Give this moment a name..." data-progress-title />
+      </label>
+      <label class="quita-progress-field" for="progress-note">
+        <span>What helped today?</span>
+        <textarea id="progress-note" name="progress-note" placeholder="Write your progress..." data-progress-textarea></textarea>
+      </label>
+      <button class="glass-chip quita-progress-save" type="button" data-progress-save disabled>Done</button>
+    </section>
+  </div>
+
+  <script type="module" src="../views/quitaDetailView.js"></script>
+</body>
+</html>

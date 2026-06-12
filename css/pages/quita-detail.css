@@ -1,0 +1,555 @@
+body {
+  align-items: flex-start;
+  min-height: 100dvh;
+}
+
+.quita-detail-page {
+  --detail-accent: var(--light-pink);
+  --detail-title: var(--detail-timeline-seed-title);
+  --detail-chip-bg: var(--detail-chip-seed-bg);
+  --detail-chip-text: var(--detail-chip-seed-text);
+  --detail-hero-scale: 1;
+  --detail-hero-shift: 0px;
+  --detail-hero-opacity: 1;
+
+  width: min(100vw, 402px);
+  min-height: 100dvh;
+  padding: 35px 20px 22px;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  overflow-x: hidden;
+}
+
+.quita-detail-page--seed {
+  --detail-accent: var(--light-pink);
+  --detail-title: var(--detail-timeline-seed-title);
+  --detail-chip-bg: var(--detail-chip-seed-bg);
+  --detail-chip-text: var(--detail-chip-seed-text);
+}
+
+.quita-detail-page--knot {
+  --detail-accent: var(--vault-knot-card);
+  --detail-title: var(--detail-timeline-knot-title);
+  --detail-chip-bg: var(--detail-chip-knot-bg);
+  --detail-chip-text: var(--detail-chip-knot-text);
+}
+
+.quita-detail-page--burden {
+  --detail-accent: var(--blue);
+  --detail-title: var(--detail-timeline-burden-title);
+  --detail-chip-bg: var(--detail-chip-burden-bg);
+  --detail-chip-text: var(--detail-chip-burden-text);
+}
+
+.quita-detail-page [hidden] {
+  display: none;
+}
+
+.quita-detail-header {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 4;
+}
+
+.quita-detail-close {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--vault-action-icon);
+  text-decoration: none;
+}
+
+.quita-detail-close-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  background: currentColor;
+  mask-image: url("../../assets/close.svg");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: url("../../assets/close.svg");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+
+.quita-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quita-detail-action {
+  width: 33px;
+  height: 33px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--vault-action-icon);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: visible;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.quita-detail-action::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 296px;
+  background:
+    linear-gradient(0deg, var(--gray-lighter) 0%, var(--gray-lighter) 100%),
+    linear-gradient(0deg, var(--glass-burn-gray) 0%, var(--glass-burn-gray) 100%),
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--white) 58%, transparent) 0%,
+      color-mix(in srgb, var(--white) 58%, transparent) 100%
+    );
+  background-blend-mode: darken, color-burn, normal;
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
+}
+
+.quita-detail-action-icon {
+  display: block;
+  height: 36px;
+  background: currentColor;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  pointer-events: none;
+  position: relative;
+  transform: translateY(-1.5px);
+  z-index: 1;
+}
+
+.quita-detail-action-icon--chatbot {
+  width: 22px;
+  mask-image: url("../../assets/chatbot-icon.svg");
+  -webkit-mask-image: url("../../assets/chatbot-icon.svg");
+}
+
+.quita-detail-action-icon--delete {
+  width: 21px;
+  mask-image: url("../../assets/bin-icon.svg");
+  -webkit-mask-image: url("../../assets/bin-icon.svg");
+}
+
+.quita-detail-hero {
+  min-height: 430px;
+  margin-top: -10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.quita-detail-hero-figure {
+  width: 100%;
+  height: 372px;
+  position: relative;
+  transform:
+    translateY(var(--detail-hero-shift))
+    scale(var(--detail-hero-scale));
+  opacity: var(--detail-hero-opacity);
+  transform-origin: center bottom;
+  will-change: transform, opacity;
+}
+
+.quita-detail-hero-star {
+  width: 340px;
+  height: 340px;
+  position: absolute;
+  top: 62px;
+  left: 50%;
+  background: var(--detail-accent);
+  opacity: 0.95;
+  transform:
+    translateX(-50%)
+    scale(1.02);
+  transform-origin: center;
+  mask-image: url("../../assets/star-4-points.svg");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: url("../../assets/star-4-points.svg");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  z-index: 1;
+}
+
+.quita-detail-doll {
+  width: 292px;
+  height: 344px;
+  object-fit: contain;
+  object-position: center bottom;
+  transform-origin: center bottom;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  margin-left: -146px;
+  z-index: 2;
+}
+
+.quita-detail-name {
+  margin: -2px 0 0;
+  color: var(--detail-accent);
+  font-family: var(--font-title);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+}
+
+.quita-detail-born {
+  margin: 2px 0 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 510;
+  line-height: 15px;
+  position: relative;
+  z-index: 3;
+}
+
+.quita-detail-section {
+  margin-top: 34px;
+}
+
+.quita-detail-section h2 {
+  margin: 0 0 8px;
+  color: var(--dark-text);
+  font-size: 18px;
+  font-weight: 590;
+  line-height: 22px;
+}
+
+.quita-detail-section p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.quita-detail-chip-row {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.quita-detail-chip {
+  min-width: 88px;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 1000px;
+  background: var(--detail-chip-bg);
+  color: var(--detail-chip-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 510;
+  line-height: 15px;
+  text-align: center;
+}
+
+.quita-detail-timeline {
+  margin-top: 20px;
+  padding-left: 86px;
+}
+
+.quita-detail-journal h2 {
+  font-size: 18px;
+  font-weight: 510;
+  line-height: 22px;
+}
+
+.quita-detail-timeline-item {
+  position: relative;
+  min-height: 131px;
+  padding: 0 0 0 35px;
+}
+
+.quita-detail-timeline-item::before {
+  content: "";
+  width: 3px;
+  height: 88px;
+  position: absolute;
+  top: 34px;
+  left: -2px;
+  border-radius: 99px;
+  background: var(--detail-accent);
+}
+
+.quita-detail-timeline-item:last-child::before {
+  display: none;
+}
+
+.quita-detail-timeline-date {
+  position: absolute;
+  top: 2px;
+  right: calc(100% + 14px);
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 510;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.quita-detail-timeline-dot {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  top: 0;
+  left: -12px;
+  border: 3px solid var(--detail-accent);
+  border-radius: 50%;
+  background: var(--background);
+}
+
+.quita-detail-timeline-dot::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  inset: 50% auto auto 50%;
+  border-radius: 50%;
+  background: var(--detail-accent);
+  transform: translate(-50%, -50%);
+}
+
+.quita-detail-timeline-item h3 {
+  margin: 0 0 10px;
+  color: var(--detail-title);
+  font-size: 18px;
+  font-weight: 590;
+  line-height: 22px;
+}
+
+.quita-detail-timeline-item p {
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.quita-detail-add-progress {
+  margin: 0 0 0 35px;
+  border: 0;
+  background: transparent;
+  color: var(--detail-title);
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 590;
+  cursor: pointer;
+  position: relative;
+}
+
+.quita-detail-add-progress::before {
+  content: "";
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  left: -47px;
+  top: 50%;
+  background: var(--detail-accent);
+  mask-image: url("../../assets/add.svg");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: url("../../assets/add.svg");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  transform: translateY(-50%);
+}
+
+.quita-detail-tools {
+  margin-top: 42px;
+}
+
+.quita-detail-tools-list {
+  display: grid;
+  gap: 10px;
+}
+
+.quita-detail-tool {
+  min-height: 54px;
+  display: grid;
+  grid-template-columns: 1fr 58px;
+  gap: 12px;
+  align-items: center;
+}
+
+.quita-detail-tool h3 {
+  margin: 0 0 3px;
+  color: var(--dark-text);
+  font-size: 16px;
+  font-weight: 590;
+  line-height: 20px;
+}
+
+.quita-detail-tool p {
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.quita-detail-tool img {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  object-fit: cover;
+  justify-self: end;
+}
+
+.quita-detail-see-more {
+  margin-top: 12px;
+  display: inline-flex;
+  color: var(--detail-title);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.quita-detail-rest-button {
+  --glass-chip-width: 100%;
+  --glass-chip-selected-background: var(--blue);
+
+  margin-top: 26px;
+  height: 48px;
+  color: var(--background);
+  font-size: 14px;
+  font-weight: 510;
+  background: var(--blue);
+  background-blend-mode: normal;
+}
+
+.quita-progress-overlay {
+  width: min(100vw, 402px);
+  position: fixed;
+  inset: 0 auto 0 50%;
+  z-index: 30;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.quita-progress-overlay[hidden] {
+  display: none;
+}
+
+.quita-progress-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: color-mix(in srgb, var(--black) 45%, transparent);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+.quita-progress-sheet {
+  width: 100%;
+  padding: 12px 20px 28px;
+  position: relative;
+  border-radius: 28px 28px 0 0;
+  background: var(--background);
+  transform: translateY(100%);
+  transition: transform 220ms ease;
+}
+
+.quita-progress-overlay.is-open .quita-progress-sheet {
+  transform: translateY(0);
+}
+
+.quita-progress-handle {
+  width: 34px;
+  height: 4px;
+  margin: 0 auto 28px;
+  display: block;
+  border-radius: 999px;
+  background: var(--gray-light);
+}
+
+.quita-progress-sheet h2 {
+  margin: 0 0 20px;
+  color: var(--dark-text);
+  font-size: 24px;
+  font-weight: 590;
+  line-height: 29px;
+}
+
+.quita-progress-field {
+  display: grid;
+  gap: 10px;
+  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: 510;
+  line-height: 20px;
+}
+
+.quita-progress-field + .quita-progress-field {
+  margin-top: 16px;
+}
+
+.quita-progress-field input,
+.quita-progress-field textarea {
+  width: 100%;
+  padding: 20px;
+  border: 0;
+  border-radius: 26px;
+  outline: none;
+  background: color-mix(in srgb, var(--white) 72%, var(--background));
+  box-shadow: 0 12px 38px color-mix(in srgb, var(--black) 10%, transparent);
+  color: var(--dark-text);
+  font: 400 16px / 22px var(--font-primary);
+}
+
+.quita-progress-field input {
+  height: 58px;
+}
+
+.quita-progress-field textarea {
+  min-height: 154px;
+  resize: none;
+}
+
+.quita-progress-field input::placeholder,
+.quita-progress-field textarea::placeholder {
+  color: var(--placeholder);
+}
+
+.quita-progress-save {
+  --glass-chip-width: 100%;
+  --glass-chip-selected-background: var(--blue);
+
+  height: 48px;
+  margin-top: 22px;
+  border: 0;
+  color: var(--background);
+  background: var(--blue);
+  background-blend-mode: normal;
+  font-size: 16px;
+}
+
+.quita-progress-save:disabled {
+  opacity: 0.55;
+  cursor: default;
+}

@@ -1,0 +1,126 @@
+body {
+  align-items: flex-start;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.support-page {
+  width: min(100vw, 402px);
+  height: 100dvh;
+  overflow-y: auto;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  padding: 72px 20px 40px;
+}
+
+.support-header {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  margin-bottom: 76px;
+}
+
+.support-header h1 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 1000;
+  line-height: 1;
+  text-align: center;
+}
+
+.support-back {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+}
+
+.support-back img {
+  width: 24px;
+  height: 24px;
+}
+
+.support-hero-card {
+  width: 100%;
+  display: block;
+  border-radius: 30px;
+  margin-bottom: 42px;
+}
+
+.support-description {
+  margin: 0 0 48px;
+  color: var(--text-primary);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.support-actions {
+  display: grid;
+  gap: 14px;
+}
+
+.support-action {
+  min-height: 62px;
+  border: 0;
+  border-radius: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 590;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.support-action--call {
+  background: var(--blue);
+  color: var(--background);
+  box-shadow: 0 18px 48px color-mix(in srgb, var(--blue) 28%, transparent);
+}
+
+.support-page--crisis .support-action--call {
+  background: var(--hot-pink);
+  box-shadow: 0 18px 48px color-mix(in srgb, var(--hot-pink) 30%, transparent);
+}
+
+.support-action--neutral {
+  background: var(--vault-filter-bg);
+}
+
+.support-copy-feedback {
+  margin: 14px 0 0;
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: 590;
+  text-align: center;
+}
+
+.support-page--crisis .support-copy-feedback {
+  color: var(--hot-pink);
+}
+
+.support-copy-fallback {
+  position: fixed;
+  inset: auto auto 0 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.support-emergency-note {
+  margin: 64px 28px 0;
+  color: var(--medium-text);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+}

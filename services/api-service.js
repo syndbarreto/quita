@@ -37,6 +37,7 @@ export async function apiRequest(path, options = {}) {
 export async function createOwnedRecord(collection, payload) {
   const user = getCurrentUser();
   const token = getAuthToken();
+  const serializedPayload = typeof payload?.toJSON === "function" ? payload.toJSON() : payload;
 
   if (!user?.id || !token) {
     logoutUser();
@@ -46,7 +47,7 @@ export async function createOwnedRecord(collection, payload) {
   return apiRequest(`/${collection}`, {
     method: "POST",
     body: {
-      ...payload,
+      ...serializedPayload,
       userId: user.id,
     },
   });

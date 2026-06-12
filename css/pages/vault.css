@@ -250,6 +250,16 @@ body {
   overflow: hidden;
 }
 
+.vault-list-card {
+  cursor: pointer;
+}
+
+.vault-grid-card:focus-visible,
+.vault-list-card:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--blue) 72%, var(--white));
+  outline-offset: 4px;
+}
+
 .vault-grid-card {
   border-radius: 20px;
   background: var(--preview-bg);
@@ -608,7 +618,7 @@ body {
   position: fixed;
   inset: 0 auto 0 50%;
   width: min(100vw, 402px);
-  z-index: 80;
+  z-index: 100;
   transform: translateX(-50%);
   pointer-events: none;
 }
@@ -781,7 +791,7 @@ body {
   position: fixed;
   inset: 0 auto 0 50%;
   width: min(100vw, 402px);
-  z-index: 90;
+  z-index: 110;
   transform: translateX(-50%);
   pointer-events: none;
 }

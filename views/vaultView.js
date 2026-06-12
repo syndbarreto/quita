@@ -2,6 +2,7 @@ import {
   deleteQuitaRecord,
   getQuitaRecords,
 } from "../services/api-service.js";
+import { requireAuth } from "../services/auth-service.js";
 import { getCalmingToolsByIds } from "../services/tools-service.js";
 import {
   DOLL_STATES,
@@ -9,8 +10,13 @@ import {
   WORRY_TYPES,
   getBackgroundOption,
   getDollAsset,
+  normalizeWorryType,
 } from "../models/constants.js";
 import { QuitaCollection } from "../models/QuitaCollection.js";
+
+if (!requireAuth()) {
+  throw new Error("Authentication required.");
+}
 
 const emptyState = document.querySelector("[data-vault-empty]");
 const vaultPage = document.querySelector(".vault-page");
@@ -31,28 +37,28 @@ const VAULT_TOOLS_BY_TYPE = {
   [WORRY_TYPES.KNOT]: {
     accent: "knot",
     ids: [12, 3, 11],
-    title: `Tools for when you're feeling tied in <span>knot</span>`,
+    titleParts: ["Tools for when you're feeling tied in ", { text: "knot", highlight: true }],
   },
   [WORRY_TYPES.SEED]: {
     accent: "seed",
     ids: [6, 1, 9],
-    title: `Tools for when something is just <span>beginning</span>`,
+    titleParts: ["Tools for when something is just ", { text: "beginning", highlight: true }],
   },
   [WORRY_TYPES.BURDEN]: {
     accent: "burden",
     ids: [13, 2, 10],
-    title: `Tools for when you're feeling <span>weighed down</span>`,
+    titleParts: ["Tools for when you're feeling ", { text: "weighed down", highlight: true }],
   },
 };
 
 const CONFIRMATION_CONTENT = {
   delete: {
     accent: "delete",
-    title: `Are you sure you want to <span>delete</span> this Quita?`,
+    titleParts: ["Are you sure you want to ", { text: "delete", highlight: true }, " this Quita?"],
   },
   release: {
     accent: "release",
-    title: `Are you sure you want to <span>release</span> this Quita?`,
+    titleParts: ["Are you sure you want to ", { text: "release", highlight: true }, " this Quita?"],
   },
 };
 
@@ -60,22 +66,50 @@ let quitas = [];
 
 let currentView = vaultParams.get("view") === "list" ? "list" : "grid";
 let currentFilter = "all";
+let isVaultLoaded = false;
 let gridDragState = null;
 let gridOffset = { x: 0, y: 0 };
 let activeGridCard = null;
 let pendingConfirmation = null;
+let shouldIgnoreNextGridClick = false;
 
-function escapeHtml(value = "") {
-  return String(value).replace(/[&<>"']/g, (char) => {
-    const entities = {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;",
-    };
+function createElement(tagName, classNames = [], attributes = {}) {
+  const element = document.createElement(tagName);
+  const normalizedClassNames = Array.isArray(classNames) ? classNames : [classNames];
 
-    return entities[char];
+  normalizedClassNames.filter(Boolean).forEach((className) => element.classList.add(className));
+
+  Object.entries(attributes).forEach(([name, value]) => {
+    if (value !== null && value !== undefined) {
+      element.setAttribute(name, value);
+    }
+  });
+
+  return element;
+}
+
+function appendText(parent, tagName, className, text) {
+  const element = createElement(tagName, className);
+
+  element.textContent = text;
+  parent.appendChild(element);
+
+  return element;
+}
+
+function appendHighlightedText(parent, parts) {
+  parent.replaceChildren();
+
+  parts.forEach((part) => {
+    if (typeof part === "string") {
+      parent.appendChild(document.createTextNode(part));
+      return;
+    }
+
+    const span = createElement("span");
+
+    span.textContent = part.text;
+    parent.appendChild(span);
   });
 }
 
@@ -93,16 +127,18 @@ function formatDate(value) {
   }).format(date);
 }
 
-function getPatternMarkup() {
-  return `
-    <span class="vault-pattern-shape vault-pattern-shape--burst shape-a"></span>
-    <span class="vault-pattern-shape vault-pattern-shape--burst shape-b"></span>
-    <span class="vault-pattern-shape vault-pattern-shape--x shape-c"></span>
-    <span class="vault-pattern-shape vault-pattern-shape--x shape-d"></span>
-    <span class="vault-pattern-shape vault-pattern-shape--x shape-e"></span>
-    <span class="vault-pattern-shape vault-pattern-shape--burst shape-f"></span>
-    <span class="vault-pattern-shape vault-pattern-shape--burst shape-g"></span>
-  `;
+function appendPatternShapes(card) {
+  [
+    ["vault-pattern-shape--burst", "shape-a"],
+    ["vault-pattern-shape--burst", "shape-b"],
+    ["vault-pattern-shape--x", "shape-c"],
+    ["vault-pattern-shape--x", "shape-d"],
+    ["vault-pattern-shape--x", "shape-e"],
+    ["vault-pattern-shape--burst", "shape-f"],
+    ["vault-pattern-shape--burst", "shape-g"],
+  ].forEach((classNames) => {
+    card.appendChild(createElement("span", ["vault-pattern-shape", ...classNames]));
+  });
 }
 
 function getQuitaDollAsset(quita) {
@@ -112,61 +148,126 @@ function getQuitaDollAsset(quita) {
 function renderGridCard(quita) {
   const background = getBackgroundOption(quita.gridBackground);
   const dollAlt = `${quita.name} Quita`;
+  const card = createElement("article", ["vault-grid-card", `background-option--${background.id}`], {
+    "data-quita-detail-id": quita.id,
+    role: "link",
+    tabindex: "0",
+  });
+  const doll = createElement("img", "vault-grid-doll", {
+    src: getQuitaDollAsset(quita),
+    alt: dollAlt,
+  });
+  const shade = createElement("div", "vault-card-shade", {
+    "aria-hidden": "true",
+  });
+  const copy = createElement("div", "vault-grid-copy");
 
-  return `
-    <article class="vault-grid-card background-option--${background.id}">
-      ${getPatternMarkup()}
-      <img class="vault-grid-doll" src="${getQuitaDollAsset(quita)}" alt="${escapeHtml(dollAlt)}" />
-      <div class="vault-card-shade" aria-hidden="true"></div>
-      <div class="vault-grid-copy">
-        <h2>${escapeHtml(quita.name)}</h2>
-        <p>${formatDate(quita.createdAt)}</p>
-      </div>
-    </article>
-  `;
+  appendPatternShapes(card);
+  appendText(copy, "h2", "", quita.name);
+  appendText(copy, "p", "", formatDate(quita.createdAt));
+  card.append(doll, shade, copy);
+
+  return card;
+}
+
+function createCardAction({ label, iconClass, attributes = {} }) {
+  const button = createElement("button", "vault-card-action", {
+    type: "button",
+    "aria-label": label,
+    ...attributes,
+  });
+  const icon = createElement("span", ["vault-card-action-icon", iconClass], {
+    "aria-hidden": "true",
+  });
+
+  button.appendChild(icon);
+
+  return button;
 }
 
 function renderListCard(quita) {
-  const validWorryTypes = Object.values(WORRY_TYPES);
-  const worryType = validWorryTypes.includes(quita.worryType) ? quita.worryType : WORRY_TYPES.SEED;
+  const worryType = normalizeWorryType(quita.worryType);
   const dollAlt = `${quita.name} Quita`;
+  const card = createElement("article", ["vault-list-card", `vault-list-card--${worryType}`], {
+    "data-quita-detail-id": quita.id,
+    role: "link",
+    tabindex: "0",
+  });
+  const actions = createElement("div", "vault-card-actions");
+  const copy = createElement("div", "vault-list-copy");
+  const time = createElement("time", "", {
+    datetime: quita.createdAt,
+  });
+  const doll = createElement("img", "vault-list-doll", {
+    src: getQuitaDollAsset(quita),
+    alt: dollAlt,
+  });
 
-  return `
-    <article class="vault-list-card vault-list-card--${worryType}">
-      <div class="vault-card-actions">
-        <button class="vault-card-action" type="button" aria-label="Open Quita chat">
-          <span class="vault-card-action-icon vault-card-action-icon--chatbot" aria-hidden="true"></span>
-        </button>
-        <button class="vault-card-action" type="button" aria-label="Open calming tools" data-vault-open-tools data-quita-id="${escapeHtml(quita.id)}">
-          <span class="vault-card-action-icon vault-card-action-icon--calming" aria-hidden="true"></span>
-        </button>
-        <button class="vault-card-action" type="button" aria-label="Release Quita" data-vault-confirm-action="release" data-quita-id="${escapeHtml(quita.id)}">
-          <span class="vault-card-action-icon vault-card-action-icon--bliss" aria-hidden="true"></span>
-        </button>
-        <button class="vault-card-action" type="button" aria-label="Delete Quita" data-vault-confirm-action="delete" data-quita-id="${escapeHtml(quita.id)}">
-          <span class="vault-card-action-icon vault-card-action-icon--delete" aria-hidden="true"></span>
-        </button>
-      </div>
-      <div class="vault-list-copy">
-        <p>Hi, I'm</p>
-        <h2>${escapeHtml(quita.name)}</h2>
-        <time datetime="${escapeHtml(quita.createdAt)}">${formatDate(quita.createdAt)}</time>
-      </div>
-      <img class="vault-list-doll" src="${getQuitaDollAsset(quita)}" alt="${escapeHtml(dollAlt)}" />
-    </article>
-  `;
+  actions.append(
+    createCardAction({
+      label: "Open Quita chat",
+      iconClass: "vault-card-action-icon--chatbot",
+    }),
+    createCardAction({
+      label: "Open calming tools",
+      iconClass: "vault-card-action-icon--calming",
+      attributes: {
+        "data-vault-open-tools": "",
+        "data-quita-id": quita.id,
+      },
+    }),
+    createCardAction({
+      label: "Release Quita",
+      iconClass: "vault-card-action-icon--bliss",
+      attributes: {
+        "data-vault-confirm-action": "release",
+        "data-quita-id": quita.id,
+      },
+    }),
+    createCardAction({
+      label: "Delete Quita",
+      iconClass: "vault-card-action-icon--delete",
+      attributes: {
+        "data-vault-confirm-action": "delete",
+        "data-quita-id": quita.id,
+      },
+    }),
+  );
+
+  time.textContent = formatDate(quita.createdAt);
+  appendText(copy, "p", "", "Hi, I'm");
+  appendText(copy, "h2", "", quita.name);
+  copy.appendChild(time);
+  card.append(actions, copy, doll);
+
+  return card;
+}
+
+function openQuitaDetail(quitaId) {
+  if (!quitaId) {
+    return;
+  }
+
+  window.location.href = `./quita-detail.html?quitaId=${encodeURIComponent(quitaId)}`;
 }
 
 function renderToolItem(tool) {
-  return `
-    <article class="vault-tools-item">
-      <img class="vault-tools-image" src="${escapeHtml(tool.imageUrl)}" alt="${escapeHtml(tool.name)}" />
-      <div class="vault-tools-text">
-        <h3>${escapeHtml(tool.name)}</h3>
-        ${tool.description ? `<p>${escapeHtml(tool.description)}</p>` : ""}
-      </div>
-    </article>
-  `;
+  const item = createElement("article", "vault-tools-item");
+  const image = createElement("img", "vault-tools-image", {
+    src: tool.imageUrl,
+    alt: tool.name,
+  });
+  const text = createElement("div", "vault-tools-text");
+
+  appendText(text, "h3", "", tool.name);
+
+  if (tool.description) {
+    appendText(text, "p", "", tool.description);
+  }
+
+  item.append(image, text);
+
+  return item;
 }
 
 async function openToolsOverlay(quitaId) {
@@ -184,15 +285,17 @@ async function openToolsOverlay(quitaId) {
   const config = VAULT_TOOLS_BY_TYPE[worryType] || VAULT_TOOLS_BY_TYPE[WORRY_TYPES.SEED];
   const tools = await getCalmingToolsByIds(config.ids);
 
-  toolsContent.innerHTML = `
-    <div class="vault-tools-copy vault-tools-copy--${config.accent}">
-      <h2 id="vault-tools-title">${config.title}</h2>
-      <p>A curated selection of tools designed to meet you where you are.</p>
-    </div>
-    <div class="vault-tools-list">
-      ${tools.map(renderToolItem).join("")}
-    </div>
-  `;
+  const copy = createElement("div", ["vault-tools-copy", `vault-tools-copy--${config.accent}`]);
+  const title = createElement("h2", "", {
+    id: "vault-tools-title",
+  });
+  const list = createElement("div", "vault-tools-list");
+
+  appendHighlightedText(title, config.titleParts);
+  appendText(copy, "p", "", "A curated selection of tools designed to meet you where you are.");
+  copy.prepend(title);
+  tools.forEach((tool) => list.appendChild(renderToolItem(tool)));
+  toolsContent.replaceChildren(copy, list);
 
   toolsOverlay.hidden = false;
   vaultPage.classList.add("is-tools-open");
@@ -220,7 +323,7 @@ function openConfirmationOverlay(action, quitaId) {
     quitaId: quita.id,
   };
 
-  confirmTitle.innerHTML = content.title;
+  appendHighlightedText(confirmTitle, content.titleParts);
   confirmOverlay.classList.toggle("is-delete", action === "delete");
   confirmOverlay.classList.toggle("is-release", action === "release");
   confirmYesButton.disabled = false;
@@ -454,6 +557,13 @@ function setFilter(nextFilter) {
 }
 
 function render() {
+  if (!isVaultLoaded) {
+    emptyState.hidden = true;
+    gridView.hidden = true;
+    listView.hidden = true;
+    return;
+  }
+
   const hasQuitas = quitas.length > 0;
   const visibleQuitas = getVisibleQuitas();
 
@@ -465,11 +575,17 @@ function render() {
     return;
   }
 
-  gridList.innerHTML = quitas.map(renderGridCard).join("");
+  gridList.replaceChildren(...quitas.map(renderGridCard));
   configureGridColumns();
-  listStack.innerHTML = visibleQuitas.length
-    ? visibleQuitas.map(renderListCard).join("")
-    : `<p class="vault-filter-empty">No Quitas in this group yet.</p>`;
+
+  if (visibleQuitas.length) {
+    listStack.replaceChildren(...visibleQuitas.map(renderListCard));
+  } else {
+    const emptyFilterMessage = createElement("p", "vault-filter-empty");
+
+    emptyFilterMessage.textContent = "No Quitas in this group yet.";
+    listStack.replaceChildren(emptyFilterMessage);
+  }
 
   if (currentView === "grid") {
     resetGridPosition();
@@ -481,6 +597,7 @@ async function loadVault() {
     const records = await getQuitaRecords();
 
     quitas = new QuitaCollection(records).newestVaultItems;
+    isVaultLoaded = true;
 
     render();
   } catch (error) {
@@ -496,6 +613,7 @@ document.addEventListener("click", (event) => {
   const confirmActionButton = event.target.closest("[data-vault-confirm-action]");
   const confirmNoButton = event.target.closest("[data-vault-confirm-no]");
   const confirmYesButtonTarget = event.target.closest("[data-vault-confirm-yes]");
+  const detailCard = event.target.closest("[data-quita-detail-id]");
 
   if (viewButton) {
     setView(viewButton.dataset.vaultView);
@@ -527,6 +645,26 @@ document.addEventListener("click", (event) => {
   if (confirmYesButtonTarget) {
     runConfirmedAction();
   }
+
+  if (detailCard && !event.target.closest(".vault-card-action")) {
+    if (currentView === "grid" && shouldIgnoreNextGridClick) {
+      shouldIgnoreNextGridClick = false;
+      return;
+    }
+
+    openQuitaDetail(detailCard.dataset.quitaDetailId);
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  const detailCard = event.target.closest("[data-quita-detail-id]");
+
+  if (!detailCard || event.target.closest(".vault-card-action") || !["Enter", " "].includes(event.key)) {
+    return;
+  }
+
+  event.preventDefault();
+  openQuitaDetail(detailCard.dataset.quitaDetailId);
 });
 
 gridView.addEventListener("pointerdown", (event) => {
@@ -554,6 +692,11 @@ gridView.addEventListener("pointermove", (event) => {
 
   event.preventDefault();
   const dragFactor = quitas.length === 1 ? 0.18 : 1;
+  const distance = Math.hypot(event.clientX - gridDragState.startX, event.clientY - gridDragState.startY);
+
+  if (distance > 6) {
+    shouldIgnoreNextGridClick = true;
+  }
 
   setGridTrackPosition(
     {
@@ -578,6 +721,12 @@ function finishGridDrag(event) {
   }
 
   snapGridToCard();
+
+  if (shouldIgnoreNextGridClick) {
+    window.setTimeout(() => {
+      shouldIgnoreNextGridClick = false;
+    }, 120);
+  }
 }
 
 gridView.addEventListener("pointerup", finishGridDrag);

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quita - Support</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages/support.css">
+</head>
+<body>
+  <main class="support-page" data-support-page>
+    <header class="support-header">
+      <a class="support-back" href="./profile.html" aria-label="Back to profile">
+        <img src="../assets/arrow.svg" alt="">
+      </a>
+      <h1>Support</h1>
+    </header>
+
+    <img class="support-hero-card" src="../assets/support.svg" alt="" data-support-hero>
+
+    <p class="support-description" data-support-description></p>
+
+    <section class="support-actions" aria-label="Support actions">
+      <a class="support-action support-action--call" href="tel:18006624357" data-support-call>
+        <span aria-hidden="true">􀌾</span>
+        <span>Call now</span>
+      </a>
+
+      <button class="support-action support-action--neutral" type="button" data-support-copy>
+        <span aria-hidden="true">􀉁</span>
+        <span>Copy number</span>
+      </button>
+
+      <a class="support-action support-action--neutral" href="https://www.samhsa.gov/find-help/helplines/national-helpline" target="_blank" rel="noreferrer" data-support-website>
+        <span aria-hidden="true">􀉣</span>
+        <span>Visit website</span>
+      </a>
+    </section>
+
+    <p class="support-copy-feedback" data-support-feedback hidden>Number copied</p>
+
+    <p class="support-emergency-note">If you're in immediate danger, please call your local emergency services.</p>
+  </main>
+
+  <script type="module" src="../views/supportView.js"></script>
+</body>
+</html>

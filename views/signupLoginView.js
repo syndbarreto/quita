@@ -52,6 +52,12 @@ async function handleAuthSubmit(event) {
 
 document.addEventListener("click", (event) => {
   const trigger = event.target.closest("[data-go-to-step]");
+  const backTrigger = event.target.closest("[data-history-back]");
+
+  if (backTrigger) {
+    window.history.back();
+    return;
+  }
 
   if (!trigger) {
     return;

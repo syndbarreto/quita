@@ -30,15 +30,18 @@ body {
 .checkin-back {
   width: 48px;
   height: 48px;
-  padding: 3px 6px;
   color: var(--black);
-  font-size: 42px;
-  line-height: 38px;
   text-decoration: none;
 
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.checkin-back img {
+  width: 24px;
+  height: 24px;
+  display: block;
 }
 
 .checkin-content {

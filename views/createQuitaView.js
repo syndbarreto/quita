@@ -3,12 +3,17 @@ import {
   CHOICE_GROUPS,
   DOLL_STATES,
   QUITA_NAME_MAX_LENGTH,
-  WORRY_TYPES,
   getBackgroundOption,
+  isValidWorryType,
   pickRandomDoll,
 } from "../models/constants.js";
 import { Quita } from "../models/Quita.js";
 import { createQuitaRecord } from "../services/api-service.js";
+import { requireAuth } from "../services/auth-service.js";
+
+if (!requireAuth()) {
+  throw new Error("Authentication required.");
+}
 
 const nameInput = document.querySelector("[data-name-input]");
 const liveName = document.querySelector("[data-live-quita-name]");
@@ -18,7 +23,6 @@ const backgroundPreview = document.querySelector("[data-background-preview]");
 const dollPreview = document.querySelector("[data-doll-preview]");
 
 const colorOrder = ["blue", "pink", "green", "orange", "yellow"];
-const validWorryTypes = Object.values(WORRY_TYPES);
 const selectedChoices = {
   activity: null,
   people: null,
@@ -26,9 +30,13 @@ const selectedChoices = {
 };
 const selectedDoll = pickRandomDoll();
 const urlParams = new URLSearchParams(window.location.search);
-const selectedWorryType = validWorryTypes.includes(urlParams.get("worryType"))
-  ? urlParams.get("worryType")
-  : WORRY_TYPES.SEED;
+const selectedWorryType = urlParams.get("worryType");
+
+if (!isValidWorryType(selectedWorryType)) {
+  window.location.replace("./quiz.html");
+  throw new Error("A valid worry type is required to create a Quita.");
+}
+
 let selectedBackgroundId = BACKGROUND_OPTIONS[0].id;
 
 function createChoice(value, type = "preset") {
@@ -48,32 +56,21 @@ function normalizeQuitaName(name) {
   return limitQuitaName(name) || "Quita";
 }
 
-function escapeHtml(value) {
-  return value.replace(/[&<>"']/g, (char) => {
-    const entities = {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;",
-    };
-
-    return entities[char];
-  });
-}
-
 function renderLiveName(value = "Quita") {
   const normalizedName = normalizeQuitaName(value);
-  const letters = Array.from(normalizedName)
-    .map((char, index) => {
-      const color = colorOrder[index % colorOrder.length];
-      const content = char === " " ? "&nbsp;" : escapeHtml(char);
+  const content = document.createElement("span");
 
-      return `<span class="name-letter--${color}">${content}</span>`;
-    })
-    .join("");
+  content.classList.add("quita-display-name__content");
+  liveName.replaceChildren(content);
 
-  liveName.innerHTML = `<span class="quita-display-name__content">${letters}</span>`;
+  Array.from(normalizedName).forEach((char, index) => {
+    const color = colorOrder[index % colorOrder.length];
+    const letter = document.createElement("span");
+
+    letter.classList.add(`name-letter--${color}`);
+    letter.textContent = char === " " ? "\u00A0" : char;
+    content.appendChild(letter);
+  });
 
   fitLiveName();
 }

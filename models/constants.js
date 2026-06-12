@@ -6,6 +6,14 @@ export const WORRY_TYPES = Object.freeze({
   BURDEN: "burden",
 });
 
+export function isValidWorryType(worryType) {
+  return Object.values(WORRY_TYPES).includes(worryType);
+}
+
+export function normalizeWorryType(worryType, fallback = WORRY_TYPES.SEED) {
+  return isValidWorryType(worryType) ? worryType : fallback;
+}
+
 export const DOLL_STATES = Object.freeze({
   WORRIED: "worried",
   CALM: "calm",
@@ -22,27 +30,27 @@ export const DOLL_CATALOG = Object.freeze([
     id: "star",
     label: "Star",
     states: {
-      [DOLL_STATES.WORRIED]: "./assets/dolls/star-worried.png",
-      [DOLL_STATES.CALM]: "./assets/dolls/star-calm.png",
-      [DOLL_STATES.HAPPY]: "./assets/dolls/star-happy.png",
+      [DOLL_STATES.WORRIED]: "../assets/dolls/star-worried.png",
+      [DOLL_STATES.CALM]: "../assets/dolls/star-calm.png",
+      [DOLL_STATES.HAPPY]: "../assets/dolls/star-happy.png",
     },
   },
   {
     id: "diamond",
     label: "Diamond",
     states: {
-      [DOLL_STATES.WORRIED]: "./assets/dolls/diamond-worried.png",
-      [DOLL_STATES.CALM]: "./assets/dolls/diamond-calm.png",
-      [DOLL_STATES.HAPPY]: "./assets/dolls/diamond-happy.png",
+      [DOLL_STATES.WORRIED]: "../assets/dolls/diamond-worried.png",
+      [DOLL_STATES.CALM]: "../assets/dolls/diamond-calm.png",
+      [DOLL_STATES.HAPPY]: "../assets/dolls/diamond-happy.png",
     },
   },
   {
     id: "flower",
     label: "Flower",
     states: {
-      [DOLL_STATES.WORRIED]: "./assets/dolls/flower-worried.png",
-      [DOLL_STATES.CALM]: "./assets/dolls/flower-calm.png",
-      [DOLL_STATES.HAPPY]: "./assets/dolls/flower-happy.png",
+      [DOLL_STATES.WORRIED]: "../assets/dolls/flower-worried.png",
+      [DOLL_STATES.CALM]: "../assets/dolls/flower-calm.png",
+      [DOLL_STATES.HAPPY]: "../assets/dolls/flower-happy.png",
     },
   },
 ]);

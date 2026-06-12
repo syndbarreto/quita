@@ -1,3 +1,9 @@
+import { requireAuth } from "../services/auth-service.js";
+
+if (!requireAuth()) {
+  throw new Error("Authentication required.");
+}
+
 const emotionChips = [...document.querySelectorAll(".emotion-chip")];
 const feelingInput = document.querySelector("#feeling-input");
 const doneButton = document.querySelector(".checkin-done");

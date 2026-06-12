@@ -1,24 +1,61 @@
-import { getCurrentUser } from "../services/auth-service.js";
+import { getCurrentUser, requireAuth } from "../services/auth-service.js";
 import { getUserRecord, updateUserRecord } from "../services/api-service.js";
 import { getCalmingTools } from "../services/tools-service.js";
 
+if (!requireAuth()) {
+  throw new Error("Authentication required.");
+}
+
 const DEFAULT_CATEGORY = "all";
 const DEFAULT_TOOL_IMAGE = "https://placehold.co/72x72";
-const EMPTY_TOOL_IMAGE = "./assets/fixar.svg";
-const LIKE_ICON = "./assets/like.svg";
-const LIKE_ACTIVE_ICON = "./assets/like-active.svg";
+const EMPTY_TOOL_IMAGE = "../assets/fixar.svg";
+const LIKE_ICON = "../assets/like.svg";
+const LIKE_ACTIVE_ICON = "../assets/like-active.svg";
 
 const calmingToolPage = document.getElementById("calmingToolPage");
 const searchView = document.getElementById("searchView");
+const categoryView = document.getElementById("categoryView");
 const savedToolsView = document.getElementById("savedToolsView");
+const toolDetailView = document.getElementById("toolDetailView");
 const addToolsScroll = document.getElementById("addToolsScroll");
 const searchResultsList = document.getElementById("searchResultsList");
+const categoryResultsList = document.getElementById("categoryResultsList");
 const favsResultsList = document.getElementById("favsResultsList");
+const toolDetailContent = document.getElementById("toolDetailContent");
+const detailFavoriteButton = document.querySelector("[data-detail-favorite]");
+const categoryTitle = document.querySelector("[data-category-title]");
+const categoryImage = document.querySelector("[data-category-image]");
 
 const authUser = getCurrentUser();
 let currentUser = null;
 let tools = [];
 let favoriteToolIds = new Set();
+let previousPage = "home";
+let selectedToolId = null;
+let selectedCategory = DEFAULT_CATEGORY;
+
+const CATEGORY_DETAILS = {
+  breathing: {
+    title: "Breathing",
+    image: "../assets/info-breathing.svg",
+    alt: "Breathing category",
+  },
+  quotes: {
+    title: "Quotes",
+    image: "../assets/info-quotes.svg",
+    alt: "Quotes category",
+  },
+  grounding: {
+    title: "Grounding",
+    image: "../assets/info-grounding.svg",
+    alt: "Grounding category",
+  },
+  sounds: {
+    title: "Sounds",
+    image: "../assets/info-sounds.svg",
+    alt: "Sounds category",
+  },
+};
 
 const filters = {
   searchView: {
@@ -66,6 +103,10 @@ function getFavoriteTools() {
 
 function getViewState(view) {
   return filters[view.id] ?? filters.searchView;
+}
+
+function getToolById(toolId) {
+  return tools.find(tool => getToolId(tool) === Number(toolId)) ?? null;
 }
 
 function normalizeSearchValue(value) {
@@ -117,11 +158,32 @@ function createFavoriteButton(tool) {
   return button;
 }
 
+function updateFavoriteButton(button, tool) {
+  if (!button || !tool) {
+    return;
+  }
+
+  const toolId = getToolId(tool);
+  const isFavorite = favoriteToolIds.has(toolId);
+
+  button.textContent = "";
+  button.dataset.toolId = String(toolId);
+  button.setAttribute("aria-label", isFavorite ? "Remove favorite" : "Add favorite");
+  button.classList.toggle("active", isFavorite);
+  button.appendChild(createElement("img", "", {
+    src: isFavorite ? LIKE_ACTIVE_ICON : LIKE_ICON,
+    alt: "",
+    "aria-hidden": "true",
+  }));
+}
+
 function createToolResultCard(tool, { showFavoriteButton = false } = {}) {
   const card = createElement("article", "result-card", {
     "data-tool-id": String(getToolId(tool)),
     "data-name": normalizeSearchValue(tool.name ?? ""),
     "data-category": normalizeSearchValue(tool.category ?? ""),
+    role: "button",
+    tabindex: "0",
   });
   const info = createElement("div", "result-info");
   const text = createElement("div", "result-text");
@@ -142,7 +204,8 @@ function createToolResultCard(tool, { showFavoriteButton = false } = {}) {
 function createSavedToolButton(tool) {
   const button = createElement("button", "add-tool-btn", {
     type: "button",
-    "data-open-saved": "",
+    "data-tool-id": String(getToolId(tool)),
+    "aria-label": `Open ${tool.name}`,
   });
   const image = createElement("img", "add-tool-image--saved", {
     src: tool.imageUrl || DEFAULT_TOOL_IMAGE,
@@ -192,11 +255,24 @@ function renderResultList(container, sourceTools, state, options = {}) {
 }
 
 function renderSearchResults() {
-  renderResultList(searchResultsList, tools, filters.searchView);
+  renderResultList(searchResultsList, tools, filters.searchView, {
+    showFavoriteButton: true,
+  });
 }
 
 function renderFavoriteResults() {
   renderResultList(favsResultsList, tools, filters.savedToolsView, {
+    showFavoriteButton: true,
+  });
+}
+
+function renderCategoryResults(category) {
+  const state = {
+    category,
+    query: "",
+  };
+
+  renderResultList(categoryResultsList, tools, state, {
     showFavoriteButton: true,
   });
 }
@@ -210,26 +286,62 @@ function renderAll() {
 function setCurrentPage(nextPage) {
   calmingToolPage.hidden = nextPage !== "home";
   searchView.hidden = nextPage !== "search";
+  categoryView.hidden = nextPage !== "category";
   savedToolsView.hidden = nextPage !== "saved";
+  toolDetailView.hidden = nextPage !== "detail";
 
   searchView.classList.toggle("is-active", nextPage === "search");
+  categoryView.classList.toggle("is-active", nextPage === "category");
   savedToolsView.classList.toggle("is-active", nextPage === "saved");
+  toolDetailView.classList.toggle("is-active", nextPage === "detail");
 }
 
-function setActiveFilter(chip) {
-  const view = chip.closest(".search-view");
+function updateFilterChips(view) {
   const state = getViewState(view);
 
-  state.category = chip.dataset.filterCategory ?? DEFAULT_CATEGORY;
   view.querySelectorAll(".filter-chip").forEach(filterChip => {
-    filterChip.classList.toggle("active", filterChip === chip);
+    filterChip.classList.toggle(
+      "active",
+      filterChip.dataset.filterCategory === state.category,
+    );
   });
+}
+
+function setViewFilter(view, category = DEFAULT_CATEGORY, query = "") {
+  const state = getViewState(view);
+  const input = view.querySelector(".search-input-wrapper");
+
+  state.category = category;
+  state.query = query;
+  updateFilterChips(view);
+
+  if (input) {
+    input.value = query;
+  }
 
   if (view.id === "savedToolsView") {
     renderFavoriteResults();
   } else {
     renderSearchResults();
   }
+}
+
+function openCategory(category) {
+  const details = CATEGORY_DETAILS[category] ?? CATEGORY_DETAILS.breathing;
+
+  selectedCategory = category;
+  categoryTitle.textContent = details.title;
+  categoryImage.src = details.image;
+  categoryImage.alt = details.alt;
+  renderCategoryResults(category);
+  setCurrentPage("category");
+}
+
+function setActiveFilter(chip) {
+  const view = chip.closest(".search-view");
+  const category = chip.dataset.filterCategory ?? DEFAULT_CATEGORY;
+
+  setViewFilter(view, category, getViewState(view).query);
 }
 
 function setSearchQuery(input) {
@@ -280,6 +392,41 @@ async function toggleFavorite(toolId) {
   }
 }
 
+function renderToolDetail(tool) {
+  clearChildren(toolDetailContent);
+  updateFavoriteButton(detailFavoriteButton, tool);
+
+  const image = createToolImage(tool);
+
+  image.classList.add("tool-detail-image");
+  toolDetailContent.appendChild(image);
+  const category = appendTextElement(toolDetailContent, "p", "tool-detail-category", tool.category ?? "Tool");
+
+  category.textContent = (tool.category ?? "Tool").toUpperCase();
+  appendTextElement(toolDetailContent, "h1", "tool-detail-title", tool.name ?? "");
+
+  if (tool.description) {
+    appendTextElement(toolDetailContent, "p", "tool-detail-description", tool.description);
+  }
+}
+
+function openToolDetail(toolId, originPage) {
+  const tool = getToolById(toolId);
+
+  if (!tool) {
+    return;
+  }
+
+  selectedToolId = getToolId(tool);
+  previousPage = originPage;
+  renderToolDetail(tool);
+  setCurrentPage("detail");
+}
+
+function closeToolDetail() {
+  setCurrentPage(previousPage);
+}
+
 async function loadCurrentUser() {
   if (!authUser?.id) {
     return null;
@@ -308,17 +455,28 @@ async function init() {
 document.addEventListener("click", event => {
   const openSearchBtn = event.target.closest("[data-open-search]");
   const closeSearchBtn = event.target.closest("[data-close-search]");
+  const closeCategoryBtn = event.target.closest("[data-close-category]");
   const openSavedBtn = event.target.closest("[data-open-saved]");
   const closeSavedBtn = event.target.closest("[data-close-saved]");
+  const closeDetailBtn = event.target.closest("[data-close-detail]");
+  const categoryCard = event.target.closest("[data-open-category]");
   const filterChip = event.target.closest(".filter-chip");
   const favoriteBtn = event.target.closest(".favorite-btn");
+  const resultCard = event.target.closest(".result-card");
+  const savedToolButton = event.target.closest(".add-tool-btn[data-tool-id]");
 
   if (openSearchBtn) {
+    setViewFilter(searchView);
     setCurrentPage("search");
     return;
   }
 
   if (closeSearchBtn) {
+    setCurrentPage("home");
+    return;
+  }
+
+  if (closeCategoryBtn) {
     setCurrentPage("home");
     return;
   }
@@ -333,6 +491,16 @@ document.addEventListener("click", event => {
     return;
   }
 
+  if (closeDetailBtn) {
+    closeToolDetail();
+    return;
+  }
+
+  if (categoryCard) {
+    openCategory(categoryCard.dataset.openCategory);
+    return;
+  }
+
   if (filterChip) {
     setActiveFilter(filterChip);
     return;
@@ -340,7 +508,54 @@ document.addEventListener("click", event => {
 
   if (favoriteBtn) {
     toggleFavorite(Number(favoriteBtn.dataset.toolId));
+
+    if (!toolDetailView.hidden && selectedToolId) {
+      updateFavoriteButton(detailFavoriteButton, getToolById(selectedToolId));
+    }
+
+    if (!categoryView.hidden) {
+      renderCategoryResults(selectedCategory);
+    }
+
+    return;
   }
+
+  if (resultCard) {
+    const originPage = resultCard.closest("#savedToolsView")
+      ? "saved"
+      : resultCard.closest("#categoryView")
+        ? "category"
+        : "search";
+
+    openToolDetail(resultCard.dataset.toolId, originPage);
+    return;
+  }
+
+  if (savedToolButton) {
+    openToolDetail(savedToolButton.dataset.toolId, "home");
+  }
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key !== "Enter" && event.key !== " ") {
+    return;
+  }
+
+  const resultCard = event.target.closest(".result-card");
+
+  if (!resultCard) {
+    return;
+  }
+
+  event.preventDefault();
+  openToolDetail(
+    resultCard.dataset.toolId,
+    resultCard.closest("#savedToolsView")
+      ? "saved"
+      : resultCard.closest("#categoryView")
+        ? "category"
+        : "search"
+  );
 });
 
 document.addEventListener("input", event => {
