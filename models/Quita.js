@@ -45,6 +45,8 @@ export class Quita {
   #status;
   #journals;
   #createdAt;
+  #releasedAt;
+  #releaseReflection;
   #userId;
 
   static createId() {
@@ -77,6 +79,8 @@ export class Quita {
     this.#status = data.status || QUITA_STATUS.VAULT;
     this.#journals = journals;
     this.#createdAt = data.createdAt || new Date().toISOString();
+    this.#releasedAt = data.releasedAt ?? null;
+    this.#releaseReflection = data.releaseReflection ?? null;
     this.#userId = data.userId ?? null;
   }
 
@@ -136,6 +140,14 @@ export class Quita {
     return this.#createdAt;
   }
 
+  get releasedAt() {
+    return this.#releasedAt;
+  }
+
+  get releaseReflection() {
+    return this.#releaseReflection;
+  }
+
   get userId() {
     return this.#userId;
   }
@@ -156,6 +168,8 @@ export class Quita {
       status: this.status,
       journals: this.journals,
       createdAt: this.createdAt,
+      ...(this.releasedAt ? { releasedAt: this.releasedAt } : {}),
+      ...(this.releaseReflection ? { releaseReflection: this.releaseReflection } : {}),
       ...(this.userId ? { userId: this.userId } : {}),
     };
   }

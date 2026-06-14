@@ -25,10 +25,16 @@ export async function apiRequest(path, options = {}) {
   if (!response.ok) {
     if (response.status === 401) {
       logoutUser();
-      throw new Error("Your session expired. Please log in again.");
+      const error = new Error("Your session expired. Please log in again.");
+
+      error.status = response.status;
+      throw error;
     }
 
-    throw new Error(data?.message || "Request failed. Please try again.");
+    const error = new Error(data?.message || "Request failed. Please try again.");
+
+    error.status = response.status;
+    throw error;
   }
 
   return data;
@@ -37,7 +43,8 @@ export async function apiRequest(path, options = {}) {
 export async function createOwnedRecord(collection, payload) {
   const user = getCurrentUser();
   const token = getAuthToken();
-  const serializedPayload = typeof payload?.toJSON === "function" ? payload.toJSON() : payload;
+  const serializedPayload =
+    typeof payload?.toJSON === "function" ? payload.toJSON() : payload;
 
   if (!user?.id || !token) {
     logoutUser();

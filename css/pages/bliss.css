@@ -1,0 +1,198 @@
+body {
+  align-items: flex-start;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.bliss-page {
+  width: min(100vw, 402px);
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  padding: 0;
+}
+
+.bliss-page-label {
+  margin: 0 0 14px;
+  padding-inline: 20px;
+  color: var(--medium-text);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.bliss-stage {
+  width: 100%;
+  min-height: max(100dvh, 960px);
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: visible;
+  background: var(--background);
+  padding-top: 102px;
+  padding-bottom: 154px;
+}
+
+.bliss-sun {
+  width: 92px;
+  height: 92px;
+  position: absolute;
+  top: 82px;
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-50%);
+}
+
+.bliss-decoration {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bliss-decoration--pentagon {
+  width: 17px;
+  height: 17px;
+  background: var(--gold);
+  clip-path: polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%);
+}
+
+.bliss-decoration--top-left {
+  top: 108px;
+  left: 68px;
+}
+
+.bliss-decoration--diamond {
+  width: 14px;
+  height: 14px;
+  background: var(--hot-pink);
+  transform: rotate(45deg);
+}
+
+.bliss-decoration--top-right {
+  top: 120px;
+  right: 72px;
+}
+
+.bliss-decoration--star-blue,
+.bliss-decoration--star-mint {
+  mask-image: url("../../assets/star-7-points.svg");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: url("../../assets/star-7-points.svg");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+
+.bliss-decoration--star-blue {
+  width: 28px;
+  height: 28px;
+  left: 88px;
+  top: 360px;
+  background: var(--blue);
+}
+
+.bliss-decoration--star-mint {
+  width: 16px;
+  height: 16px;
+  right: 76px;
+  top: 386px;
+  background: var(--mint);
+}
+
+.bliss-hero-copy {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.bliss-hero-copy h1 {
+  margin: 96px 0 16px;
+  color: var(--purple);
+  font-family: var(--font-title);
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 0.9;
+}
+
+.bliss-hero-copy p {
+  margin: 0 0 14px;
+  color: color-mix(in srgb, var(--purple) 72%, var(--white));
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.bliss-count-chip {
+  min-width: 124px;
+  min-height: 32px;
+  border-radius: 1000px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 18px;
+  background: var(--vault-filter-bg);
+  color: var(--purple);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  line-height: 1;
+}
+
+.bliss-empty {
+  position: relative;
+  z-index: 2;
+  margin-top: 120px;
+  padding-inline: 48px;
+  color: var(--text-secondary);
+  font-size: 17px;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.bliss-carousel {
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  gap: 36px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 104px;
+  padding: 0 calc((100% - 224px) / 2) 18px;
+}
+
+.bliss-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.bliss-doll-card {
+  flex: 0 0 224px;
+  height: 468px;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bliss-doll-card img {
+  width: 258px;
+  max-width: none;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 18px 24px color-mix(in srgb, var(--purple) 12%, transparent));
+}
+
+.bliss-doll-card:first-child img {
+  width: 282px;
+}

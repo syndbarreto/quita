@@ -55,6 +55,10 @@ body {
   z-index: 30;
 }
 
+.vault-page.is-empty .vault-view-toggle {
+  display: none;
+}
+
 .vault-toggle-button {
   width: 46px;
   height: 41px;
@@ -119,18 +123,47 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-start;
-  text-align: center;
-  gap: 26px;
+  text-align: left;
+  gap: 22px;
+  padding-top: 72px;
+}
+
+.vault-empty-header {
+  width: 100%;
+  min-height: 56px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+}
+
+.vault-empty-header h1 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 24px;
+  font-weight: 1000;
+  line-height: 29px;
+}
+
+.vault-empty-header p {
+  margin: 8px 0 0;
+  color: var(--medium-text);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
 }
 
 .vault-empty-doll {
-  width: 260px;
-  height: 326px;
-  margin-top: 70px;
+  width: 208px;
+  height: 262px;
+  margin-top: 38px;
+  align-self: center;
   display: grid;
   place-items: center;
+  opacity: 0.42;
+  filter: grayscale(1);
 }
 
 .vault-empty-doll img {
@@ -143,7 +176,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  text-align: center;
+  gap: 10px;
+  margin-top: 2px;
 }
 
 .vault-empty h2 {
@@ -151,7 +186,7 @@ body {
   color: var(--blue);
   font-size: 24px;
   font-weight: 590;
-  line-height: 22px;
+  line-height: 28px;
 }
 
 .vault-empty p {
@@ -164,9 +199,10 @@ body {
 }
 
 .vault-primary-button {
-  width: 206px;
+  width: 214px;
   height: 48px;
   padding: 0 28px;
+  align-self: center;
   border-radius: 1000px;
   background: var(--blue);
   box-shadow: 0 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
@@ -177,6 +213,7 @@ body {
   font-size: 16px;
   font-weight: 510;
   text-decoration: none;
+  margin-top: 8px;
 }
 
 .vault-list-view {
