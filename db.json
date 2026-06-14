@@ -38,6 +38,17 @@
         3
       ],
       "id": 3
+    },
+    {
+      "email": "lucaslindo@gmail.com",
+      "password": "$2a$10$C1LKfNLAKLaurXcMzU7aKOFJn3nz6fz.vovfQWSWGwxf2VexhtnAq",
+      "firstName": "lucas",
+      "lastName": "lindo",
+      "birthDate": "2003-03-05",
+      "favTools": [
+        13
+      ],
+      "id": 4
     }
   ],
   "quitas": [
@@ -62,7 +73,7 @@
       "worryType": "burden",
       "dollId": "star",
       "dollState": "calm",
-      "status": "vault",
+      "status": "bliss",
       "journals": [
         {
           "id": "94482a23-d594-432a-a0a5-acb90c1a380a",
@@ -72,7 +83,12 @@
         }
       ],
       "createdAt": "2026-06-11T11:34:43.701Z",
-      "userId": 1
+      "userId": 1,
+      "releaseReflection": {
+        "text": "muito feliz",
+        "createdAt": "2026-06-12T19:40:33.529Z"
+      },
+      "releasedAt": "2026-06-12T19:40:33.530Z"
     },
     {
       "id": "d8d78380-d41d-4be8-833a-463b24623d78",
@@ -125,10 +141,15 @@
       "worryType": "seed",
       "dollId": "diamond",
       "dollState": "worried",
-      "status": "vault",
+      "status": "bliss",
       "journals": [],
       "createdAt": "2026-06-11T11:37:12.273Z",
-      "userId": 1
+      "userId": 1,
+      "releaseReflection": {
+        "text": "muito",
+        "createdAt": "2026-06-12T19:26:26.432Z"
+      },
+      "releasedAt": "2026-06-12T19:26:26.435Z"
     }
   ],
   "emotionalCheckins": [],

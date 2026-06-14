@@ -1,7 +1,4 @@
-import {
-  deleteQuitaRecord,
-  getQuitaRecords,
-} from "../services/api-service.js";
+import { deleteQuitaRecord, getQuitaRecords } from "../services/api-service.js";
 import { requireAuth } from "../services/auth-service.js";
 import { getCalmingToolsByIds } from "../services/tools-service.js";
 import {
@@ -37,28 +34,45 @@ const VAULT_TOOLS_BY_TYPE = {
   [WORRY_TYPES.KNOT]: {
     accent: "knot",
     ids: [12, 3, 11],
-    titleParts: ["Tools for when you're feeling tied in ", { text: "knot", highlight: true }],
+    titleParts: [
+      "Tools for when you're feeling tied in ",
+      { text: "knot", highlight: true },
+    ],
   },
   [WORRY_TYPES.SEED]: {
     accent: "seed",
     ids: [6, 1, 9],
-    titleParts: ["Tools for when something is just ", { text: "beginning", highlight: true }],
+    titleParts: [
+      "Tools for when something is just ",
+      { text: "beginning", highlight: true },
+    ],
   },
   [WORRY_TYPES.BURDEN]: {
     accent: "burden",
     ids: [13, 2, 10],
-    titleParts: ["Tools for when you're feeling ", { text: "weighed down", highlight: true }],
+    titleParts: [
+      "Tools for when you're feeling ",
+      { text: "weighed down", highlight: true },
+    ],
   },
 };
 
 const CONFIRMATION_CONTENT = {
   delete: {
     accent: "delete",
-    titleParts: ["Are you sure you want to ", { text: "delete", highlight: true }, " this Quita?"],
+    titleParts: [
+      "Are you sure you want to ",
+      { text: "delete", highlight: true },
+      " this Quita?",
+    ],
   },
   release: {
     accent: "release",
-    titleParts: ["Are you sure you want to ", { text: "release", highlight: true }, " this Quita?"],
+    titleParts: [
+      "Are you sure you want to ",
+      { text: "release", highlight: true },
+      " this Quita?",
+    ],
   },
 };
 
@@ -75,9 +89,13 @@ let shouldIgnoreNextGridClick = false;
 
 function createElement(tagName, classNames = [], attributes = {}) {
   const element = document.createElement(tagName);
-  const normalizedClassNames = Array.isArray(classNames) ? classNames : [classNames];
+  const normalizedClassNames = Array.isArray(classNames)
+    ? classNames
+    : [classNames];
 
-  normalizedClassNames.filter(Boolean).forEach((className) => element.classList.add(className));
+  normalizedClassNames
+    .filter(Boolean)
+    .forEach((className) => element.classList.add(className));
 
   Object.entries(attributes).forEach(([name, value]) => {
     if (value !== null && value !== undefined) {
@@ -137,7 +155,9 @@ function appendPatternShapes(card) {
     ["vault-pattern-shape--burst", "shape-f"],
     ["vault-pattern-shape--burst", "shape-g"],
   ].forEach((classNames) => {
-    card.appendChild(createElement("span", ["vault-pattern-shape", ...classNames]));
+    card.appendChild(
+      createElement("span", ["vault-pattern-shape", ...classNames]),
+    );
   });
 }
 
@@ -148,11 +168,15 @@ function getQuitaDollAsset(quita) {
 function renderGridCard(quita) {
   const background = getBackgroundOption(quita.gridBackground);
   const dollAlt = `${quita.name} Quita`;
-  const card = createElement("article", ["vault-grid-card", `background-option--${background.id}`], {
-    "data-quita-detail-id": quita.id,
-    role: "link",
-    tabindex: "0",
-  });
+  const card = createElement(
+    "article",
+    ["vault-grid-card", `background-option--${background.id}`],
+    {
+      "data-quita-detail-id": quita.id,
+      role: "link",
+      tabindex: "0",
+    },
+  );
   const doll = createElement("img", "vault-grid-doll", {
     src: getQuitaDollAsset(quita),
     alt: dollAlt,
@@ -188,11 +212,15 @@ function createCardAction({ label, iconClass, attributes = {} }) {
 function renderListCard(quita) {
   const worryType = normalizeWorryType(quita.worryType);
   const dollAlt = `${quita.name} Quita`;
-  const card = createElement("article", ["vault-list-card", `vault-list-card--${worryType}`], {
-    "data-quita-detail-id": quita.id,
-    role: "link",
-    tabindex: "0",
-  });
+  const card = createElement(
+    "article",
+    ["vault-list-card", `vault-list-card--${worryType}`],
+    {
+      "data-quita-detail-id": quita.id,
+      role: "link",
+      tabindex: "0",
+    },
+  );
   const actions = createElement("div", "vault-card-actions");
   const copy = createElement("div", "vault-list-copy");
   const time = createElement("time", "", {
@@ -282,17 +310,26 @@ async function openToolsOverlay(quitaId) {
   }
 
   const worryType = quita.worryType || WORRY_TYPES.SEED;
-  const config = VAULT_TOOLS_BY_TYPE[worryType] || VAULT_TOOLS_BY_TYPE[WORRY_TYPES.SEED];
+  const config =
+    VAULT_TOOLS_BY_TYPE[worryType] || VAULT_TOOLS_BY_TYPE[WORRY_TYPES.SEED];
   const tools = await getCalmingToolsByIds(config.ids);
 
-  const copy = createElement("div", ["vault-tools-copy", `vault-tools-copy--${config.accent}`]);
+  const copy = createElement("div", [
+    "vault-tools-copy",
+    `vault-tools-copy--${config.accent}`,
+  ]);
   const title = createElement("h2", "", {
     id: "vault-tools-title",
   });
   const list = createElement("div", "vault-tools-list");
 
   appendHighlightedText(title, config.titleParts);
-  appendText(copy, "p", "", "A curated selection of tools designed to meet you where you are.");
+  appendText(
+    copy,
+    "p",
+    "",
+    "A curated selection of tools designed to meet you where you are.",
+  );
   copy.prepend(title);
   tools.forEach((tool) => list.appendChild(renderToolItem(tool)));
   toolsContent.replaceChildren(copy, list);
@@ -391,18 +428,23 @@ function getNearestGridCard() {
   const gridCenterX = gridRect.left + gridRect.width / 2;
   const gridCenterY = gridRect.top + gridRect.height / 2;
 
-  return cards.reduce((nearest, card) => {
-    const cardRect = card.getBoundingClientRect();
-    const cardCenterX = cardRect.left + cardRect.width / 2;
-    const cardCenterY = cardRect.top + cardRect.height / 2;
-    const distance = Math.hypot(cardCenterX - gridCenterX, cardCenterY - gridCenterY);
+  return (
+    cards.reduce((nearest, card) => {
+      const cardRect = card.getBoundingClientRect();
+      const cardCenterX = cardRect.left + cardRect.width / 2;
+      const cardCenterY = cardRect.top + cardRect.height / 2;
+      const distance = Math.hypot(
+        cardCenterX - gridCenterX,
+        cardCenterY - gridCenterY,
+      );
 
-    if (!nearest || distance < nearest.distance) {
-      return { card, distance };
-    }
+      if (!nearest || distance < nearest.distance) {
+        return { card, distance };
+      }
 
-    return nearest;
-  }, null)?.card ?? null;
+      return nearest;
+    }, null)?.card ?? null
+  );
 }
 
 function setGridTrackPosition(nextOffset, shouldAnimate = false) {
@@ -467,7 +509,7 @@ function snapGridToCard(card = getNearestGridCard(), shouldAnimate = true) {
       x: gridOffset.x + gridCenter.x - cardCenter.x,
       y: gridOffset.y + gridCenter.y - cardCenter.y,
     },
-    shouldAnimate
+    shouldAnimate,
   );
   updateCenteredGridCard();
 }
@@ -485,7 +527,7 @@ function centerSmallGridSet(cards) {
       x: gridOffset.x + gridCenter.x - groupBounds.centerX,
       y: gridOffset.y + gridCenter.y - groupBounds.centerY,
     },
-    false
+    false,
   );
   updateCenteredGridCard();
 }
@@ -558,6 +600,7 @@ function setFilter(nextFilter) {
 
 function render() {
   if (!isVaultLoaded) {
+    vaultPage.classList.remove("is-empty");
     emptyState.hidden = true;
     gridView.hidden = true;
     listView.hidden = true;
@@ -567,6 +610,7 @@ function render() {
   const hasQuitas = quitas.length > 0;
   const visibleQuitas = getVisibleQuitas();
 
+  vaultPage.classList.toggle("is-empty", !hasQuitas);
   emptyState.hidden = hasQuitas;
   gridView.hidden = !hasQuitas || currentView !== "grid";
   listView.hidden = !hasQuitas || currentView !== "list";
@@ -601,6 +645,13 @@ async function loadVault() {
 
     render();
   } catch (error) {
+    if (error.status === 403) {
+      quitas = new QuitaCollection([]).newestVaultItems;
+      isVaultLoaded = true;
+      render();
+      return;
+    }
+
     window.location.href = "./signupLogin.html?view=login";
   }
 }
@@ -610,9 +661,13 @@ document.addEventListener("click", (event) => {
   const filterButton = event.target.closest("[data-vault-filter]");
   const toolsButton = event.target.closest("[data-vault-open-tools]");
   const closeToolsButton = event.target.closest("[data-vault-tools-close]");
-  const confirmActionButton = event.target.closest("[data-vault-confirm-action]");
+  const confirmActionButton = event.target.closest(
+    "[data-vault-confirm-action]",
+  );
   const confirmNoButton = event.target.closest("[data-vault-confirm-no]");
-  const confirmYesButtonTarget = event.target.closest("[data-vault-confirm-yes]");
+  const confirmYesButtonTarget = event.target.closest(
+    "[data-vault-confirm-yes]",
+  );
   const detailCard = event.target.closest("[data-quita-detail-id]");
 
   if (viewButton) {
@@ -634,7 +689,7 @@ document.addEventListener("click", (event) => {
   if (confirmActionButton) {
     openConfirmationOverlay(
       confirmActionButton.dataset.vaultConfirmAction,
-      confirmActionButton.dataset.quitaId
+      confirmActionButton.dataset.quitaId,
     );
   }
 
@@ -659,7 +714,11 @@ document.addEventListener("click", (event) => {
 document.addEventListener("keydown", (event) => {
   const detailCard = event.target.closest("[data-quita-detail-id]");
 
-  if (!detailCard || event.target.closest(".vault-card-action") || !["Enter", " "].includes(event.key)) {
+  if (
+    !detailCard ||
+    event.target.closest(".vault-card-action") ||
+    !["Enter", " "].includes(event.key)
+  ) {
     return;
   }
 
@@ -692,7 +751,10 @@ gridView.addEventListener("pointermove", (event) => {
 
   event.preventDefault();
   const dragFactor = quitas.length === 1 ? 0.18 : 1;
-  const distance = Math.hypot(event.clientX - gridDragState.startX, event.clientY - gridDragState.startY);
+  const distance = Math.hypot(
+    event.clientX - gridDragState.startX,
+    event.clientY - gridDragState.startY,
+  );
 
   if (distance > 6) {
     shouldIgnoreNextGridClick = true;
@@ -700,10 +762,14 @@ gridView.addEventListener("pointermove", (event) => {
 
   setGridTrackPosition(
     {
-      x: gridDragState.offsetX + (event.clientX - gridDragState.startX) * dragFactor,
-      y: gridDragState.offsetY + (event.clientY - gridDragState.startY) * dragFactor,
+      x:
+        gridDragState.offsetX +
+        (event.clientX - gridDragState.startX) * dragFactor,
+      y:
+        gridDragState.offsetY +
+        (event.clientY - gridDragState.startY) * dragFactor,
     },
-    false
+    false,
   );
   updateCenteredGridCard();
 });

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quita - Bliss</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages/bliss.css">
+</head>
+<body>
+  <main class="bliss-page">
+
+    <section class="bliss-stage" aria-labelledby="bliss-title">
+      <img class="bliss-sun" src="../assets/Sun.svg" alt="" aria-hidden="true">
+      <span class="bliss-decoration bliss-decoration--pentagon bliss-decoration--top-left" aria-hidden="true"></span>
+      <span class="bliss-decoration bliss-decoration--diamond bliss-decoration--top-right" aria-hidden="true"></span>
+      <span class="bliss-decoration bliss-decoration--star-blue" aria-hidden="true"></span>
+      <span class="bliss-decoration bliss-decoration--star-mint" aria-hidden="true"></span>
+
+      <header class="bliss-hero-copy">
+        <h1 id="bliss-title">Bliss</h1>
+        <p data-bliss-subtitle>They rest here now.</p>
+        <span class="bliss-count-chip" data-bliss-count>0 LET GO</span>
+      </header>
+
+      <section class="bliss-empty" data-bliss-empty hidden>
+        <p>No Quitas are resting here yet.</p>
+      </section>
+
+      <section class="bliss-carousel" aria-label="Released Quitas" data-bliss-carousel></section>
+    </section>
+  </main>
+
+  <nav class="app-bottom-nav" aria-label="Main navigation">
+    <a class="app-bottom-nav__item app-bottom-nav__item--tools" href="./calmingTools.html">
+      <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+      <span>Tools</span>
+    </a>
+    <a class="app-bottom-nav__item app-bottom-nav__item--vault" href="./vault.html?view=list">
+      <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+      <span>Vault</span>
+    </a>
+    <a class="app-bottom-nav__item app-bottom-nav__item--home" href="./home.html">
+      <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+      <span>Home</span>
+    </a>
+    <a class="app-bottom-nav__item app-bottom-nav__item--bliss" href="./bliss.html" aria-current="page">
+      <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+      <span>Bliss</span>
+    </a>
+    <a class="app-bottom-nav__item app-bottom-nav__item--profile" href="./profile.html">
+      <span class="app-bottom-nav__icon" aria-hidden="true"></span>
+      <span>Profile</span>
+    </a>
+  </nav>
+
+  <script type="module" src="../views/blissView.js"></script>
+</body>
+</html>

@@ -2,7 +2,6 @@ import { loginUser, registerUser } from "../services/auth-service.js";
 
 const views = [...document.querySelectorAll("[data-step]")];
 const authForms = [...document.querySelectorAll("[data-auth-form]")];
-const dateInputs = [...document.querySelectorAll("[data-date-input]")];
 
 function showView(viewName) {
   views.forEach((view) => {
@@ -37,7 +36,7 @@ async function handleAuthSubmit(event) {
 
     if (authType === "signup") {
       await registerUser(payload);
-      window.location.href = "./onboarding.html";
+      window.location.href = "./home.html";
       return;
     }
 
@@ -75,16 +74,4 @@ showView(initialView);
 
 authForms.forEach((form) => {
   form.addEventListener("submit", handleAuthSubmit);
-});
-
-dateInputs.forEach((input) => {
-  input.addEventListener("focus", () => {
-    input.type = "date";
-  });
-
-  input.addEventListener("blur", () => {
-    if (!input.value) {
-      input.type = "text";
-    }
-  });
 });

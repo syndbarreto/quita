@@ -1,3 +1,5 @@
+import { isAuthenticated } from "../services/auth-service.js";
+
 const splashDuration = 2000;
 const transitionDuration = 450;
 
@@ -6,5 +8,7 @@ window.setTimeout(() => {
 }, splashDuration - transitionDuration);
 
 window.setTimeout(() => {
-  window.location.href = "./pages/onboarding.html";
+  window.location.href = isAuthenticated()
+    ? "./pages/home.html"
+    : "./pages/onboarding.html";
 }, splashDuration);

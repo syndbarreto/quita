@@ -72,11 +72,12 @@ export function getCurrentUser() {
 }
 
 export function isAuthenticated() {
-  return Boolean(getAuthToken());
+  return Boolean(getCurrentUser());
 }
 
 export function requireAuth() {
   if (!isAuthenticated()) {
+    logoutUser();
     window.location.href = "./signupLogin.html?view=login";
     return false;
   }
