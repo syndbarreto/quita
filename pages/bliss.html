@@ -31,6 +31,28 @@
 
       <section class="bliss-carousel" aria-label="Released Quitas" data-bliss-carousel></section>
     </section>
+
+    <section class="bliss-info-overlay" data-bliss-info-overlay hidden>
+      <div class="bliss-info-backdrop" data-bliss-info-close></div>
+      <article class="bliss-info-sheet" role="dialog" aria-modal="true" aria-labelledby="bliss-info-name">
+        <button class="bliss-info-close" type="button" data-bliss-info-close aria-label="Close Bliss details">
+          <img src="../assets/close.svg" alt="" aria-hidden="true">
+        </button>
+        <img class="bliss-info-doll" data-bliss-info-doll src="../assets/dolls/flower-happy.png" alt="">
+        <p class="bliss-info-kicker" data-bliss-info-kicker>LET GO</p>
+        <h2 id="bliss-info-name" class="bliss-info-name" data-bliss-info-name></h2>
+
+        <section class="bliss-info-card" aria-labelledby="bliss-info-worry-title">
+          <h3 id="bliss-info-worry-title">The worry</h3>
+          <p data-bliss-info-worry></p>
+        </section>
+
+        <section class="bliss-info-card bliss-info-card--light" aria-labelledby="bliss-info-reflection-title">
+          <h3 id="bliss-info-reflection-title">How it eased</h3>
+          <p data-bliss-info-reflection></p>
+        </section>
+      </article>
+    </section>
   </main>
 
   <nav class="app-bottom-nav" aria-label="Main navigation">
