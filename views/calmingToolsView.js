@@ -37,6 +37,8 @@ let selectedToolId = null;
 let selectedCategory = DEFAULT_CATEGORY;
 let activeExercise = null;
 let activeExerciseStep = 0;
+let quoteSwipeStartX = null;
+let quoteSwipeStartY = null;
 
 const GROUNDING_EXERCISE_TOOL_ID = 12;
 const GROUNDING_EXERCISE_TOOL_NAME = "5-4-3-2-1 method";
@@ -44,8 +46,47 @@ const BODY_SCAN_TOOL_ID = 13;
 const BODY_SCAN_TOOL_NAME = "body scan";
 const ORGANIZE_MIND_TOOL_ID = 14;
 const ORGANIZE_MIND_TOOL_NAME = "organize your mind";
+const FOCUSED_BREATH_TOOL_ID = 1;
+const FOCUSED_BREATH_TOOL_NAME = "focused breath";
+const BOX_BREATHE_TOOL_ID = 2;
+const BOX_BREATHE_TOOL_NAME = "box breathe";
+const BELLY_BREATHE_TOOL_ID = 3;
+const BELLY_BREATHE_TOOL_NAME = "belly breathe";
+const RESILIENCE_QUOTES_TOOL_ID = 4;
+const RESILIENCE_QUOTES_TOOL_NAME = "resilience & strength";
+const PATIENCE_QUOTES_TOOL_ID = 5;
+const PATIENCE_QUOTES_TOOL_NAME = "patience & calm";
+const PERSPECTIVE_QUOTES_TOOL_ID = 6;
+const PERSPECTIVE_QUOTES_TOOL_NAME = "new perspectives";
 
 const EXERCISES = {
+  focusedBreath: {
+    kind: "breathing-video",
+    toolId: FOCUSED_BREATH_TOOL_ID,
+    toolName: FOCUSED_BREATH_TOOL_NAME,
+    category: "breathing",
+    method: "Focused breath",
+    theme: "breathing-dark",
+    videoSrc: "../assets/videos/focused-breath.mp4",
+  },
+  boxBreathe: {
+    kind: "breathing-video",
+    toolId: BOX_BREATHE_TOOL_ID,
+    toolName: BOX_BREATHE_TOOL_NAME,
+    category: "breathing",
+    method: "Box breath",
+    theme: "breathing-light",
+    videoSrc: "../assets/videos/box-breathe.mp4",
+  },
+  bellyBreathe: {
+    kind: "breathing-video",
+    toolId: BELLY_BREATHE_TOOL_ID,
+    toolName: BELLY_BREATHE_TOOL_NAME,
+    category: "breathing",
+    method: "Belly breath",
+    theme: "breathing-dark",
+    videoSrc: "../assets/videos/belly-breath.mp4",
+  },
   grounding: {
     toolId: GROUNDING_EXERCISE_TOOL_ID,
     toolName: GROUNDING_EXERCISE_TOOL_NAME,
@@ -173,6 +214,79 @@ const EXERCISES = {
         prompts: [
           "Mentally list as many specific items as you can for each chosen category.",
         ],
+      },
+    ],
+  },
+  resilienceQuotes: {
+    kind: "quotes",
+    toolId: RESILIENCE_QUOTES_TOOL_ID,
+    toolName: RESILIENCE_QUOTES_TOOL_NAME,
+    category: "quotes",
+    method: "Resilience & Strength",
+    theme: "quotes-resilience",
+    steps: [
+      {
+        quote: "You have survived 100% of your worst days. Even when things feel heavy, you are capable of holding your ground.",
+      },
+      {
+        quote: "One step at a time is enough. You don't have to see the whole staircase to take the first step toward clarity.",
+      },
+      {
+        quote: "Rock bottom became the solid foundation on which I rebuilt my life.",
+        author: "J.K. Rowling",
+      },
+      {
+        quote: "Courage does not always roar. Sometimes courage is the quiet voice at the end of the day saying, I will try again tomorrow.",
+        author: "Mary Anne Radmacher",
+      },
+    ],
+  },
+  patienceQuotes: {
+    kind: "quotes",
+    toolId: PATIENCE_QUOTES_TOOL_ID,
+    toolName: PATIENCE_QUOTES_TOOL_NAME,
+    category: "quotes",
+    method: "Patience & Calm",
+    theme: "quotes-patience",
+    steps: [
+      {
+        quote: "Hard times dissolve into something better, but you have to be there to see it.",
+      },
+      {
+        quote: "Patience is not the ability to wait, but the ability to keep a good attitude while waiting.",
+        author: "Joyce Meyer",
+      },
+      {
+        quote: "To understand everything is to forgive everything.",
+        author: "Buddha",
+      },
+      {
+        quote: "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.",
+        author: "Buddha",
+      },
+    ],
+  },
+  perspectiveQuotes: {
+    kind: "quotes",
+    toolId: PERSPECTIVE_QUOTES_TOOL_ID,
+    toolName: PERSPECTIVE_QUOTES_TOOL_NAME,
+    category: "quotes",
+    method: "New perspectives",
+    theme: "quotes-perspective",
+    steps: [
+      {
+        quote: "A small thought can change your entire day.",
+      },
+      {
+        quote: "If you change the way you look at things, the things you look at change.",
+        author: "Wayne Dyer",
+      },
+      {
+        quote: "You cannot change the wind, but you can adjust your sails.",
+        author: "James Dean",
+      },
+      {
+        quote: "Sometimes, a change of perspective is all it takes to see the light in the shadows.",
       },
     ],
   },
@@ -610,12 +724,108 @@ function createExerciseProgress(exercise) {
   return progress;
 }
 
+function createQuoteDecorations() {
+  const decorations = createElement("div", "quote-exercise-decorations", {
+    "aria-hidden": "true",
+  });
+  const topLeft = createElement("span", ["quote-exercise-decoration", "quote-exercise-decoration--top-left"]);
+  const topRight = createElement("span", ["quote-exercise-decoration", "quote-exercise-decoration--top-right"]);
+  const bottomLeft = createElement("span", ["quote-exercise-decoration", "quote-exercise-decoration--bottom-left"]);
+
+  decorations.append(topLeft, topRight, bottomLeft);
+
+  return decorations;
+}
+
+function renderQuoteExercise(exercise) {
+  const step = exercise.steps[activeExerciseStep];
+  const content = createElement("section", "quote-exercise-content");
+  const counter = createElement("p", "quote-exercise-counter");
+  const quote = createElement("h1", "quote-exercise-quote");
+  const footer = createElement("footer", "quote-exercise-footer");
+  const previousButton = createElement("button", "quote-exercise-button", {
+    type: "button",
+    "data-quote-exercise-previous": "",
+  });
+  const nextButton = createElement("button", ["quote-exercise-button", "quote-exercise-button--primary"], {
+    type: "button",
+    "data-grounding-exercise-next": "",
+  });
+  const dots = createElement("div", "quote-exercise-dots", {
+    "aria-label": `Quote ${activeExerciseStep + 1} of ${exercise.steps.length}`,
+  });
+  const hint = createElement("p", "quote-exercise-hint");
+
+  counter.textContent = `${activeExerciseStep + 1} / ${exercise.steps.length}`;
+  quote.textContent = step.quote;
+  previousButton.textContent = "Previous";
+  previousButton.disabled = activeExerciseStep === 0;
+  nextButton.textContent = activeExerciseStep === exercise.steps.length - 1 ? "Done" : "Next";
+  hint.textContent = "Swipe for another ->";
+
+  exercise.steps.forEach((quoteStep, index) => {
+    const dot = createElement("span", index === activeExerciseStep
+      ? ["quote-exercise-dot", "is-active"]
+      : "quote-exercise-dot");
+
+    dot.setAttribute("aria-label", `Quote ${index + 1}`);
+    dots.appendChild(dot);
+  });
+
+  content.append(counter, quote);
+
+  if (step.author) {
+    appendTextElement(content, "p", "quote-exercise-author", step.author);
+  }
+
+  content.appendChild(hint);
+  footer.append(previousButton, dots, nextButton);
+  groundingExerciseContent.append(createQuoteDecorations(), content, footer);
+}
+
+function renderBreathingVideoExercise(exercise) {
+  const content = createElement("section", "breathing-exercise-content");
+  const videoFrame = createElement("div", "breathing-exercise-video-frame");
+  const video = createElement("video", "breathing-exercise-video", {
+    src: exercise.videoSrc,
+    preload: "metadata",
+    playsinline: "",
+    "aria-label": exercise.method,
+  });
+  const button = createElement("button", "breathing-exercise-action", {
+    type: "button",
+    "data-breathing-video-toggle": "",
+  });
+
+  video.loop = true;
+  button.textContent = "Start";
+  video.addEventListener("ended", () => {
+    button.textContent = "Start";
+    button.classList.remove("is-playing");
+  });
+  videoFrame.appendChild(video);
+  content.append(videoFrame, button);
+  groundingExerciseContent.appendChild(content);
+}
+
 function renderGroundingExercise() {
   const exercise = getCurrentExercise();
 
   clearChildren(groundingExerciseContent);
   groundingExerciseView.dataset.exerciseTheme = exercise.theme;
-  groundingExerciseContent.append(createExerciseHeader(exercise), createExerciseProgress(exercise));
+  groundingExerciseContent.appendChild(createExerciseHeader(exercise));
+
+  if (exercise.kind === "breathing-video") {
+    renderBreathingVideoExercise(exercise);
+    return;
+  }
+
+  if (exercise.kind === "quotes") {
+    renderQuoteExercise(exercise);
+    return;
+  }
+
+  groundingExerciseContent.appendChild(createExerciseProgress(exercise));
 
   if (activeExerciseStep >= exercise.steps.length) {
     const doneIcon = createElement("div", "grounding-exercise-done-icon");
@@ -670,6 +880,27 @@ function renderGroundingExercise() {
   groundingExerciseContent.appendChild(nextButton);
 }
 
+function isQuoteExerciseActive() {
+  return !groundingExerciseView.hidden && getCurrentExercise().kind === "quotes";
+}
+
+function moveQuoteExercise(direction) {
+  const exercise = getCurrentExercise();
+
+  if (exercise.kind !== "quotes") {
+    return;
+  }
+
+  const nextStep = activeExerciseStep + direction;
+
+  if (nextStep < 0 || nextStep >= exercise.steps.length) {
+    return;
+  }
+
+  activeExerciseStep = nextStep;
+  renderGroundingExercise();
+}
+
 function openGroundingExercise(exercise, originPage) {
   previousPage = originPage;
   activeExercise = exercise;
@@ -679,7 +910,22 @@ function openGroundingExercise(exercise, originPage) {
   setCurrentPage("grounding-exercise");
 }
 
+function pauseBreathingVideo() {
+  const video = groundingExerciseView.querySelector(".breathing-exercise-video");
+  const button = groundingExerciseView.querySelector("[data-breathing-video-toggle]");
+
+  if (video) {
+    video.pause();
+  }
+
+  if (button) {
+    button.textContent = "Start";
+    button.classList.remove("is-playing");
+  }
+}
+
 function closeGroundingExercise() {
+  pauseBreathingVideo();
   openCategory(getCurrentExercise().category);
 }
 
@@ -752,6 +998,8 @@ document.addEventListener("click", event => {
   const closeGroundingExerciseBtn = event.target.closest("[data-close-grounding-exercise]");
   const groundingExerciseNextBtn = event.target.closest("[data-grounding-exercise-next]");
   const groundingExerciseAgainBtn = event.target.closest("[data-grounding-exercise-again]");
+  const quoteExercisePreviousBtn = event.target.closest("[data-quote-exercise-previous]");
+  const breathingVideoToggleBtn = event.target.closest("[data-breathing-video-toggle]");
   const categoryCard = event.target.closest("[data-open-category]");
   const filterChip = event.target.closest(".filter-chip");
   const favoriteBtn = event.target.closest(".favorite-btn");
@@ -795,8 +1043,42 @@ document.addEventListener("click", event => {
   }
 
   if (groundingExerciseNextBtn) {
+    if (getCurrentExercise().kind === "quotes" && activeExerciseStep >= getCurrentExercise().steps.length - 1) {
+      closeGroundingExercise();
+      return;
+    }
+
     activeExerciseStep += 1;
     renderGroundingExercise();
+    return;
+  }
+
+  if (quoteExercisePreviousBtn) {
+    activeExerciseStep = Math.max(activeExerciseStep - 1, 0);
+    renderGroundingExercise();
+    return;
+  }
+
+  if (breathingVideoToggleBtn) {
+    const video = groundingExerciseView.querySelector(".breathing-exercise-video");
+
+    if (!video) {
+      return;
+    }
+
+    if (video.paused) {
+      video.play()
+        .then(() => {
+          breathingVideoToggleBtn.textContent = "Pause";
+          breathingVideoToggleBtn.classList.add("is-playing");
+        })
+        .catch(error => console.error("Error playing breathing video:", error));
+    } else {
+      video.pause();
+      breathingVideoToggleBtn.textContent = "Start";
+      breathingVideoToggleBtn.classList.remove("is-playing");
+    }
+
     return;
   }
 
@@ -866,6 +1148,36 @@ document.addEventListener("keydown", event => {
         ? "category"
         : "search"
   );
+});
+
+groundingExerciseView.addEventListener("pointerdown", event => {
+  if (!isQuoteExerciseActive() || event.target.closest("button")) {
+    return;
+  }
+
+  quoteSwipeStartX = event.clientX;
+  quoteSwipeStartY = event.clientY;
+});
+
+groundingExerciseView.addEventListener("pointerup", event => {
+  if (quoteSwipeStartX === null || quoteSwipeStartY === null || !isQuoteExerciseActive()) {
+    quoteSwipeStartX = null;
+    quoteSwipeStartY = null;
+    return;
+  }
+
+  const deltaX = event.clientX - quoteSwipeStartX;
+  const deltaY = event.clientY - quoteSwipeStartY;
+  const isHorizontalSwipe = Math.abs(deltaX) > 48 && Math.abs(deltaX) > Math.abs(deltaY);
+
+  quoteSwipeStartX = null;
+  quoteSwipeStartY = null;
+
+  if (!isHorizontalSwipe) {
+    return;
+  }
+
+  moveQuoteExercise(deltaX < 0 ? 1 : -1);
 });
 
 document.addEventListener("input", event => {
