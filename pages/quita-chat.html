@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quita - Reflect</title>
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/pages/quita-chat.css" />
+</head>
+<body>
+  <main class="chat-page">
+    <header class="chat-header">
+      <button class="chat-back" type="button" data-chat-back aria-label="Go back">
+        <img src="../assets/arrow.svg" alt="" aria-hidden="true" />
+      </button>
+      <div class="chat-header-info">
+        <span class="chat-star" aria-hidden="true">✦</span>
+        <h1 class="chat-title">Reflect</h1>
+      </div>
+      <p class="chat-subtitle" data-chat-subtitle></p>
+    </header>
+
+    <div class="chat-messages" data-chat-messages aria-live="polite" aria-label="Conversation"></div>
+
+    <div class="chat-crisis-note">
+      In crisis? Call SNS 24:
+      <a href="tel:808242424">808 24 24 24</a>
+    </div>
+
+    <div class="chat-input-area">
+      <textarea
+        class="chat-input"
+        data-chat-input
+        placeholder="Write here..."
+        rows="1"
+        aria-label="Your message"
+      ></textarea>
+      <button class="chat-send" type="button" data-chat-send aria-label="Send message">
+        <img src="../assets/arrow.svg" alt="" aria-hidden="true" />
+      </button>
+    </div>
+  </main>
+
+  <script type="module" src="../views/quitaChatView.js"></script>
+</body>
+</html>

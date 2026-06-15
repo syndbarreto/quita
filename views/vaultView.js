@@ -248,6 +248,10 @@ function renderListCard(quita) {
     createCardAction({
       label: "Open Quita chat",
       iconClass: "vault-card-action-icon--chatbot",
+      attributes: {
+        "data-vault-open-chat": "",
+        "data-quita-id": quita.id,
+      },
     }),
     createCardAction({
       label: "Open calming tools",
@@ -773,6 +777,7 @@ async function loadVault() {
 document.addEventListener("click", (event) => {
   const viewButton = event.target.closest("[data-vault-view]");
   const filterButton = event.target.closest("[data-vault-filter]");
+  const chatButton = event.target.closest("[data-vault-open-chat]");
   const toolsButton = event.target.closest("[data-vault-open-tools]");
   const closeToolsButton = event.target.closest("[data-vault-tools-close]");
   const hotlinesOpenButton = event.target.closest("[data-vault-hotlines-open]");
@@ -794,6 +799,10 @@ document.addEventListener("click", (event) => {
 
   if (filterButton) {
     setFilter(filterButton.dataset.vaultFilter);
+  }
+
+  if (chatButton) {
+    window.location.href = `./quita-chat.html?quitaId=${encodeURIComponent(chatButton.dataset.quitaId)}`;
   }
 
   if (toolsButton) {

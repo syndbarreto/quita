@@ -49,6 +49,24 @@
         13
       ],
       "id": 4
+    },
+    {
+      "email": "sau@gmail.com",
+      "password": "$2a$10$YnBxa08nJW8wDyz0faAOXOV3UY3i7zwDir5DirvVgm9PPPPCwxtki",
+      "firstName": "Saulo",
+      "lastName": "La",
+      "birthDate": "2000-06-18",
+      "favTools": [],
+      "id": 5
+    },
+    {
+      "email": "rick@gmail.com",
+      "password": "$2a$10$VZjgN0tR0YfV4dG0v4MgtOqlag1OS0Sm//l9wNqeHFfBpzNf9Db/O",
+      "firstName": "Rick",
+      "lastName": "Las",
+      "birthDate": "2000-04-23",
+      "favTools": [],
+      "id": 6
     }
   ],
   "quitas": [
@@ -199,6 +217,32 @@
       "journals": [],
       "createdAt": "2026-06-15T13:57:17.336Z",
       "userId": 1
+    },
+    {
+      "id": "1781544964520-942f4e36936268",
+      "name": "kkk",
+      "worryText": "kkkk",
+      "smallStep": "kkkkk",
+      "activity": {
+        "type": "preset",
+        "value": "Driving"
+      },
+      "people": {
+        "type": "preset",
+        "value": "Family"
+      },
+      "location": {
+        "type": "preset",
+        "value": "Commuting"
+      },
+      "gridBackground": "hot-pink",
+      "worryType": "burden",
+      "dollId": "diamond",
+      "dollState": "worried",
+      "status": "vault",
+      "journals": [],
+      "createdAt": "2026-06-15T17:36:04.520Z",
+      "userId": 4
     }
   ],
   "emotionalCheckins": [],
