@@ -150,6 +150,55 @@
         "createdAt": "2026-06-12T19:26:26.432Z"
       },
       "releasedAt": "2026-06-12T19:26:26.435Z"
+    },
+    {
+      "id": "1781481623631-9f8ae2245a7ea8",
+      "name": "Cibs",
+      "worryText": "Meu trabalho é cansativo",
+      "smallStep": "Tentei fazer algo que goste para nao ficar mais triste",
+      "activity": {
+        "type": "preset",
+        "value": "Eating"
+      },
+      "people": {
+        "type": "preset",
+        "value": "By Myself"
+      },
+      "location": {
+        "type": "preset",
+        "value": "Home"
+      },
+      "gridBackground": "blue",
+      "worryType": "knot",
+      "dollId": "star",
+      "dollState": "worried",
+      "status": "vault",
+      "journals": [],
+      "createdAt": "2026-06-15T00:00:23.631Z",
+      "userId": 1
+    },
+    {
+      "id": "1781531837336-27167a527b8018",
+      "name": "Lara",
+      "worryText": "é o teaser",
+      "smallStep": "tentei fazer algo",
+      "activity": null,
+      "people": {
+        "type": "preset",
+        "value": "Co-Workers"
+      },
+      "location": {
+        "type": "preset",
+        "value": "Home"
+      },
+      "gridBackground": "dark-red",
+      "worryType": "burden",
+      "dollId": "flower",
+      "dollState": "worried",
+      "status": "vault",
+      "journals": [],
+      "createdAt": "2026-06-15T13:57:17.336Z",
+      "userId": 1
     }
   ],
   "emotionalCheckins": [],
