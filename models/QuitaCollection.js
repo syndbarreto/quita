@@ -21,4 +21,17 @@ export class QuitaCollection {
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
   }
+
+  get blissItems() {
+    return this.#items.filter((quita) => quita.status === QUITA_STATUS.BLISS);
+  }
+
+  get newestBlissItems() {
+    return [...this.blissItems].sort((a, b) => {
+      const dateA = new Date(a.releasedAt || a.createdAt);
+      const dateB = new Date(b.releasedAt || b.createdAt);
+
+      return dateB - dateA;
+    });
+  }
 }

@@ -559,6 +559,475 @@
   line-height: 1.35;
 }
 
+.calming-exercise-active .app-bottom-nav {
+  display: none;
+}
+
+.grounding-exercise-view {
+  width: min(100vw, 402px);
+  min-height: 100dvh;
+  background: var(--light-pink);
+  color: var(--purple);
+  overflow: hidden;
+}
+
+.grounding-exercise-view[data-exercise-theme="body-scan"] {
+  background: var(--light-blue);
+}
+
+.grounding-exercise-view[data-exercise-theme="organize-mind"] {
+  background: var(--mint);
+}
+
+.grounding-exercise-view[data-exercise-theme="quotes-resilience"] {
+  background: var(--hot-pink);
+}
+
+.grounding-exercise-view[data-exercise-theme="quotes-patience"] {
+  background: var(--mint);
+}
+
+.grounding-exercise-view[data-exercise-theme="quotes-perspective"] {
+  background: var(--light-orange);
+}
+
+.grounding-exercise-view[data-exercise-theme="breathing-dark"] {
+  background: var(--black);
+  color: var(--background);
+}
+
+.grounding-exercise-view[data-exercise-theme="breathing-light"] {
+  background: var(--background);
+  color: var(--purple);
+}
+
+.grounding-exercise-view[hidden] {
+  display: none;
+}
+
+.grounding-exercise-content {
+  min-height: 100dvh;
+  padding: 72px 20px 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grounding-exercise-header {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: center;
+}
+
+.grounding-exercise-back {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.grounding-exercise-back img {
+  width: 24px;
+  height: 24px;
+}
+
+.grounding-exercise-view[data-exercise-theme="breathing-dark"] .grounding-exercise-back img {
+  filter: brightness(0) invert(1);
+}
+
+.grounding-exercise-method {
+  margin: 0;
+  justify-self: end;
+  color: var(--purple);
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.grounding-exercise-view[data-exercise-theme="breathing-dark"] .grounding-exercise-method {
+  color: var(--background);
+}
+
+.grounding-exercise-progress {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 22px;
+}
+
+.grounding-exercise-progress[data-step-count="3"] {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grounding-exercise-progress-bar {
+  height: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--purple) 24%, transparent);
+}
+
+.grounding-exercise-progress-bar.is-active {
+  background: var(--purple);
+}
+
+.grounding-exercise-label {
+  margin: 84px 0 0;
+  color: color-mix(in srgb, var(--purple) 72%, transparent);
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 510;
+  letter-spacing: 0.38em;
+}
+
+.grounding-exercise-count {
+  margin: 64px 0 0;
+  color: var(--background);
+  font-family: var(--font-title);
+  font-size: 82px;
+  line-height: 0.9;
+}
+
+.grounding-exercise-title {
+  max-width: 290px;
+  margin: 80px 0 0;
+  color: var(--purple);
+  font-family: var(--font-title);
+  font-size: 31px;
+  font-weight: 400;
+  line-height: 0.9;
+  text-align: center;
+}
+
+.grounding-exercise-prompts {
+  width: 100%;
+  margin: 42px 0 0;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  color: var(--purple);
+  font-family: var(--font-primary);
+}
+
+.grounding-exercise-prompt {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.grounding-exercise-view[data-exercise-theme="organize-mind"] .grounding-exercise-prompts {
+  max-width: 300px;
+  padding-left: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.grounding-exercise-view[data-exercise-theme="organize-mind"] .grounding-exercise-prompt {
+  text-align: center;
+}
+
+.grounding-exercise-next,
+.grounding-exercise-action {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 1000px;
+  background: var(--purple);
+  color: var(--background);
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.grounding-exercise-done-icon {
+  width: 166px;
+  height: 166px;
+  margin-top: 58px;
+}
+
+.grounding-exercise-done-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.grounding-exercise-message {
+  max-width: 230px;
+  margin: 10px 0 0;
+  color: color-mix(in srgb, var(--purple) 70%, transparent);
+  font-family: var(--font-primary);
+  font-size: 12px;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.grounding-exercise-action {
+  background: var(--background);
+  color: var(--purple);
+  margin-top: auto;
+}
+
+.grounding-exercise-category-link {
+  margin-top: 14px;
+  border: 0;
+  background: transparent;
+  color: color-mix(in srgb, var(--purple) 72%, transparent);
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 510;
+  cursor: pointer;
+}
+
+.grounding-exercise-view[data-exercise-theme^="breathing-"] .grounding-exercise-content {
+  min-height: 100dvh;
+  padding: 72px 20px 36px;
+}
+
+.breathing-exercise-content {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: calc(100dvh - 152px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 56px;
+}
+
+.breathing-exercise-video-frame {
+  width: 100%;
+  max-width: 310px;
+  display: grid;
+  place-items: center;
+}
+
+.breathing-exercise-video {
+  width: 100%;
+  max-width: 310px;
+  max-height: calc(100dvh - 260px);
+  display: block;
+  object-fit: contain;
+  background: transparent;
+}
+
+.grounding-exercise-view[data-exercise-theme="breathing-light"] .breathing-exercise-video-frame {
+  width: min(280px, calc(100vw - 72px));
+  max-width: none;
+  overflow: hidden;
+  border-radius: 16px;
+  transform: translateY(-96px);
+}
+
+.grounding-exercise-view[data-exercise-theme="breathing-light"] .breathing-exercise-video {
+  width: 142%;
+  height: auto;
+  max-width: none;
+  max-height: calc(100dvh - 260px);
+  object-fit: contain;
+}
+
+.grounding-exercise-view[data-exercise-theme="breathing-dark"] .breathing-exercise-video-frame {
+  transform: translateY(-88px);
+}
+
+.grounding-exercise-view[data-exercise-theme="breathing-dark"] .breathing-exercise-video {
+  max-height: calc(100dvh - 210px);
+}
+
+.breathing-exercise-action {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 1000px;
+  background: var(--purple);
+  color: var(--background);
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.grounding-exercise-view[data-exercise-theme^="quotes-"] .grounding-exercise-content {
+  position: relative;
+  min-height: 100dvh;
+  padding: 54px 20px 34px;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.grounding-exercise-view[data-exercise-theme^="quotes-"] .grounding-exercise-header {
+  position: relative;
+  z-index: 2;
+}
+
+.grounding-exercise-view[data-exercise-theme^="quotes-"] .grounding-exercise-method {
+  justify-self: start;
+  color: var(--background);
+}
+
+.quote-exercise-decorations {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.quote-exercise-decoration {
+  position: absolute;
+  display: block;
+  background: var(--yellow);
+}
+
+.quote-exercise-decoration--top-left {
+  width: 14px;
+  height: 14px;
+  top: 102px;
+  left: 56px;
+  mask-image: url("../../assets/star-7-points.svg");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: url("../../assets/star-7-points.svg");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+
+.quote-exercise-decoration--top-right {
+  width: 32px;
+  height: 32px;
+  top: 86px;
+  right: 38px;
+  background: var(--blue);
+  clip-path: polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%);
+}
+
+.quote-exercise-decoration--bottom-left {
+  width: 18px;
+  height: 18px;
+  left: 46px;
+  bottom: 150px;
+  background: var(--blue);
+  mask-image: url("../../assets/star-7-points.svg");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: url("../../assets/star-7-points.svg");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+
+.quote-exercise-content {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 92px;
+  text-align: center;
+}
+
+.quote-exercise-counter {
+  margin: 0 0 70px;
+  color: color-mix(in srgb, var(--background) 78%, transparent);
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 510;
+  letter-spacing: 0.3em;
+}
+
+.quote-exercise-quote {
+  max-width: 310px;
+  margin: 0;
+  color: var(--background);
+  font-family: var(--font-title);
+  font-size: 29px;
+  font-weight: 400;
+  line-height: 0.98;
+}
+
+.quote-exercise-author {
+  margin: 34px 0 0;
+  color: var(--background);
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.quote-exercise-hint {
+  margin: 78px 0 0;
+  color: color-mix(in srgb, var(--background) 78%, transparent);
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 510;
+}
+
+.quote-exercise-footer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 78px 1fr 62px;
+  align-items: center;
+  gap: 12px;
+}
+
+.quote-exercise-button {
+  min-height: 36px;
+  border: 0;
+  border-radius: 1000px;
+  background: color-mix(in srgb, var(--background) 16%, transparent);
+  color: color-mix(in srgb, var(--background) 72%, transparent);
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.quote-exercise-button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.quote-exercise-button--primary {
+  background: var(--background);
+  color: var(--hot-pink);
+}
+
+.grounding-exercise-view[data-exercise-theme="quotes-patience"] .quote-exercise-button--primary,
+.grounding-exercise-view[data-exercise-theme="quotes-perspective"] .quote-exercise-button--primary {
+  color: var(--blue);
+}
+
+.quote-exercise-dots {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.quote-exercise-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--background) 55%, transparent);
+}
+
+.quote-exercise-dot.is-active {
+  width: 18px;
+  background: var(--background);
+}
+
 .red {
 
     color: var(--dark-red);

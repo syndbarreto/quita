@@ -25,7 +25,7 @@ function updateButtonState() {
 
 async function loadQuita() {
   if (!quitaId) {
-    window.location.href = "./vault.html";
+    window.location.href = "./bliss.html";
     return;
   }
 

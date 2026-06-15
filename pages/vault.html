@@ -12,6 +12,13 @@
 <body>
   <main class="vault-page is-grid">
     <section class="vault-empty" data-vault-empty hidden>
+      <header class="vault-empty-header">
+        <div>
+          <h1>Vault</h1>
+          <p>Nothing here yet</p>
+        </div>
+      </header>
+
       <div class="vault-empty-doll">
         <img src="../assets/doll-vault.png" alt="" aria-hidden="true" />
       </div>
@@ -59,7 +66,32 @@
         <div class="vault-tools-handle" aria-hidden="true"></div>
         <div class="vault-tools-content" data-vault-tools-content></div>
         <button class="vault-tools-done" type="button" data-vault-tools-close>Done</button>
-        <p class="vault-tools-support">If you are in crisis, get professional support <a href="#" aria-label="Professional support resources">here</a></p>
+        <p class="vault-tools-support">If you are in crisis, get professional support <a href="#" data-vault-hotlines-open aria-label="Professional support resources">here</a></p>
+      </section>
+    </div>
+
+    <div class="vault-hotlines-overlay" data-vault-hotlines-overlay hidden>
+      <section class="vault-hotlines-page" aria-modal="true" aria-labelledby="vault-hotlines-title" role="dialog">
+        <button class="vault-hotlines-close" type="button" data-vault-hotlines-close aria-label="Close mental health hotlines">
+          <img src="../assets/close.svg" alt="" aria-hidden="true">
+        </button>
+
+        <header class="vault-hotlines-header">
+          <div>
+            <h2 id="vault-hotlines-title">Mental health<br>hotlines</h2>
+            <p data-vault-hotlines-subtitle></p>
+          </div>
+
+          <div class="vault-country-picker">
+            <button class="vault-country-toggle" type="button" data-vault-country-toggle aria-expanded="false">
+              <span aria-hidden="true">⌄</span>
+              <span data-vault-country-flag></span>
+            </button>
+            <div class="vault-country-menu" data-vault-country-menu hidden></div>
+          </div>
+        </header>
+
+        <div class="vault-hotlines-list" data-vault-hotlines-list></div>
       </section>
     </div>
 
@@ -88,7 +120,7 @@
         <span class="app-bottom-nav__icon" aria-hidden="true"></span>
         <span>Home</span>
       </a>
-      <a class="app-bottom-nav__item app-bottom-nav__item--bliss" aria-disabled="true">
+      <a class="app-bottom-nav__item app-bottom-nav__item--bliss" href="./bliss.html">
         <span class="app-bottom-nav__icon" aria-hidden="true"></span>
         <span>Bliss</span>
       </a>

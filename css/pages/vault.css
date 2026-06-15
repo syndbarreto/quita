@@ -55,6 +55,10 @@ body {
   z-index: 30;
 }
 
+.vault-page.is-empty .vault-view-toggle {
+  display: none;
+}
+
 .vault-toggle-button {
   width: 46px;
   height: 41px;
@@ -119,18 +123,47 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-start;
-  text-align: center;
-  gap: 26px;
+  text-align: left;
+  gap: 22px;
+  padding-top: 72px;
+}
+
+.vault-empty-header {
+  width: 100%;
+  min-height: 56px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+}
+
+.vault-empty-header h1 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 24px;
+  font-weight: 1000;
+  line-height: 29px;
+}
+
+.vault-empty-header p {
+  margin: 8px 0 0;
+  color: var(--medium-text);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
 }
 
 .vault-empty-doll {
-  width: 260px;
-  height: 326px;
-  margin-top: 70px;
+  width: 208px;
+  height: 262px;
+  margin-top: 38px;
+  align-self: center;
   display: grid;
   place-items: center;
+  opacity: 0.42;
+  filter: grayscale(1);
 }
 
 .vault-empty-doll img {
@@ -143,7 +176,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  text-align: center;
+  gap: 10px;
+  margin-top: 2px;
 }
 
 .vault-empty h2 {
@@ -151,7 +186,7 @@ body {
   color: var(--blue);
   font-size: 24px;
   font-weight: 590;
-  line-height: 22px;
+  line-height: 28px;
 }
 
 .vault-empty p {
@@ -164,9 +199,10 @@ body {
 }
 
 .vault-primary-button {
-  width: 206px;
+  width: 214px;
   height: 48px;
   padding: 0 28px;
+  align-self: center;
   border-radius: 1000px;
   background: var(--blue);
   box-shadow: 0 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
@@ -177,6 +213,7 @@ body {
   font-size: 16px;
   font-weight: 510;
   text-decoration: none;
+  margin-top: 8px;
 }
 
 .vault-list-view {
@@ -775,6 +812,213 @@ body {
   color: var(--blue);
   font-weight: 800;
   text-decoration: none;
+}
+
+.vault-hotlines-overlay {
+  position: fixed;
+  inset: 0 auto 0 50%;
+  width: min(100vw, 402px);
+  z-index: 140;
+  transform: translateX(-50%);
+  background: var(--background);
+  color: var(--text-primary);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.vault-hotlines-overlay[hidden] {
+  display: none;
+}
+
+.vault-hotlines-page {
+  min-height: 100dvh;
+  padding: 74px 20px 42px;
+  background: var(--background);
+}
+
+.vault-hotlines-close {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.vault-hotlines-close img {
+  width: 18px;
+  height: 18px;
+}
+
+.vault-hotlines-header {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 38px;
+}
+
+.vault-hotlines-header h2 {
+  margin: 0;
+  color: var(--black);
+  font-size: 26px;
+  font-weight: 1000;
+  line-height: 28px;
+}
+
+.vault-hotlines-header p {
+  max-width: 230px;
+  margin: 12px 0 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.vault-country-picker {
+  position: relative;
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.vault-country-toggle {
+  min-width: 60px;
+  min-height: 32px;
+  border: 0;
+  border-radius: 1000px;
+  padding: 0 11px;
+  background: color-mix(in srgb, var(--placeholder) 34%, transparent);
+  color: var(--background);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-family: var(--font-primary);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.vault-country-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 188px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--placeholder) 54%, var(--background));
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--black) 16%, transparent);
+  z-index: 2;
+}
+
+.vault-country-menu[hidden] {
+  display: none;
+}
+
+.vault-country-option {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--background) 72%, transparent);
+  padding: 6px 0;
+  background: transparent;
+  color: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-primary);
+  font-size: 18px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.vault-country-option:last-child {
+  border-bottom: 0;
+}
+
+.vault-country-toggle span[aria-hidden="true"] {
+  display: inline-block;
+  transition: transform 200ms ease;
+}
+
+.vault-country-toggle.is-open span[aria-hidden="true"] {
+  transform: rotate(180deg);
+}
+
+.vault-hotlines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 36px;
+}
+
+.vault-hotline-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.vault-hotline-section-title {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+
+.vault-hotline-card {
+  min-height: 92px;
+  border-radius: 28px;
+  padding: 16px 24px;
+  position: relative;
+  background: var(--light-pink);
+  display: flex;
+  align-items: flex-start;
+}
+
+.vault-hotline-copy {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.vault-hotline-name {
+  max-width: 190px;
+  margin: 0 0 2px;
+  color: var(--background);
+  font-size: 15px;
+  line-height: 17px;
+}
+
+.vault-hotline-value {
+  max-width: 210px;
+  color: var(--background);
+  font-family: var(--font-title);
+  font-size: 35px;
+  font-weight: 400;
+  line-height: 33px;
+  overflow-wrap: anywhere;
+}
+
+.vault-hotline-detail {
+  margin-top: 4px;
+  color: var(--background);
+  font-size: 13px;
+  line-height: 15px;
+}
+
+.vault-hotline-doll {
+  width: 122px;
+  height: 122px;
+  position: absolute;
+  right: -5px;
+  bottom: 0;
+  object-fit: contain;
+  pointer-events: none;
 }
 
 @keyframes vaultSheetIn {
