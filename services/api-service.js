@@ -110,3 +110,21 @@ export function updateUserRecord(id, payload) {
 export function getToolRecords() {
   return apiRequest("/tools");
 }
+
+export function updateToolRecord(id, payload) {
+  return apiRequest(`/tools/${id}`, {
+    method: "PATCH",
+    body: payload,
+  });
+}
+
+export function getAllUsers() {
+  return apiRequest("/users");
+}
+
+export function setUserActive(id, active) {
+  return apiRequest(`/users/${id}`, {
+    method: "PATCH",
+    body: { active },
+  });
+}

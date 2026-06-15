@@ -15,7 +15,9 @@
       "emergencyContact": {
         "name": "Pedro",
         "phone": "3519887546"
-      }
+      },
+      "role": "admin",
+      "active": true
     },
     {
       "email": "lara007cunha@gmail.com",
@@ -24,7 +26,9 @@
       "lastName": "Cunha",
       "birthDate": "2026-06-03",
       "id": 2,
-      "favTools": []
+      "favTools": [],
+      "role": "user",
+      "active": true
     },
     {
       "email": "necanuno@gmail.com",
@@ -37,7 +41,9 @@
         2,
         3
       ],
-      "id": 3
+      "id": 3,
+      "role": "user",
+      "active": true
     },
     {
       "email": "lucaslindo@gmail.com",
@@ -48,7 +54,9 @@
       "favTools": [
         13
       ],
-      "id": 4
+      "id": 4,
+      "role": "user",
+      "active": true
     },
     {
       "email": "sau@gmail.com",
@@ -57,7 +65,9 @@
       "lastName": "La",
       "birthDate": "2000-06-18",
       "favTools": [],
-      "id": 5
+      "id": 5,
+      "role": "user",
+      "active": true
     },
     {
       "email": "rick@gmail.com",
@@ -66,7 +76,9 @@
       "lastName": "Las",
       "birthDate": "2000-04-23",
       "favTools": [],
-      "id": 6
+      "id": 6,
+      "role": "user",
+      "active": true
     }
   ],
   "quitas": [
