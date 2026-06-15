@@ -61,7 +61,14 @@ export async function createOwnedRecord(collection, payload) {
 }
 
 export function getOwnedRecords(collection) {
-  return apiRequest(`/${collection}`);
+  const user = getCurrentUser();
+
+  if (!user?.id) {
+    logoutUser();
+    throw new Error("You need to be logged in to fetch this data.");
+  }
+
+  return apiRequest(`/${collection}?userId=${user.id}`);
 }
 
 export function createQuitaRecord(quita) {

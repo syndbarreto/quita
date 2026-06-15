@@ -217,6 +217,32 @@
       "journals": [],
       "createdAt": "2026-06-15T13:57:17.336Z",
       "userId": 1
+    },
+    {
+      "id": "1781544964520-942f4e36936268",
+      "name": "kkk",
+      "worryText": "kkkk",
+      "smallStep": "kkkkk",
+      "activity": {
+        "type": "preset",
+        "value": "Driving"
+      },
+      "people": {
+        "type": "preset",
+        "value": "Family"
+      },
+      "location": {
+        "type": "preset",
+        "value": "Commuting"
+      },
+      "gridBackground": "hot-pink",
+      "worryType": "burden",
+      "dollId": "diamond",
+      "dollState": "worried",
+      "status": "vault",
+      "journals": [],
+      "createdAt": "2026-06-15T17:36:04.520Z",
+      "userId": 4
     }
   ],
   "emotionalCheckins": [],
