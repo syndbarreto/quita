@@ -9,6 +9,11 @@ import {
   getDollAsset,
   normalizeWorryType,
 } from "../models/constants.js";
+import {
+  DEFAULT_HOTLINE_COUNTRY,
+  getHotlineCountries,
+  getHotlineCountry,
+} from "../models/mentalHealthHotlines.js";
 import { QuitaCollection } from "../models/QuitaCollection.js";
 
 if (!requireAuth()) {
@@ -28,6 +33,13 @@ const toolsContent = document.querySelector("[data-vault-tools-content]");
 const confirmOverlay = document.querySelector("[data-vault-confirm-overlay]");
 const confirmTitle = document.querySelector("[data-vault-confirm-title]");
 const confirmYesButton = document.querySelector("[data-vault-confirm-yes]");
+const hotlinesOverlay = document.querySelector("[data-vault-hotlines-overlay]");
+const hotlinesOpenLink = document.querySelector("[data-vault-hotlines-open]");
+const hotlinesSubtitle = document.querySelector("[data-vault-hotlines-subtitle]");
+const hotlinesList = document.querySelector("[data-vault-hotlines-list]");
+const hotlinesCountryFlag = document.querySelector("[data-vault-country-flag]");
+const hotlinesCountryToggle = document.querySelector("[data-vault-country-toggle]");
+const hotlinesCountryMenu = document.querySelector("[data-vault-country-menu]");
 const vaultParams = new URLSearchParams(window.location.search);
 
 const VAULT_TOOLS_BY_TYPE = {
@@ -86,6 +98,7 @@ let gridOffset = { x: 0, y: 0 };
 let activeGridCard = null;
 let pendingConfirmation = null;
 let shouldIgnoreNextGridClick = false;
+let selectedHotlinesCountry = DEFAULT_HOTLINE_COUNTRY;
 
 function createElement(tagName, classNames = [], attributes = {}) {
   const element = document.createElement(tagName);
@@ -341,6 +354,107 @@ async function openToolsOverlay(quitaId) {
 function closeToolsOverlay() {
   toolsOverlay.hidden = true;
   vaultPage.classList.remove("is-tools-open");
+}
+
+function createHotlineCard(item) {
+  const card = createElement("article", "vault-hotline-card");
+  const copy = createElement("div", "vault-hotline-copy");
+  const image = createElement("img", "vault-hotline-doll", {
+    src: item.asset,
+    alt: "",
+    "aria-hidden": "true",
+  });
+
+  appendText(copy, "p", "vault-hotline-name", item.name);
+  appendText(copy, "strong", "vault-hotline-value", item.value);
+
+  if (item.detail) {
+    appendText(copy, "span", "vault-hotline-detail", item.detail);
+  }
+
+  card.append(copy, image);
+
+  return card;
+}
+
+function renderHotlinesCountryMenu() {
+  const countries = getHotlineCountries();
+
+  hotlinesCountryMenu.replaceChildren(
+    ...countries.map((country) => {
+      const button = createElement("button", "vault-country-option", {
+        type: "button",
+        "data-vault-country": country.id,
+      });
+
+      appendText(button, "span", "", country.label);
+      appendText(button, "span", "", country.flag);
+
+      return button;
+    }),
+  );
+}
+
+function renderHotlinesCountry() {
+  const country = getHotlineCountry(selectedHotlinesCountry);
+
+  hotlinesSubtitle.textContent = country.subtitle;
+  hotlinesCountryFlag.textContent = country.flag;
+  hotlinesList.replaceChildren();
+
+  country.sections.forEach((section) => {
+    const sectionElement = createElement("section", "vault-hotline-section");
+    const title = appendText(
+      sectionElement,
+      "h3",
+      "vault-hotline-section-title",
+      section.title,
+    );
+
+    title.id = `vault-hotline-${section.title.toLowerCase().replaceAll(" ", "-")}`;
+
+    section.items.forEach((item) => {
+      sectionElement.appendChild(createHotlineCard(item));
+    });
+
+    hotlinesList.appendChild(sectionElement);
+  });
+}
+
+function openHotlinesOverlay() {
+  if (
+    !hotlinesOverlay ||
+    !hotlinesCountryMenu ||
+    !hotlinesCountryToggle ||
+    !hotlinesSubtitle ||
+    !hotlinesList ||
+    !hotlinesCountryFlag
+  ) {
+    return;
+  }
+
+  closeToolsOverlay();
+  renderHotlinesCountryMenu();
+  renderHotlinesCountry();
+  hotlinesCountryMenu.hidden = true;
+  hotlinesCountryToggle.setAttribute("aria-expanded", "false");
+  hotlinesCountryToggle.classList.remove("is-open");
+  hotlinesOverlay.hidden = false;
+  vaultPage.classList.add("is-hotlines-open");
+}
+
+function closeHotlinesOverlay() {
+  hotlinesOverlay.hidden = true;
+  hotlinesCountryMenu.hidden = true;
+  hotlinesCountryToggle.setAttribute("aria-expanded", "false");
+  hotlinesCountryToggle.classList.remove("is-open");
+  vaultPage.classList.remove("is-hotlines-open");
+}
+
+function handleHotlinesOpen(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  openHotlinesOverlay();
 }
 
 function openConfirmationOverlay(action, quitaId) {
@@ -661,6 +775,10 @@ document.addEventListener("click", (event) => {
   const filterButton = event.target.closest("[data-vault-filter]");
   const toolsButton = event.target.closest("[data-vault-open-tools]");
   const closeToolsButton = event.target.closest("[data-vault-tools-close]");
+  const hotlinesOpenButton = event.target.closest("[data-vault-hotlines-open]");
+  const hotlinesCloseButton = event.target.closest("[data-vault-hotlines-close]");
+  const countryToggleButton = event.target.closest("[data-vault-country-toggle]");
+  const countryButton = event.target.closest("[data-vault-country]");
   const confirmActionButton = event.target.closest(
     "[data-vault-confirm-action]",
   );
@@ -684,6 +802,31 @@ document.addEventListener("click", (event) => {
 
   if (closeToolsButton) {
     closeToolsOverlay();
+  }
+
+  if (hotlinesOpenButton) {
+    handleHotlinesOpen(event);
+    return;
+  }
+
+  if (hotlinesCloseButton) {
+    closeHotlinesOverlay();
+  }
+
+  if (countryToggleButton) {
+    const shouldOpen = hotlinesCountryMenu.hidden;
+
+    hotlinesCountryMenu.hidden = !shouldOpen;
+    hotlinesCountryToggle.setAttribute("aria-expanded", String(shouldOpen));
+    hotlinesCountryToggle.classList.toggle("is-open", shouldOpen);
+  }
+
+  if (countryButton) {
+    selectedHotlinesCountry = countryButton.dataset.vaultCountry;
+    hotlinesCountryMenu.hidden = true;
+    hotlinesCountryToggle.setAttribute("aria-expanded", "false");
+    hotlinesCountryToggle.classList.remove("is-open");
+    renderHotlinesCountry();
   }
 
   if (confirmActionButton) {
@@ -711,7 +854,14 @@ document.addEventListener("click", (event) => {
   }
 });
 
+hotlinesOpenLink?.addEventListener("click", handleHotlinesOpen);
+
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !hotlinesOverlay.hidden) {
+    closeHotlinesOverlay();
+    return;
+  }
+
   const detailCard = event.target.closest("[data-quita-detail-id]");
 
   if (
