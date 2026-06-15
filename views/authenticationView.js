@@ -9,3 +9,4 @@ document.addEventListener("click", (event) => {
   event.preventDefault();
   window.location.href = trigger.dataset.navigate;
 });
+  
