@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quita - Admin</title>
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/pages/admin.css" />
+</head>
+<body>
+  <main class="admin-page">
+    <header class="admin-header">
+      <h1 class="admin-title">Admin</h1>
+      <a class="admin-back" href="./home.html">Back to app</a>
+    </header>
+
+    <section class="admin-section">
+      <h2 class="admin-section-title">Users</h2>
+      <div class="admin-list" data-admin-users></div>
+    </section>
+
+    <section class="admin-section">
+      <h2 class="admin-section-title">Calming Tools</h2>
+      <div class="admin-list" data-admin-tools></div>
+    </section>
+  </main>
+
+  <div class="admin-toast" data-admin-toast hidden></div>
+
+  <script type="module" src="../views/adminView.js"></script>
+</body>
+</html>

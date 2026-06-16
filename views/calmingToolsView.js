@@ -1,10 +1,6 @@
-import { getCurrentUser, requireAuth } from "../services/auth-service.js";
+import { getCurrentUser, isAuthenticated } from "../services/auth-service.js";
 import { getUserRecord, updateUserRecord } from "../services/api-service.js";
 import { getCalmingTools } from "../services/tools-service.js";
-
-if (!requireAuth()) {
-  throw new Error("Authentication required.");
-}
 
 const DEFAULT_CATEGORY = "all";
 const DEFAULT_TOOL_IMAGE = "https://placehold.co/72x72";
@@ -29,6 +25,9 @@ const categoryTitle = document.querySelector("[data-category-title]");
 const categoryImage = document.querySelector("[data-category-image]");
 
 const authUser = getCurrentUser();
+const guestWall = document.querySelector("[data-guest-wall]");
+let guestHasUsedTool = false;
+
 let currentUser = null;
 let tools = [];
 let favoriteToolIds = new Set();
@@ -927,6 +926,13 @@ function pauseBreathingVideo() {
 function closeGroundingExercise() {
   pauseBreathingVideo();
   openCategory(getCurrentExercise().category);
+  if (!isAuthenticated() && guestHasUsedTool) {
+    showGuestWall();
+  }
+}
+
+function showGuestWall() {
+  if (guestWall) guestWall.hidden = false;
 }
 
 function openTool(toolId, originPage) {
@@ -934,6 +940,10 @@ function openTool(toolId, originPage) {
 
   if (!tool) {
     return;
+  }
+
+  if (!isAuthenticated()) {
+    guestHasUsedTool = true;
   }
 
   const exercise = getExerciseForTool(tool);
@@ -961,6 +971,9 @@ function openToolDetail(toolId, originPage) {
 
 function closeToolDetail() {
   setCurrentPage(previousPage);
+  if (!isAuthenticated() && guestHasUsedTool) {
+    showGuestWall();
+  }
 }
 
 async function loadCurrentUser() {

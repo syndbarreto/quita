@@ -85,6 +85,35 @@ export function requireAuth() {
   return true;
 }
 
+export async function requireAdmin() {
+  if (!isAuthenticated()) {
+    logoutUser();
+    window.location.href = "./signupLogin.html?view=login";
+    return false;
+  }
+
+  const user = getCurrentUser();
+  const token = getAuthToken();
+
+  const response = await fetch(`${API_BASE_URL}/users/${user.id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (!response.ok) {
+    window.location.href = "./home.html";
+    return false;
+  }
+
+  const data = await response.json();
+
+  if (data.role !== "admin") {
+    window.location.href = "./home.html";
+    return false;
+  }
+
+  return true;
+}
+
 export function logoutUser() {
   localStorage.removeItem(AUTH_STORAGE_KEY);
 }

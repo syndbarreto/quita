@@ -75,6 +75,7 @@
 
     <section class="profile-actions" aria-label="Profile actions">
       <a class="glass-chip profile-edit-profile" href="./edit-profile.html">Edit profile</a>
+      <a class="profile-admin-button" href="./admin.html" data-profile-admin hidden>Admin panel</a>
       <button class="profile-logout-button" type="button" data-profile-logout>Log out</button>
     </section>
   </main>
@@ -135,6 +136,18 @@
       <span>Profile</span>
     </a>
   </nav>
+
+  <div class="guest-wall" data-guest-wall hidden>
+    <div class="guest-wall-backdrop"></div>
+    <div class="guest-wall-sheet">
+      <div class="guest-wall-handle"></div>
+      <img class="guest-wall-doll" src="../assets/Quita Logo svg.svg" alt="Quita" />
+      <h2 class="guest-wall-title">Make it yours</h2>
+      <p class="guest-wall-body">Create a free account to set up your profile and emergency contact.</p>
+      <a class="guest-wall-cta" href="./signupLogin.html">Create an account</a>
+      <a class="guest-wall-login" href="./signupLogin.html?view=login">Already have an account? Log in</a>
+    </div>
+  </div>
 
   <script type="module" src="../views/profileView.js"></script>
 </body>
