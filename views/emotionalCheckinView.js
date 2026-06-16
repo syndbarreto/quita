@@ -1,4 +1,5 @@
 import { requireAuth } from "../services/auth-service.js";
+import { createEmotionalCheckin } from "../services/api-service.js";
 
 if (!requireAuth()) {
   throw new Error("Authentication required.");
@@ -46,7 +47,33 @@ function selectEmotion(selectedChip) {
     feelingInput.value = selectedChip.textContent.trim();
   }
 }
+function getSelectedFeeling() {
+  if (feelingInput?.value.trim()) {
+    return feelingInput.value.trim();
+  }
 
+  const selected = emotionChips.find((c) => c.classList.contains("is-selected"));
+  return selected ? selected.textContent.trim() : "";
+}
+
+async function handleDone() {
+  const feeling = getSelectedFeeling();
+
+  if (feeling) {
+    if (doneButton) doneButton.disabled = true;
+
+    try {
+      await createEmotionalCheckin(feeling);
+    } catch (err) {
+      console.error("Failed to save check-in:", err);
+      // Continua para o overlay mesmo em erro — não bloqueia o utilizador
+    } finally {
+      if (doneButton) doneButton.disabled = false;
+    }
+  }
+
+  openHistoryOverlay();
+}
 emotionChips.forEach((chip) => {
   chip.setAttribute(
     "aria-pressed",
@@ -62,7 +89,7 @@ document.addEventListener("click", (event) => {
   }
 });
 
-doneButton?.addEventListener("click", openHistoryOverlay);
+doneButton?.addEventListener("click", handleDone);
 historyCloseButton?.addEventListener("click", closeHistoryOverlay);
 
 historyOverlay?.addEventListener("click", (event) => {

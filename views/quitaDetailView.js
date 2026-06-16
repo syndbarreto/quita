@@ -339,6 +339,8 @@ async function loadDetail() {
     return;
   }
 
+  console.log("[quita-detail] loading quitaId:", quitaId);
+
   try {
     const record = await getQuitaRecord(quitaId);
 
@@ -358,6 +360,7 @@ async function loadDetail() {
     await renderRecommendedTools(worryType);
     updateHeroOnScroll();
   } catch (error) {
+    console.error("[quita-detail] loadDetail failed:", error);
     window.location.href = "./vault.html?view=list";
   }
 }
