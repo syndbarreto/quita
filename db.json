@@ -225,10 +225,15 @@
       "worryType": "burden",
       "dollId": "flower",
       "dollState": "worried",
-      "status": "vault",
+      "status": "bliss",
       "journals": [],
       "createdAt": "2026-06-15T13:57:17.336Z",
-      "userId": 1
+      "userId": 1,
+      "releaseReflection": {
+        "text": "terminei o teaser",
+        "createdAt": "2026-06-16T10:57:31.904Z"
+      },
+      "releasedAt": "2026-06-16T10:57:31.904Z"
     },
     {
       "id": "1781544964520-942f4e36936268",
@@ -255,9 +260,42 @@
       "journals": [],
       "createdAt": "2026-06-15T17:36:04.520Z",
       "userId": 4
+    },
+    {
+      "id": "1781572358756-002f871201467",
+      "name": "Mui",
+      "worryText": "Minha mãe",
+      "smallStep": "Liguei pra ela",
+      "activity": {
+        "type": "preset",
+        "value": "Eating"
+      },
+      "people": {
+        "type": "preset",
+        "value": "By Myself"
+      },
+      "location": {
+        "type": "preset",
+        "value": "Home"
+      },
+      "gridBackground": "light-orange",
+      "worryType": "knot",
+      "dollId": "star",
+      "dollState": "worried",
+      "status": "vault",
+      "journals": [],
+      "createdAt": "2026-06-16T01:12:38.756Z",
+      "userId": 4
     }
   ],
-  "emotionalCheckins": [],
+  "emotionalCheckins": [
+    {
+      "feeling": "Anxious",
+      "createdAt": "2026-06-16T01:03:11.204Z",
+      "userId": 4,
+      "id": 1
+    }
+  ],
   "journals": [],
   "tools": [
     {
