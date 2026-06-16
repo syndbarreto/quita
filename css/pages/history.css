@@ -1,13 +1,12 @@
 body {
-  background: #eaeaea;
-  font-family: var(--font-primary), Arial, Helvetica, sans-serif;
+  align-items: flex-start;
+  min-height: 100dvh;
 }
 
 .history-page {
-  width: 402px;
-  min-height: 874px;
-  margin: 0 auto;
-  padding: 72px 20px 48px;
+  width: min(100vw, 402px);
+  min-height: 100dvh;
+  padding: 72px 20px 60px;
   background: var(--background);
   color: var(--purple);
   overflow: hidden;
