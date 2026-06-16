@@ -1,9 +1,5 @@
 import { getUserRecord } from "../services/api-service.js";
-import { getCurrentUser, requireAuth } from "../services/auth-service.js";
-
-if (!requireAuth()) {
-  throw new Error("Authentication required.");
-}
+import { getCurrentUser, isAuthenticated } from "../services/auth-service.js";
 
 const greetingTitle = document.querySelector("[data-user-greeting]");
 const authUser = getCurrentUser();

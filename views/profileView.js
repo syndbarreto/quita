@@ -1,8 +1,10 @@
 import { getUserRecord, updateUserRecord } from "../services/api-service.js";
-import { getCurrentUser, logoutUser, requireAuth } from "../services/auth-service.js";
+import { getCurrentUser, isAuthenticated, logoutUser } from "../services/auth-service.js";
 
-if (!requireAuth()) {
-  throw new Error("Authentication required.");
+const guestWall = document.querySelector("[data-guest-wall]");
+
+if (!isAuthenticated()) {
+  if (guestWall) guestWall.hidden = false;
 }
 
 const authUser = getCurrentUser();
@@ -15,6 +17,7 @@ const emailElement = document.querySelector("[data-profile-email]");
 const emergencyNameElement = document.querySelector("[data-emergency-name]");
 const emergencyPhoneElement = document.querySelector("[data-emergency-phone]");
 const emergencyCard = document.querySelector("[data-emergency-card]");
+const adminButton = document.querySelector("[data-profile-admin]");
 const logoutButton = document.querySelector("[data-profile-logout]");
 const emergencyOpenButton = document.querySelector("[data-emergency-open]");
 const emergencyOverlay = document.querySelector("[data-emergency-overlay]");
@@ -119,6 +122,10 @@ function renderProfile(user) {
   currentUser = user;
   const displayName = getDisplayName(user);
   const emergencyContact = user?.emergencyContact ?? {};
+
+  if (adminButton) {
+    adminButton.hidden = user?.role !== "admin";
+  }
 
   setText(initialsElement, getInitials(user), "Q");
   setText(profileNameElement, displayName, "Quita friend");

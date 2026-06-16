@@ -304,6 +304,22 @@ body {
   box-shadow: 0 8px 40px color-mix(in srgb, var(--blue) 28%, transparent);
 }
 
+.profile-admin-button {
+  width: 100%;
+  height: 62px;
+  border-radius: 1000px;
+  border: 2px solid var(--blue);
+  background: transparent;
+  color: var(--blue);
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 590;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .profile-logout-button {
   border: 0;
   background: transparent;

@@ -1,10 +1,12 @@
 import { getQuitaRecords } from "../services/api-service.js";
-import { requireAuth } from "../services/auth-service.js";
+import { isAuthenticated } from "../services/auth-service.js";
 import { DOLL_STATES, getDollAsset } from "../models/constants.js";
 import { QuitaCollection } from "../models/QuitaCollection.js";
 
-if (!requireAuth()) {
-  throw new Error("Authentication required.");
+const guestWall = document.querySelector("[data-guest-wall]");
+
+if (!isAuthenticated()) {
+  if (guestWall) guestWall.hidden = false;
 }
 
 const countElement = document.querySelector("[data-bliss-count]");
