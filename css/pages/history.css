@@ -8,12 +8,12 @@ body {
   min-height: 100dvh;
   padding: 72px 20px 60px;
   background: var(--background);
-  color: var(--purple);
-  overflow: hidden;
+  color: var(--text-primary);
+  font-family: var(--font-primary);
 }
 
 .history-header {
-  height: 68px;
+  height: 64px;
   display: grid;
   grid-template-columns: 44px 1fr 44px;
   align-items: center;
@@ -21,119 +21,46 @@ body {
 
 .history-header h1 {
   grid-column: 2;
-  font-family: var(--font-primary), Arial, Helvetica, sans-serif;
-  font-size: 27px;
+  font-size: 18px;
   line-height: 1;
-  font-weight: 800;
+  font-weight: 1000;
   text-align: center;
-  color: var(--purple);
+  color: var(--text-primary);
 }
 
-.back-button {
+.history-back {
   width: 44px;
   height: 44px;
-  position: relative;
+  display:grid;
+  place-items: center;
+}
+
+.history-back img {
+  width: 20px;
+  height: 20px;
   display: block;
 }
 
-.back-button::before {
-  content: "";
-  width: 15px;
-  height: 15px;
-  border-left: 3px solid #111111;
-  border-bottom: 3px solid #111111;
-  position: absolute;
-  left: 14px;
-  top: 13px;
-  transform: rotate(45deg);
-}
-
 .hero {
-  margin-bottom: 24px;
+  padding-top: 8px;
+  margin-bottom: 28px;
 }
 
 .hero h2 {
-  margin-bottom: 8px;
-  font-family: var(--font-title), var(--font-primary), sans-serif;
-  font-size: 57px;
-  line-height: 0.88;
+  margin: 0 0 6px;
+  font-family: var(--font-title);
+  font-size: 36px;
+  line-height: 1;
   font-weight: 400;
   color: var(--purple);
 }
 
 .hero p {
-  font-size: 20px;
-  line-height: 1.25;
-  color: #9787ad;
-}
-
-.mood-filters {
-  width: calc(100% + 20px);
-  margin-bottom: 24px;
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.mood-filters::-webkit-scrollbar {
-  display: none;
-}
-
-.filter-chip,
-.mood-pill {
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  text-decoration: none;
-  color: var(--purple);
-  white-space: nowrap;
-}
-
-.filter-chip {
-  height: 70px;
-  padding: 0 24px;
-  flex: 0 0 auto;
-  font-size: 18px;
-}
-
-.filter-chip.all {
-  width: 70px;
-  padding: 0;
-  color: var(--background);
-  background: var(--purple);
-}
-
-.filter-chip.calm,
-.timeline-item.calm .timeline-dot,
-.timeline-item.calm .mood-pill {
-  background: var(--mint);
-}
-
-.filter-chip.anxious,
-.timeline-item.anxious .timeline-dot,
-.timeline-item.anxious .mood-pill {
-  background: var(--yellow);
-}
-
-.filter-chip.tender,
-.timeline-item.tender .timeline-dot,
-.timeline-item.tender .mood-pill {
-  background: #ffa6c9;
-}
-
-.filter-chip.tired,
-.timeline-item.tired .timeline-dot,
-.timeline-item.tired .mood-pill {
-  background: #bea5ef;
-}
-
-.filter-chip.hopeful,
-.timeline-item.hopeful .timeline-dot,
-.timeline-item.hopeful .mood-pill {
-  background: #63a7f7;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text-secondary);
 }
 
 .history-list {
@@ -141,32 +68,32 @@ body {
 }
 
 .section-label {
-  margin: 0 0 18px;
-  font-size: 15px;
-  line-height: 1;
-  letter-spacing: 6px;
+  margin: 0 0 16px;
+  font-size: 11px;
+  font-weight: 590;
+  letter-spacing: 3px;
   text-transform: uppercase;
-  color: #a998bd;
+  color: var(--medium-text);
 }
 
 .section-label:not(:first-child) {
-  margin-top: 34px;
+  margin-top: 32px;
 }
 
 .timeline-item {
-  min-height: 84px;
-  padding-left: 48px;
+  min-height: 72px;
+  padding-left: 44px;
   position: relative;
 }
 
 .timeline-item::before {
   content: "";
-  width: 2px;
+  width: 1px;
   position: absolute;
-  left: 15px;
-  top: 29px;
+  left: 13px;
+  top: 28px;
   bottom: -2px;
-  background: #e6dfe8;
+  background: var(--gray-light);
 }
 
 .timeline-item:last-child::before {
@@ -174,80 +101,105 @@ body {
 }
 
 .timeline-dot {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   position: absolute;
   left: 0;
   top: 0;
+  background: var(--gray-lighter);
 }
 
 .timeline-content {
   min-width: 0;
-  padding-top: 1px;
+  padding-top: 2px;
 }
 
 .timeline-meta {
-  min-height: 34px;
+  min-height: 30px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .mood-pill {
-  min-width: 72px;
-  min-height: 34px;
-  padding: 0 15px;
-  font-size: 16px;
+  min-width: 64px;
+  height: 28px;
+  padding: 0 12px;
+  font-size: 13px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 590;
+  color: var(--text-primary);
+  background: var(--gray-lighter);
+  white-space: nowrap;
 }
 
 .timeline-meta time {
-  font-size: 17px;
+  font-size: 13px;
+  font-weight: 400;
   line-height: 1;
-  color: #a294b8;
+  color: var(--medium-text);
 }
 
-.timeline-content p {
-  margin-top: 13px;
-  font-size: 20px;
-  line-height: 1.25;
-  color: #705892;
-}
+/* ── Cores por emoção (timeline-dot + mood-pill) ── */
+.timeline-item.anxious    .timeline-dot,
+.timeline-item.anxious    .mood-pill    { background: var(--yellow); }
 
-.timeline-item.overwhelmed {
-  min-height: 56px;
-}
+.timeline-item.serene     .timeline-dot,
+.timeline-item.serene     .mood-pill,
+.timeline-item.content    .timeline-dot,
+.timeline-item.content    .mood-pill    { background: var(--mint); }
+
+.timeline-item.grateful   .timeline-dot,
+.timeline-item.grateful   .mood-pill    { background: var(--gold); }
+
+.timeline-item.inspired   .timeline-dot,
+.timeline-item.inspired   .mood-pill    { background: color-mix(in srgb, var(--blue) 30%, var(--background)); }
+
+.timeline-item.hyped      .timeline-dot,
+.timeline-item.hyped      .mood-pill,
+.timeline-item.lonely     .timeline-dot,
+.timeline-item.lonely     .mood-pill    { background: var(--light-pink); }
+
+.timeline-item.radiant    .timeline-dot,
+.timeline-item.radiant    .mood-pill    { background: var(--light-yellow); }
 
 .timeline-item.overwhelmed .timeline-dot,
-.timeline-item.overwhelmed .mood-pill {
-  background: #ef4939;
-}
+.timeline-item.overwhelmed .mood-pill,
+.timeline-item.frustrated  .timeline-dot,
+.timeline-item.frustrated  .mood-pill   { background: color-mix(in srgb, var(--dark-orange) 28%, var(--background)); }
 
-.timeline-item.overwhelmed .mood-pill {
-  color: var(--white);
-}
+.timeline-item.panicked   .timeline-dot,
+.timeline-item.panicked   .mood-pill    { background: color-mix(in srgb, var(--light-red) 22%, var(--background)); }
 
-.timeline-item.generous .timeline-dot,
-.timeline-item.generous .mood-pill {
-  background: #f04fc6;
-}
+.timeline-item.drained    .timeline-dot,
+.timeline-item.drained    .mood-pill,
+.timeline-item.restless   .timeline-dot,
+.timeline-item.restless   .mood-pill    { background: color-mix(in srgb, var(--light-green) 50%, var(--background)); }
 
-.timeline-item.numb {
-  min-height: 56px;
-}
 
-.timeline-item.numb .timeline-dot,
-.timeline-item.numb .mood-pill {
-  background: #6c3f20;
-}
+.timeline-item.unmotivated .timeline-dot,
+.timeline-item.unmotivated .mood-pill,
+.timeline-item.insecure    .timeline-dot,
+.timeline-item.insecure    .mood-pill   { background: color-mix(in srgb, var(--hot-pink) 28%, var(--background)); }
 
-.timeline-item.numb .mood-pill {
-  color: var(--white);
-}
+.timeline-item.numb       .timeline-dot,
+.timeline-item.numb       .mood-pill,
+.timeline-item.stuck      .timeline-dot,
+.timeline-item.stuck      .mood-pill,
+.timeline-item.lost       .timeline-dot,
+.timeline-item.lost       .mood-pill    { background: var(--gray-lightest); }
 
-@media (max-width: 420px) {
-  .history-page {
-    width: 100%;
-    min-height: 100svh;
-  }
+/* ── Estado vazio ── */
+.history-empty {
+  margin: 48px 0 0;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--medium-text);
+  text-align: center;
+  line-height: 1.5;
 }
