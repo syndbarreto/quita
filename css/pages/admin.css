@@ -202,3 +202,23 @@ body {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 374px) {
+  main {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  main {
+    height: auto;
+    min-height: auto;
+  }
+  .admin-page {
+    height: auto;
+    min-height: auto;
+  }
+}

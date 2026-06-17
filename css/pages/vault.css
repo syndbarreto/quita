@@ -15,6 +15,11 @@ body {
   font-family: var(--font-primary);
 }
 
+.vault-page.is-loading > * {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .vault-page.is-list {
   overflow-y: auto;
 }

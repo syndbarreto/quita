@@ -320,6 +320,10 @@ body {
   justify-content: center;
 }
 
+.profile-admin-button[hidden] {
+  display: none;
+}
+
 .profile-logout-button {
   border: 0;
   background: transparent;
@@ -503,5 +507,28 @@ body {
 @keyframes emergency-sheet-in {
   to {
     transform: translateY(0);
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 374px) {
+  main {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  body {
+    overflow: auto;
+  }
+  main {
+    height: auto;
+    min-height: auto;
+  }
+  .profile-page {
+    height: auto;
+    min-height: auto;
   }
 }

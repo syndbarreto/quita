@@ -328,3 +328,15 @@ body.bliss-info-open .app-bottom-nav {
     width: 118px;
   }
 }
+
+@media (min-width: 768px) {
+  body {
+    overflow: auto;
+  }
+  .bliss-page {
+    min-height: auto;
+  }
+  .bliss-stage {
+    min-height: auto;
+  }
+}
