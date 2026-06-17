@@ -236,3 +236,12 @@ body {
     margin-top: 44px;
   }
 }
+
+@media (min-width: 768px) {
+  body {
+    overflow: auto;
+  }
+  .release-reflection-page {
+    min-height: auto;
+  }
+}

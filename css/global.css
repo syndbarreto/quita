@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+@view-transition {
+  navigation: auto;
+}
+
 html,
 body {
   min-height: 100%;
@@ -19,6 +23,47 @@ body {
   min-height: 100vh;
 
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Small phones — prevent horizontal scroll */
+@media (max-width: 374px) {
+  body {
+    align-items: stretch;
+  }
+}
+
+/* iPad and above — conteúdo preenche a tela inteira */
+@media (min-width: 768px) {
+  body {
+    background: var(--background);
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
+  main,
+  .home-container,
+  .signup-page,
+  .auth-page,
+  .admin-page,
+  .bliss-page,
+  .calming-tools-page,
+  .chat-page,
+  .checkin-page,
+  .create-quita-page,
+  .edit-profile-page,
+  .history-page,
+  .onboarding-page,
+  .profile-page,
+  .quita-detail-page,
+  .release-reflection-page,
+  .support-page,
+  .vault-page,
+  .welcome-page {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
 }
 
 @font-face {

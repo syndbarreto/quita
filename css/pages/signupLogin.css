@@ -287,3 +287,18 @@
   font-weight: 600;
   text-decoration: none;
 }
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 374px) {
+  .signup-main,
+  .login-main {
+    padding: 10px 12px;
+  }
+}
+
+@media (min-width: 768px) {
+  .signup-page {
+    min-height: auto;
+  }
+}

@@ -559,6 +559,32 @@
   line-height: 1.35;
 }
 
+.tool-youtube-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: #ff0000;
+  color: #ffffff;
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.tool-youtube-link:hover,
+.tool-youtube-link:focus-visible {
+  opacity: 0.85;
+}
+
+.tool-youtube-link:focus-visible {
+  outline: 2px solid #ff0000;
+  outline-offset: 3px;
+}
+
 .calming-exercise-active .app-bottom-nav {
   display: none;
 }
@@ -1031,4 +1057,19 @@
 .red {
 
     color: var(--dark-red);
+}
+
+@media (min-width: 768px) {
+  .calming-tools-page {
+    min-height: auto;
+    --breathing-height: 280px;
+    --quotes-height: 280px;
+    --sounds-height: 330px;
+    --grounding-height: 622px;
+  }
+
+  .tools-gallery > .tool-card:nth-child(3) img {
+    object-fit: contain;
+    background-color: #DE98B2;
+  }
 }

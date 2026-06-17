@@ -220,3 +220,21 @@ body {
   opacity: 0.72;
   transform: none;
 }
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 374px) {
+  main {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  body {
+    overflow: auto;
+  }
+  main {
+    min-height: auto;
+  }
+}

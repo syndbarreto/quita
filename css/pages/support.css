@@ -124,3 +124,26 @@ body {
   line-height: 1.5;
   text-align: center;
 }
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 374px) {
+  main {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  body {
+    overflow: auto;
+  }
+  main {
+    height: auto;
+    min-height: auto;
+  }
+  .support-page {
+    height: auto;
+    min-height: auto;
+  }
+}

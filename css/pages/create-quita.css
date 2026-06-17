@@ -429,3 +429,9 @@ body {
     height: 132px;
   }
 }
+
+@media (min-width: 768px) {
+  .create-quita-page {
+    min-height: auto;
+  }
+}
