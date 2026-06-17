@@ -9,6 +9,12 @@ if (!isAuthenticated()) {
   if (guestWall) guestWall.hidden = false;
 }
 
+window.addEventListener("pageshow", (e) => {
+  if (e.persisted && !isAuthenticated()) {
+    window.location.replace("./authentication.html");
+  }
+});
+
 const countElement = document.querySelector("[data-bliss-count]");
 const emptyState = document.querySelector("[data-bliss-empty]");
 const carousel = document.querySelector("[data-bliss-carousel]");

@@ -1,5 +1,5 @@
 import { requireAuth } from "../services/auth-service.js";
-import { createEmotionalCheckin } from "../services/api-service.js";
+import { createdOwnedRecord } from "../services/api-service.js";
 
 if (!requireAuth()) {
   throw new Error("Authentication required.");
@@ -47,6 +47,28 @@ function selectEmotion(selectedChip) {
     feelingInput.value = selectedChip.textContent.trim();
   }
 }
+
+async function saveCheckin() {
+  const feeling = feelingInput?.value.trim();
+
+  if (!feeling) {
+    return;
+  }
+
+  doneButton.disabled = true;
+
+  try {
+    await createOwnedRecord("emotionalCheckins", {
+      feeling,
+      createdAt: new Date().toISOString(),
+    });
+
+    openHistoryOverlay();
+  } finally {
+    doneButton.disabled = false;
+  }
+}
+
 function getSelectedFeeling() {
   if (feelingInput?.value.trim()) {
     return feelingInput.value.trim();
@@ -89,7 +111,7 @@ document.addEventListener("click", (event) => {
   }
 });
 
-doneButton?.addEventListener("click", handleDone);
+doneButton?.addEventListener("click", saveCheckin);
 historyCloseButton?.addEventListener("click", closeHistoryOverlay);
 
 historyOverlay?.addEventListener("click", (event) => {

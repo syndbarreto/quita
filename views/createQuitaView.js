@@ -10,6 +10,7 @@ import {
 import { Quita } from "../models/Quita.js";
 import { createQuitaRecord } from "../services/api-service.js";
 import { requireAuth } from "../services/auth-service.js";
+import { notify } from "../services/notification-service.js";
 
 if (!requireAuth()) {
   throw new Error("Authentication required.");
@@ -301,7 +302,8 @@ form.addEventListener("submit", async (event) => {
   const quita = new Quita(getFormData());
 
   try {
-    await createQuitaRecord(quita);
+    const createdQuita = await createQuitaRecord(quita);
+    notify("quita_created", `${createdQuita.name} arrived in your vault!`).catch(()=>{});
     window.location.href = "./vault.html";
   } catch (error) {
     if (error.message.includes("logged in") || error.message.includes("session expired")) {

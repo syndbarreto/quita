@@ -78,7 +78,7 @@ export function isAuthenticated() {
 export function requireAuth() {
   if (!isAuthenticated()) {
     logoutUser();
-    window.location.href = "./signupLogin.html?view=login";
+    window.location.replace("./authentication.html");
     return false;
   }
 
@@ -88,7 +88,7 @@ export function requireAuth() {
 export async function requireAdmin() {
   if (!isAuthenticated()) {
     logoutUser();
-    window.location.href = "./signupLogin.html?view=login";
+    window.location.replace("./authentication.html");
     return false;
   }
 
