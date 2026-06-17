@@ -678,7 +678,21 @@ function renderToolDetail(tool) {
   if (tool.description) {
     appendTextElement(toolDetailContent, "p", "tool-detail-description", tool.description);
   }
+
+  if (tool.youtubeUrl) {
+    const link = createElement("a", "tool-youtube-link", {
+      href: tool.youtubeUrl,
+      target: "_blank",
+      rel: "noopener noreferrer",
+    });
+
+    link.textContent = "Listen on YouTube ↗️";
+    toolDetailContent.appendChild(link);
+  }
 }
+
+
+
 
 function getCurrentExercise() {
   return activeExercise ?? EXERCISES.grounding;

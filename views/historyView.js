@@ -1,46 +1,41 @@
 import { requireAuth } from "../services/auth-service.js";
-import { getEmotionalCheckins } from "../services/api-service.js";
+import { getOwnedRecords } from "../services/api-service.js";
 
 if (!requireAuth()) {
   throw new Error("Authentication required.");
 }
 
-const listEl = document.querySelector("[data-history-list]");
-const emptyEl = document.querySelector("[data-history-empty]");
+const historyList = document.querySelector(".history-list");
 
-function relativeTime(isoString) {
-  const diffMs = Date.now() - new Date(isoString).getTime();
-  const mins = Math.floor(diffMs / 60000);
-  if (mins < 60) return `${mins}m ago`;
-  const hours = Math.floor(mins / 60);
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.floor(hours / 24);
-  if (days < 7) return `${days}d ago`;
-  const weeks = Math.floor(days / 7);
-  return `${weeks}w ago`;
+function formatRelativeTime(isoString) {
+  const created = new Date(isoString);
+  const now = new Date();
+  const diffMs = now - created;
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+  const diffWeeks = Math.floor(diffDays / 7);
+
+  if (diffMins < 1) return "just now";
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  if (diffDays < 7) return `${diffDays}d ago`;
+  return `${diffWeeks}w ago`;
 }
 
-function sectionLabel(isoString) {
-  const diffDays = Math.floor(
-    (Date.now() - new Date(isoString).getTime()) / 86400000,
-  );
+function getGroup(isoString) {
+  const created = new Date(isoString);
+  const now = new Date();
+  const diffDays = Math.floor((now - created) / 86400000);
+
   if (diffDays === 0) return "Today";
   if (diffDays < 7) return "This week";
   return "Earlier";
 }
 
-function createSectionLabel(text) {
-  const p = document.createElement("p");
-  p.className = "section-label";
-  p.textContent = text;
-  return p;
-}
-
-function createTimelineItem(checkin) {
-  const slug = checkin.feeling.toLowerCase().replace(/\s+/g, "-");
-
-  const article = document.createElement("article");
-  article.className = `timeline-item ${slug}`;
+function renderCheckin(checkin) {
+  const item = document.createElement("article");
+  item.className = `timeline-item ${checkin.feeling.toLowerCase()}`;
 
   const dot = document.createElement("span");
   dot.className = "timeline-dot";
@@ -57,48 +52,61 @@ function createTimelineItem(checkin) {
 
   const time = document.createElement("time");
   time.dateTime = checkin.createdAt;
-  time.textContent = relativeTime(checkin.createdAt);
+  time.textContent = formatRelativeTime(checkin.createdAt);
 
   meta.append(pill, time);
   content.append(meta);
-  article.append(dot, content);
+  item.append(dot, content);
 
-  return article;
+  return item;
 }
 
-function render(checkins) {
-  if (!checkins.length) {
-    if (emptyEl) emptyEl.hidden = false;
+function renderEmpty() {
+  const empty = document.createElement("p");
+  empty.textContent = "No check-ins yet. Come back after your first one.";
+  empty.style.color = "#a998bd";
+  historyList.append(empty);
+}
+
+async function renderHistory() {
+  if (!historyList) {
     return;
   }
 
-  // Ordena do mais recente para o mais antigo
+  const checkins = await getOwnedRecords("emotionalCheckins");
+
+  historyList.replaceChildren();
+
+  if (!checkins || checkins.length === 0) {
+    renderEmpty();
+    return;
+  }
+
   const sorted = [...checkins].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
   );
 
-  let currentLabel = null;
+  const GROUP_ORDER = ["Today", "This week", "Earlier"];
+  const groups = {};
 
-  for (const checkin of sorted) {
-    const label = sectionLabel(checkin.createdAt);
+  sorted.forEach((checkin) => {
+    const group = getGroup(checkin.createdAt);
+    if (!groups[group]) groups[group] = [];
+    groups[group].push(checkin);
+  });
 
-    if (label !== currentLabel) {
-      listEl.appendChild(createSectionLabel(label));
-      currentLabel = label;
-    }
+  GROUP_ORDER.forEach((groupName) => {
+    if (!groups[groupName]) return;
 
-    listEl.appendChild(createTimelineItem(checkin));
-  }
+    const label = document.createElement("p");
+    label.className = "section-label";
+    label.textContent = groupName;
+    historyList.append(label);
+
+    groups[groupName].forEach((checkin) => {
+      historyList.append(renderCheckin(checkin));
+    });
+  });
 }
 
-async function init() {
-  try {
-    const checkins = await getEmotionalCheckins();
-    render(checkins);
-  } catch (err) {
-    console.error("Failed to load history:", err);
-    if (emptyEl) emptyEl.hidden = false;
-  }
-}
-
-init();
+renderHistory();
