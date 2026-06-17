@@ -18,18 +18,6 @@ function normalizeName(name) {
   return limitName(name) || "Quita";
 }
 
-function getDollStateByProgress(journalCount = 0) {
-  if (journalCount <= 0) {
-    return DOLL_STATES.WORRIED;
-  }
-
-  if (journalCount === 1) {
-    return DOLL_STATES.CALM;
-  }
-
-  return DOLL_STATES.HAPPY;
-}
-
 export class Quita {
   #id;
   #name;
@@ -57,6 +45,13 @@ export class Quita {
     return normalizeName(name);
   }
 
+  static getDollStateByJournalCount(journalCount = 0) {
+    if (journalCount <= 0) return DOLL_STATES.WORRIED;
+    if (journalCount === 1) return DOLL_STATES.CALM;
+    return DOLL_STATES.HAPPY;
+  }
+
+
   static fromServerRecord(record) {
     return record instanceof Quita ? record : new Quita(record);
   }
@@ -75,7 +70,7 @@ export class Quita {
     this.#gridBackground = data.gridBackground || BACKGROUND_OPTIONS[0].id;
     this.#worryType = normalizeWorryType(data.worryType);
     this.#dollId = selectedDoll.id;
-    this.#dollState = data.dollState || getDollStateByProgress(journals.length);
+    this.#dollState = data.dollState || Quita.getDollStateByJournalCount(journals.length);
     this.#status = data.status || QUITA_STATUS.VAULT;
     this.#journals = journals;
     this.#createdAt = data.createdAt || new Date().toISOString();
