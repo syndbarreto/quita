@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/pages/home.css">
+    <script src="/js/suppress-transition-errors.js"></script>
 </head>
 <body>
     <div class="home-container">
@@ -15,7 +16,30 @@
         <section class="home-greeting">
             <h1 class="greeting-title" data-user-greeting>Hi there</h1>
             <p class="greeting-subtitle">Tell your worries to the dolls, so<br/>they can worry for you.</p>
+            <button
+              class="notification-bell"
+              data-notification-bell
+              type="button"
+              aria-label="Notifications"
+              aria-expanded="false"
+            >
+              <svg width="22" height="24" viewBox="0 0 22 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 0C11.5523 0 12 0.447715 12 1V2.07089C15.3923 2.55612 18 5.47353 18 9V15L20.7071 17.7071C21.0976 18.0976 21.0976 18.7308 20.7071 19.1213C20.5196 19.3088 20.2652 19.4143 20 19.4143H2C1.44772 19.4143 1 18.9666 1 18.4143C1 18.1491 1.10536 17.8948 1.29289 17.7071L4 15V9C4 5.47353 6.60771 2.55612 10 2.07089V1C10 0.447715 10.4477 0 11 0ZM11 24C9.34315 24 8 22.6569 8 21H14C14 22.6569 12.6569 24 11 24Z" fill="currentColor"/>
+              </svg>
+              <span class="notification-badge" data-notification-badge hidden>0</span>
+            </button>
         </section>
+
+        <!-- Notification panel -->
+        <aside
+          class="notification-panel"
+          data-notification-panel
+          aria-label="Notifications"
+          hidden
+        >
+          <p class="notification-panel-empty" data-notification-empty>No notifications yet.</p>
+          <ul class="notification-list" data-notification-list aria-live="polite"></ul>
+        </aside>
 
         <!-- Doll Illustration -->
         <a class="doll-wrapper" href="./quiz.html" aria-label="Start the Quita quiz">
@@ -71,6 +95,18 @@
             <span>Profile</span>
         </a>
     </nav>
+
+    <div class="guest-wall" data-guest-wall hidden>
+      <div class="guest-wall-backdrop"></div>
+      <div class="guest-wall-sheet">
+        <div class="guest-wall-handle"></div>
+        <img class="guest-wall-doll" src="../assets/Quita Logo svg.svg" alt="Quita" />
+        <h2 class="guest-wall-title">Keep going</h2>
+        <p class="guest-wall-body">Create a free account to unlock this and save your progress.</p>
+        <a class="guest-wall-cta" href="./signupLogin.html">Create an account</a>
+        <a class="guest-wall-login" href="./signupLogin.html?view=login">Already have an account? Log in</a>
+      </div>
+    </div>
 
     <script type="module" src="../views/homeView.js"></script>
 </body>
