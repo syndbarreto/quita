@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="../css/variables.css" />
     <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/components.css" />
     <link rel="stylesheet" href="../css/pages/history.css" />
     <script src="../js/suppress-transition-errors.js"></script>
 </head>
@@ -14,7 +15,9 @@
   <body>
     <main class="history-page" aria-label="Feeling history">
       <header class="history-header">
-        <a class="back-button" href="../index.html" aria-label="Go back"></a>
+        <a class="checkin-back" href="./home.html" aria-label="Go back">
+          <img src="../assets/arrow.svg" alt="">
+        </a>
         <h1>History</h1>
       </header>
 
@@ -24,12 +27,12 @@
       </section>
 
       <nav class="mood-filters" aria-label="Feeling filters">
-        <a class="filter-chip all active" href="#">All</a>
-        <a class="filter-chip calm" href="#">Calm</a>
-        <a class="filter-chip anxious" href="#">Anxious</a>
-        <a class="filter-chip tender" href="#">Tender</a>
-        <a class="filter-chip tired" href="#">Tired</a>
-        <a class="filter-chip hopeful" href="#">Hopeful</a>
+        <button class="glass-chip filter-chip" type="button" data-filter="all" aria-pressed="true">All</button>
+        <button class="glass-chip filter-chip filter-chip--calm" type="button" data-filter="calm" aria-pressed="false">Calm</button>
+        <button class="glass-chip filter-chip filter-chip--anxious" type="button" data-filter="anxious" aria-pressed="false">Anxious</button>
+        <button class="glass-chip filter-chip filter-chip--tender" type="button" data-filter="tender" aria-pressed="false">Tender</button>
+        <button class="glass-chip filter-chip filter-chip--tired" type="button" data-filter="tired" aria-pressed="false">Tired</button>
+        <button class="glass-chip filter-chip filter-chip--hopeful" type="button" data-filter="hopeful" aria-pressed="false">Hopeful</button>
       </nav>
 
       <section class="history-list" aria-label="Timeline">

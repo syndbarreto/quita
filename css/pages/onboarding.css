@@ -1,5 +1,5 @@
 body {
-  background: #eaeaea;
+  background: var(--body-bg);
   font-family: var(--font-primary);
   min-height: 100vh;
   display: grid;
@@ -19,7 +19,7 @@ h1 {
   --page-copy: var(--text-secondary);
   --nav-color: var(--purple);
   --step-label-color: var(--nav-color);
-  --dot-idle: rgba(74, 46, 110, 0.33);
+  --dot-idle: color-mix(in srgb, var(--purple) 33%, transparent);
   --dot-active: var(--purple);
   --button-background: var(--blue);
   --button-text: var(--background);
@@ -101,7 +101,7 @@ h1 {
   --page-text: var(--background);
   --page-copy: var(--background);
   --nav-color: var(--background);
-  --dot-idle: rgba(255, 252, 245, 0.33);
+  --dot-idle: color-mix(in srgb, var(--background) 33%, transparent);
   --dot-active: var(--background);
   --button-background: var(--yellow);
   --button-text: var(--blue);
@@ -361,23 +361,23 @@ h1 {
 }
 
 .feeling-card.seed {
-  background: #ffd1db;
+  background: var(--quiz-result-seed-circle);
 }
 
 .feeling-card.seed h2 {
-  color: #ffaac3;
+  color: var(--light-pink);
 }
 
 .feeling-card.knot {
-  background: #ffd883;
+  background: var(--onboarding-knot-card);
 }
 
 .feeling-card.knot h2 {
-  color: #ffb619;
+  color: var(--vault-knot-card);
 }
 
 .feeling-card.burden {
-  background: #9fa8eb;
+  background: var(--quiz-result-burden-name);
 }
 
 .feeling-card.burden h2 {

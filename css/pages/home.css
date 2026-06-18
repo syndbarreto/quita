@@ -25,10 +25,10 @@
 }
 
 .greeting-title {
-  color: var(--dark-text);
+  color: var(--text-primary);
   font-family: var(--font-primary);
   font-size: 28px;
-  font-weight: 590;
+  font-weight: 600;
   margin: 0;
 }
 
@@ -73,7 +73,7 @@
   transform: translateX(-50%);
   width: 170px;
   height: 46px;
-  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(51, 51, 51, 0.4) 13%, rgba(235, 231, 231, 0) 100%);
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, color-mix(in srgb, var(--black) 40%, transparent) 13%, transparent 100%);
   border-radius: 9999px;
   z-index: 1;
 }
@@ -132,7 +132,7 @@
   overflow-y: auto;
   background: var(--white);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--black) 14%, transparent);
   padding: 12px 0;
   z-index: 100;
 }
@@ -153,8 +153,8 @@
 
 .notification-item {
   padding: 10px 16px;
-  border-bottom: 1px solid #f0eaf4;
-  background: #faf7fc;
+  border-bottom: 1px solid var(--home-notification-border);
+  background: var(--home-notification-bg);
 }
 
 .notification-item:last-child {
@@ -216,10 +216,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(0deg, var(--light-pink, #ffaac3) 0%, var(--light-pink, #ffaac3) 100%);
+  background: linear-gradient(0deg, var(--light-pink) 0%, var(--light-pink) 100%);
   border-radius: 34px;
   z-index: 0;
-  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
 }
 
 .card-content {
@@ -237,8 +237,8 @@
   height: 48px;
   min-width: 48px;
   border-radius: 296px;
-  background: linear-gradient(0deg, #f7f7f7 0%, #f7f7f7 100%);
-  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.12);
+  background: linear-gradient(0deg, var(--gray-lighter) 0%, var(--gray-lighter) 100%);
+  box-shadow: 0px 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
 }
 
 .emotion-icon {
@@ -314,8 +314,8 @@
 
 .action-button--secondary {
   color: var(--blue);
-  background: linear-gradient(0deg, #f7f7f7 0%, #f7f7f7 100%);
-  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.12);
+  background: linear-gradient(0deg, var(--gray-lighter) 0%, var(--gray-lighter) 100%);
+  box-shadow: 0px 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
 }
 
 .action-button--secondary:active {
@@ -325,7 +325,7 @@
 .action-button--primary {
   color: var(--white);
   background: linear-gradient(0deg, var(--blue) 0%, var(--blue) 100%);
-  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
 }
 
 .action-button--primary:active {
@@ -352,8 +352,8 @@
   left: 0;
   width: 100%;
   height: 62px;
-  background: linear-gradient(0deg, #f7f7f7 0%, #f7f7f7 100%);
-  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.12);
+  background: linear-gradient(0deg, var(--gray-lighter) 0%, var(--gray-lighter) 100%);
+  box-shadow: 0px 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
   border-radius: 296px;
   z-index: 0;
 }
@@ -391,7 +391,7 @@
   justify-content: center;
   display: flex;
   flex-direction: column;
-  color: #8b8b90;
+  color: var(--medium-gray);
   font-size: 18px;
   font-family: var(--font-primary);
   font-weight: 590;
@@ -404,7 +404,7 @@
 
 .nav-label {
   text-align: center;
-  color: #8b8b90;
+  color: var(--medium-gray);
   font-size: 10px;
   font-family: var(--font-primary);
   font-weight: 590;
@@ -459,7 +459,7 @@
     max-width: 600px;
     margin: 0 auto;
     border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--black) 8%, transparent);
   }
 
   .greeting-title {
