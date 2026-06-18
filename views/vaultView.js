@@ -22,6 +22,12 @@ if (!isAuthenticated()) {
   if (guestWall) guestWall.hidden = false;
 }
 
+window.addEventListener("pageshow", (e) => {
+  if (e.persisted && !isAuthenticated()) {
+    window.location.replace("./authentication.html");
+  }
+});
+
 const emptyState = document.querySelector("[data-vault-empty]");
 const vaultPage = document.querySelector(".vault-page");
 const gridView = document.querySelector("[data-vault-grid]");
@@ -762,12 +768,14 @@ async function loadVault() {
 
     quitas = new QuitaCollection(records).newestVaultItems;
     isVaultLoaded = true;
+    vaultPage.classList.remove("is-loading");
 
     render();
   } catch (error) {
     if (error.status === 403) {
       quitas = new QuitaCollection([]).newestVaultItems;
       isVaultLoaded = true;
+      vaultPage.classList.remove("is-loading");
       render();
       return;
     }
@@ -804,7 +812,12 @@ document.addEventListener("click", (event) => {
   }
 
   if (chatButton) {
-    window.location.href = `./quita-chat.html?quitaId=${encodeURIComponent(chatButton.dataset.quitaId)}`;
+    const quitaId = chatButton.dataset.quitaId;
+    const quitaData = quitas.find((q) => String(q.id) === String(quitaId));
+    if (quitaData) {
+      sessionStorage.setItem("quita.chatQuita", JSON.stringify({ id: quitaData.id, name: quitaData.name, worryText: quitaData.worryText }));
+    }
+    window.location.href = `./quita-chat.html?quitaId=${encodeURIComponent(quitaId)}`;
   }
 
   if (toolsButton) {

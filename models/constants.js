@@ -56,16 +56,8 @@ export const DOLL_CATALOG = Object.freeze([
 ]);
 
 export const BACKGROUND_OPTIONS = Object.freeze([
-  { id: "blue", 
-    label: "Blue", 
-    background: "blue", 
-    stars: "yellow"
-   },
-  { id: "mint",
-    label: "Mint",
-    background: "mint",
-    stars: "blue"
-  },
+  { id: "blue", label: "Blue", background: "blue", stars: "yellow" },
+  { id: "mint", label: "Mint", background: "mint", stars: "blue" },
   {
     id: "dark-orange",
     label: "Orange",

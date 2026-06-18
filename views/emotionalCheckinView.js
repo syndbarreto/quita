@@ -1,5 +1,5 @@
 import { requireAuth } from "../services/auth-service.js";
-import { createdOwnedRecord } from "../services/api-service.js";
+import { createOwnedRecord } from "../services/api-service.js";
 
 if (!requireAuth()) {
   throw new Error("Authentication required.");
@@ -69,33 +69,6 @@ async function saveCheckin() {
   }
 }
 
-function getSelectedFeeling() {
-  if (feelingInput?.value.trim()) {
-    return feelingInput.value.trim();
-  }
-
-  const selected = emotionChips.find((c) => c.classList.contains("is-selected"));
-  return selected ? selected.textContent.trim() : "";
-}
-
-async function handleDone() {
-  const feeling = getSelectedFeeling();
-
-  if (feeling) {
-    if (doneButton) doneButton.disabled = true;
-
-    try {
-      await createEmotionalCheckin(feeling);
-    } catch (err) {
-      console.error("Failed to save check-in:", err);
-      // Continua para o overlay mesmo em erro — não bloqueia o utilizador
-    } finally {
-      if (doneButton) doneButton.disabled = false;
-    }
-  }
-
-  openHistoryOverlay();
-}
 emotionChips.forEach((chip) => {
   chip.setAttribute(
     "aria-pressed",

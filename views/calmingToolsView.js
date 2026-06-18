@@ -686,13 +686,10 @@ function renderToolDetail(tool) {
       rel: "noopener noreferrer",
     });
 
-    link.textContent = "Listen on YouTube ↗️";
+    link.textContent = "Listen on YouTube ↗";
     toolDetailContent.appendChild(link);
   }
 }
-
-
-
 
 function getCurrentExercise() {
   return activeExercise ?? EXERCISES.grounding;

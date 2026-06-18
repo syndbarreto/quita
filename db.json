@@ -16,32 +16,6 @@
         "name": "Pedro",
         "phone": "3519887546"
       },
-      "role": "admin",
-      "active": true
-    },
-    {
-      "email": "lara007cunha@gmail.com",
-      "password": "$2a$10$9QVdusDoaXsmPi1xqCu0O.fSW/iZ9zO/k8IJLkw9DuSK7qgGI4DRm",
-      "firstName": "Lara",
-      "lastName": "Cunha",
-      "birthDate": "2026-06-03",
-      "id": 2,
-      "favTools": [],
-      "role": "user",
-      "active": true
-    },
-    {
-      "email": "necanuno@gmail.com",
-      "password": "$2a$10$EhtnfCALWnst69WaZ..DZe8CgkP3VJ.NLjDkbfjZXJ/FJjv8fb8RK",
-      "firstName": "Nuno",
-      "lastName": "Neca",
-      "birthDate": "1997-08-30",
-      "favTools": [
-        1,
-        2,
-        3
-      ],
-      "id": 3,
       "role": "user",
       "active": true
     },
@@ -59,34 +33,45 @@
       "active": true
     },
     {
-      "email": "sau@gmail.com",
-      "password": "$2a$10$YnBxa08nJW8wDyz0faAOXOV3UY3i7zwDir5DirvVgm9PPPPCwxtki",
-      "firstName": "Saulo",
-      "lastName": "La",
-      "birthDate": "2000-06-18",
+      "email": "user@quita.com",
+      "password": "$2a$10$LoZOLN6PboNkBZdi9ikDeurjYLqTA2U7073mL0RGcd/921MrfWK1O",
+      "firstName": "User",
+      "lastName": "Demo",
+      "birthDate": "2000-01-01",
       "favTools": [],
-      "id": 5,
       "role": "user",
-      "active": true
+      "active": true,
+      "id": 7
     },
     {
-      "email": "rick@gmail.com",
-      "password": "$2a$10$VZjgN0tR0YfV4dG0v4MgtOqlag1OS0Sm//l9wNqeHFfBpzNf9Db/O",
-      "firstName": "Rick",
-      "lastName": "Las",
-      "birthDate": "2000-04-23",
+      "email": "admin@quita.com",
+      "password": "$2a$10$GD.BGhLM8cOMOQ2OoxVsrOOzoM0Uo0MKpKztHwNmhchIF2pm2BlUW",
+      "firstName": "Admin",
+      "lastName": "Demo",
+      "birthDate": "2000-01-01",
       "favTools": [],
-      "id": 6,
+      "role": "admin",
+      "active": true,
+      "id": 8
+    },
+    {
+      "email": "test@quita.com",
+      "password": "$2a$10$u2D1jm5XCr9XjlrKfA/aB.vDEY/LJxIv7aeNrW04hkZ5dCAOZA/Lu",
+      "firstName": "Test",
+      "lastName": "User",
+      "birthDate": "2000-01-01",
+      "favTools": [],
       "role": "user",
-      "active": true
+      "active": true,
+      "id": 9
     }
   ],
   "quitas": [
     {
       "id": "c12141e1-f307-47be-bc20-2fcb38aab07c",
-      "name": "dor",
-      "worryText": "werk",
-      "smallStep": "qweq",
+      "name": "Medo",
+      "worryText": "Tenho medo de falhar no projeto final",
+      "smallStep": "Revisei os requisitos do enunciado",
       "activity": {
         "type": "preset",
         "value": "Hanging Out"
@@ -107,8 +92,8 @@
       "journals": [
         {
           "id": "94482a23-d594-432a-a0a5-acb90c1a380a",
-          "title": "k",
-          "text": "jjkk",
+          "title": "Primeiro passo",
+          "text": "Conversei com a minha equipa e fizemos um plano claro.",
           "createdAt": "2026-06-11T18:57:03.696Z"
         }
       ],
@@ -237,9 +222,9 @@
     },
     {
       "id": "1781544964520-942f4e36936268",
-      "name": "kkk",
-      "worryText": "kkkk",
-      "smallStep": "kkkkk",
+      "name": "Ansie",
+      "worryText": "Fico ansioso antes das apresentações",
+      "smallStep": "Preparei os slides com antecedência",
       "activity": {
         "type": "preset",
         "value": "Driving"
@@ -286,6 +271,32 @@
       "journals": [],
       "createdAt": "2026-06-16T01:12:38.756Z",
       "userId": 4
+    },
+    {
+      "id": "1781623231609-20c4b0e5ca334",
+      "name": "Lu",
+      "worryText": "Projeto 1",
+      "smallStep": "tentei dar uma volta",
+      "activity": {
+        "type": "preset",
+        "value": "Eating"
+      },
+      "people": {
+        "type": "preset",
+        "value": "Family"
+      },
+      "location": {
+        "type": "preset",
+        "value": "Outside"
+      },
+      "gridBackground": "blue",
+      "worryType": "burden",
+      "dollId": "diamond",
+      "dollState": "worried",
+      "status": "vault",
+      "journals": [],
+      "createdAt": "2026-06-16T15:20:31.609Z",
+      "userId": 1
     }
   ],
   "emotionalCheckins": [
@@ -294,9 +305,14 @@
       "createdAt": "2026-06-16T01:03:11.204Z",
       "userId": 4,
       "id": 1
+    },
+    {
+      "feeling": "Anxious",
+      "createdAt": "2026-06-17T14:34:40.671Z",
+      "userId": 8,
+      "id": 2
     }
   ],
-  "journals": [],
   "tools": [
     {
       "name": "Focused breath",
@@ -342,35 +358,40 @@
       "description": "by Natural Sample Makers",
       "id": 7,
       "imageUrl": "./assets/tool7.png",
-      "category": "sounds"
+      "category": "sounds",
+      "youtubeUrl": "https://youtu.be/vlbb56GnGGo?si=kUaaK9UqbVSmW9Tb"
     },
     {
       "name": "Atmospheric White Noise",
       "description": "by Abstratc Time",
       "id": 8,
       "imageUrl": "./assets/tool8.png",
-      "category": "sounds"
+      "category": "sounds",
+      "youtubeUrl": "https://youtu.be/wzjWIxXBs_s?si=cI854cGhkCYbCyLs"
     },
     {
       "name": "Forest Veil of Calm",
       "description": "by Nature Acoustics",
       "id": 9,
       "imageUrl": "./assets/tool9.png",
-      "category": "sounds"
+      "category": "sounds",
+      "youtubeUrl": "https://youtu.be/54FJlmDnOnY?si=mNd-juO9eVWCU5nx"
     },
     {
       "name": "Sunset Alpha 108 Hz",
       "description": "by Ookean",
       "id": 10,
       "imageUrl": "./assets/tool10.png",
-      "category": "sounds"
+      "category": "sounds",
+      "youtubeUrl": "https://youtu.be/54FJlmDnOnY?si=mNd-juO9eVWCU5nx"
     },
     {
       "name": "Whispering White Calm",
       "description": "by Historic Site",
       "id": 11,
       "imageUrl": "./assets/tool11.png",
-      "category": "sounds"
+      "category": "sounds",
+      "youtubeUrl": "https://youtu.be/vQ1IBVNGQMc?si=-H3IZZ3aQIgpwQ3_"
     },
     {
       "name": "5-4-3-2-1 Method",
@@ -393,5 +414,6 @@
       "imageUrl": "./assets/tool14.png",
       "category": "grounding"
     }
-  ]
+  ],
+  "notifications": []
 }

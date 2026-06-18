@@ -7,6 +7,12 @@ if (!isAuthenticated()) {
   if (guestWall) guestWall.hidden = false;
 }
 
+window.addEventListener("pageshow", (e) => {
+  if (e.persisted && !isAuthenticated()) {
+    window.location.replace("./authentication.html");
+  }
+});
+
 const authUser = getCurrentUser();
 const initialsElement = document.querySelector("[data-profile-initials]");
 const profileNameElement = document.querySelector("[data-profile-name]");
@@ -200,13 +206,14 @@ async function loadProfile() {
     const user = await getUserRecord(authUser.id);
     renderProfile(user);
   } catch {
-    renderProfile(authUser);
+    // never show admin button from JWT fallback — role must come from API
+    renderProfile({ ...authUser, role: "user" });
   }
 }
 
 logoutButton?.addEventListener("click", () => {
   logoutUser();
-  window.location.href = "./signupLogin.html?view=login";
+  window.location.replace("./authentication.html");
 });
 
 emergencyOpenButton?.addEventListener("click", openEmergencyOverlay);

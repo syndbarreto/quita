@@ -93,18 +93,20 @@ export async function requireAdmin() {
   }
 
   const user = getCurrentUser();
-  
-// Dynamic import evita dependência circular (api-service importa getAuthToken daqui)
-  const { getUserRecord } = await import("./api-service.js");
+  const token = getAuthToken();
 
-  try {
-    const data = await getUserRecord(user.id);
-    if (data.role !== "admin") {
+  const response = await fetch(`${API_BASE_URL}/users/${user.id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (!response.ok) {
     window.location.href = "./home.html";
     return false;
   }
 
-  } catch {
+  const data = await response.json();
+
+  if (data.role !== "admin") {
     window.location.href = "./home.html";
     return false;
   }
