@@ -20,20 +20,6 @@
       "active": true
     },
     {
-      "email": "lucaslindo@gmail.com",
-      "password": "$2a$10$C1LKfNLAKLaurXcMzU7aKOFJn3nz6fz.vovfQWSWGwxf2VexhtnAq",
-      "firstName": "lucas",
-      "lastName": "lindo",
-      "birthDate": "2003-03-05",
-      "favTools": [
-        13,
-        1
-      ],
-      "id": 4,
-      "role": "user",
-      "active": true
-    },
-    {
       "email": "user@quita.com",
       "password": "$2a$10$LoZOLN6PboNkBZdi9ikDeurjYLqTA2U7073mL0RGcd/921MrfWK1O",
       "firstName": "User",
@@ -222,58 +208,6 @@
       "releasedAt": "2026-06-16T10:57:31.904Z"
     },
     {
-      "id": "1781544964520-942f4e36936268",
-      "name": "Ansie",
-      "worryText": "Fico ansioso antes das apresentações",
-      "smallStep": "Preparei os slides com antecedência",
-      "activity": {
-        "type": "preset",
-        "value": "Driving"
-      },
-      "people": {
-        "type": "preset",
-        "value": "Family"
-      },
-      "location": {
-        "type": "preset",
-        "value": "Commuting"
-      },
-      "gridBackground": "hot-pink",
-      "worryType": "burden",
-      "dollId": "diamond",
-      "dollState": "worried",
-      "status": "vault",
-      "journals": [],
-      "createdAt": "2026-06-15T17:36:04.520Z",
-      "userId": 4
-    },
-    {
-      "id": "1781572358756-002f871201467",
-      "name": "Mui",
-      "worryText": "Minha mãe",
-      "smallStep": "Liguei pra ela",
-      "activity": {
-        "type": "preset",
-        "value": "Eating"
-      },
-      "people": {
-        "type": "preset",
-        "value": "By Myself"
-      },
-      "location": {
-        "type": "preset",
-        "value": "Home"
-      },
-      "gridBackground": "light-orange",
-      "worryType": "knot",
-      "dollId": "star",
-      "dollState": "worried",
-      "status": "vault",
-      "journals": [],
-      "createdAt": "2026-06-16T01:12:38.756Z",
-      "userId": 4
-    },
-    {
       "id": "1781623231609-20c4b0e5ca334",
       "name": "Lu",
       "worryText": "Projeto 1",
@@ -303,51 +237,9 @@
   "emotionalCheckins": [
     {
       "feeling": "Anxious",
-      "createdAt": "2026-06-16T01:03:11.204Z",
-      "userId": 4,
-      "id": 1
-    },
-    {
-      "feeling": "Anxious",
       "createdAt": "2026-06-17T14:34:40.671Z",
       "userId": 8,
       "id": 2
-    },
-    {
-      "feeling": "Stuck",
-      "createdAt": "2026-06-18T00:25:22.614Z",
-      "userId": 4,
-      "id": 3
-    },
-    {
-      "feeling": "Drained",
-      "createdAt": "2026-06-18T00:37:44.773Z",
-      "userId": 4,
-      "id": 4
-    },
-    {
-      "feeling": "Numb",
-      "createdAt": "2026-06-18T00:43:38.244Z",
-      "userId": 4,
-      "id": 5
-    },
-    {
-      "feeling": "Frustrated",
-      "createdAt": "2026-06-18T00:47:44.749Z",
-      "userId": 4,
-      "id": 6
-    },
-    {
-      "feeling": "Panicked",
-      "createdAt": "2026-06-18T00:49:31.669Z",
-      "userId": 4,
-      "id": 7
-    },
-    {
-      "feeling": "Serene",
-      "createdAt": "2026-06-18T00:53:23.917Z",
-      "userId": 4,
-      "id": 8
     }
   ],
   "tools": [
