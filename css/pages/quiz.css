@@ -16,7 +16,7 @@
     min-height: auto;
     height: 874px;
     border-radius: 24px;
-    box-shadow: 0 8px 48px rgba(0, 0, 0, 0.10);
+    box-shadow: 0 8px 48px color-mix(in srgb, var(--black) 10%, transparent);
   }
 }
 
@@ -249,11 +249,11 @@ justify-content: flex-start;
   width: 100%;
   height: 54px;
   padding: 11px 23px;
-  background: rgba(120, 120, 128, 0.08);
+  background: color-mix(in srgb, var(--light-grey) 8%, transparent);
   border-radius: 100px;
   border: none;
   color: var(--placeholder);
-  font-family: var(--font-primary, "SF Pro");
+  font-family: var(--font-primary);
   font-size: 16px;
   font-weight: 400;
   line-height: 22px;
@@ -277,7 +277,7 @@ justify-content: flex-start;
 }
 
 .quiz-option:hover {
-  background: rgba(120, 120, 128, 0.12);
+  background: color-mix(in srgb, var(--light-grey) 12%, transparent);
 }
 
 /* ===== FOOTER ===== */
@@ -326,7 +326,7 @@ justify-content: flex-start;
   left: 0;
   top: 0;
   background: var(--light-pink);
-  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
   border-radius: 296px;
   z-index: 0;
 }
@@ -358,7 +358,7 @@ justify-content: flex-start;
   cursor: pointer;
   border: none;
   background: linear-gradient(0deg, var(--gray-lighter) 0%, var(--gray-lighter) 100%);
-  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
   border-radius: 296px;
 }
 
@@ -390,7 +390,7 @@ justify-content: flex-start;
     width: 600px;
     max-width: 600px;
     border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--black) 10%, transparent);
   }
 }
 
@@ -449,7 +449,7 @@ justify-content: flex-start;
   text-align: center;
   color: var(--quiz-result-title-color, var(--white));
   font-size: 68px;
-  font-family: var(--font-title, "Tumb Test");
+  font-family: var(--font-title);
   font-weight: 400;
   word-wrap: break-word;
   margin: 0;
@@ -478,7 +478,7 @@ justify-content: flex-start;
   font-family: var(--font-title, "Tumb Test");
   font-weight: 400;
   word-wrap: break-word;
-  margin: 21px !important;
+  margin: 21px;
   line-height: 1.2;
 }
 
@@ -681,7 +681,7 @@ justify-content: flex-start;
 }
 
 .quiz-nav-active::before {
-  background: #EDEDED;
+  background: var(--gray-lightest);
 }
 
 .quiz-nav-icon {
@@ -690,9 +690,9 @@ justify-content: flex-start;
   justify-content: center;
   display: flex;
   flex-direction: column;
-  color: #8B8B90;
+  color: var(--medium-gray);
   font-size: 18px;
-  font-family: var(--font-primary, "SF Pro");
+  font-family: var(--font-primary);
   font-weight: 590;
   line-height: 28px;
   word-wrap: break-word;
@@ -705,9 +705,9 @@ justify-content: flex-start;
 .quiz-nav-label {
   align-self: stretch;
   text-align: center;
-  color: #8B8B90;
+  color: var(--medium-gray);
   font-size: 10px;
-  font-family: var(--font-primary, "SF Pro");
+  font-family: var(--font-primary);
   font-weight: 590;
   line-height: 12px;
   word-wrap: break-word;
