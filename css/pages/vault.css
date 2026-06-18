@@ -236,9 +236,9 @@ body {
 .vault-list-header h1 {
   margin: 0;
   color: var(--text-primary);
-  font-size: 24px;
-  font-weight: 1000;
-  line-height: 29px;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1;
 }
 
 .vault-list-header p {
