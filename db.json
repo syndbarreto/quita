@@ -311,6 +311,12 @@
       "createdAt": "2026-06-17T14:34:40.671Z",
       "userId": 8,
       "id": 2
+    },
+    {
+      "feeling": "Stuck",
+      "createdAt": "2026-06-18T00:25:22.614Z",
+      "userId": 4,
+      "id": 3
     }
   ],
   "tools": [
