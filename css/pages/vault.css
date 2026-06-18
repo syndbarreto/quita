@@ -1235,3 +1235,9 @@ body {
     width: 19px;
   }
 }
+
+@media (min-width: 768px) {
+  .vault-page {
+    height: 100dvh;
+  }
+}

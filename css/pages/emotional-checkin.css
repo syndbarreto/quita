@@ -4,8 +4,8 @@ body {
 }
 
 .checkin-page {
-  width: 402px;
-  min-height: 874px;
+  width: min(100vw, 402px);
+  min-height: 100svh;
   margin: 0 auto;
   padding: 42px 16px 67px;
   background: var(--background);
@@ -18,7 +18,7 @@ body {
 }
 
 .checkin-header {
-  width: 402px;
+  width: 100%;
   padding: 10px 16px;
   overflow: hidden;
 
@@ -373,10 +373,8 @@ body {
   border: 0;
 }
 
-@media (max-width: 600px) {
+@media (min-width: 768px) {
   .checkin-page {
-    width: 100vw;
-    min-height: 100dvh;
-    margin: 0;
+    min-height: auto;
   }
 }

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git reflog *)",
+      "Bash(git reset *)",
+      "Bash(git push *)",
+      "Bash(gh pr *)",
+      "Bash(git cherry-pick *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}

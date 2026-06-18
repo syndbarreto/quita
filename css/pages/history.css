@@ -1,19 +1,20 @@
 body {
-  align-items: flex-start;
-  min-height: 100dvh;
+  background: #eaeaea;
+  font-family: var(--font-primary), Arial, Helvetica, sans-serif;
 }
 
 .history-page {
   width: min(100vw, 402px);
   min-height: 100svh;
-  padding: 72px 20px 60px;
+  margin: 0 auto;
+  padding: 72px 20px 48px;
   background: var(--background);
-  color: var(--text-primary);
-  font-family: var(--font-primary);
+  color: var(--purple);
+  overflow: hidden;
 }
 
 .history-header {
-  height: 64px;
+  height: 68px;
   display: grid;
   grid-template-columns: 44px 1fr 44px;
   align-items: center;
@@ -21,46 +22,119 @@ body {
 
 .history-header h1 {
   grid-column: 2;
-  font-size: 18px;
+  font-family: var(--font-primary), Arial, Helvetica, sans-serif;
+  font-size: 27px;
   line-height: 1;
-  font-weight: 1000;
+  font-weight: 800;
   text-align: center;
-  color: var(--text-primary);
+  color: var(--purple);
 }
 
-.history-back {
+.back-button {
   width: 44px;
   height: 44px;
-  display:grid;
-  place-items: center;
-}
-
-.history-back img {
-  width: 20px;
-  height: 20px;
+  position: relative;
   display: block;
 }
 
+.back-button::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  border-left: 3px solid #111111;
+  border-bottom: 3px solid #111111;
+  position: absolute;
+  left: 14px;
+  top: 13px;
+  transform: rotate(45deg);
+}
+
 .hero {
-  padding-top: 8px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .hero h2 {
-  margin: 0 0 6px;
-  font-family: var(--font-title);
-  font-size: 36px;
-  line-height: 1;
+  margin-bottom: 8px;
+  font-family: var(--font-title), var(--font-primary), sans-serif;
+  font-size: 57px;
+  line-height: 0.88;
   font-weight: 400;
   color: var(--purple);
 }
 
 .hero p {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.4;
-  color: var(--text-secondary);
+  font-size: 20px;
+  line-height: 1.25;
+  color: #9787ad;
+}
+
+.mood-filters {
+  width: calc(100% + 20px);
+  margin-bottom: 24px;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.mood-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-chip,
+.mood-pill {
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--purple);
+  white-space: nowrap;
+}
+
+.filter-chip {
+  height: 70px;
+  padding: 0 24px;
+  flex: 0 0 auto;
+  font-size: 18px;
+}
+
+.filter-chip.all {
+  width: 70px;
+  padding: 0;
+  color: var(--background);
+  background: var(--purple);
+}
+
+.filter-chip.calm,
+.timeline-item.calm .timeline-dot,
+.timeline-item.calm .mood-pill {
+  background: var(--mint);
+}
+
+.filter-chip.anxious,
+.timeline-item.anxious .timeline-dot,
+.timeline-item.anxious .mood-pill {
+  background: var(--yellow);
+}
+
+.filter-chip.tender,
+.timeline-item.tender .timeline-dot,
+.timeline-item.tender .mood-pill {
+  background: #ffa6c9;
+}
+
+.filter-chip.tired,
+.timeline-item.tired .timeline-dot,
+.timeline-item.tired .mood-pill {
+  background: #bea5ef;
+}
+
+.filter-chip.hopeful,
+.timeline-item.hopeful .timeline-dot,
+.timeline-item.hopeful .mood-pill {
+  background: #63a7f7;
 }
 
 .history-list {
@@ -68,32 +142,32 @@ body {
 }
 
 .section-label {
-  margin: 0 0 16px;
-  font-size: 11px;
-  font-weight: 590;
-  letter-spacing: 3px;
+  margin: 0 0 18px;
+  font-size: 15px;
+  line-height: 1;
+  letter-spacing: 6px;
   text-transform: uppercase;
-  color: var(--medium-text);
+  color: #a998bd;
 }
 
 .section-label:not(:first-child) {
-  margin-top: 32px;
+  margin-top: 34px;
 }
 
 .timeline-item {
-  min-height: 72px;
-  padding-left: 44px;
+  min-height: 84px;
+  padding-left: 48px;
   position: relative;
 }
 
 .timeline-item::before {
   content: "";
-  width: 1px;
+  width: 2px;
   position: absolute;
-  left: 13px;
-  top: 28px;
+  left: 15px;
+  top: 29px;
   bottom: -2px;
-  background: var(--gray-light);
+  background: #e6dfe8;
 }
 
 .timeline-item:last-child::before {
@@ -101,107 +175,82 @@ body {
 }
 
 .timeline-dot {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   position: absolute;
   left: 0;
   top: 0;
-  background: var(--gray-lighter);
 }
 
 .timeline-content {
   min-width: 0;
-  padding-top: 2px;
+  padding-top: 1px;
 }
 
 .timeline-meta {
-  min-height: 30px;
+  min-height: 34px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .mood-pill {
-  min-width: 64px;
-  height: 28px;
-  padding: 0 12px;
-  font-size: 13px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 590;
-  color: var(--text-primary);
-  background: var(--gray-lighter);
-  white-space: nowrap;
+  min-width: 72px;
+  min-height: 34px;
+  padding: 0 15px;
+  font-size: 16px;
 }
 
 .timeline-meta time {
-  font-size: 13px;
-  font-weight: 400;
+  font-size: 17px;
   line-height: 1;
-  color: var(--medium-text);
+  color: #a294b8;
 }
 
-/* ── Cores por emoção (timeline-dot + mood-pill) ── */
-.timeline-item.anxious    .timeline-dot,
-.timeline-item.anxious    .mood-pill    { background: var(--yellow); }
+.timeline-content p {
+  margin-top: 13px;
+  font-size: 20px;
+  line-height: 1.25;
+  color: #705892;
+}
 
-.timeline-item.serene     .timeline-dot,
-.timeline-item.serene     .mood-pill,
-.timeline-item.content    .timeline-dot,
-.timeline-item.content    .mood-pill    { background: var(--mint); }
-
-.timeline-item.grateful   .timeline-dot,
-.timeline-item.grateful   .mood-pill    { background: var(--gold); }
-
-.timeline-item.inspired   .timeline-dot,
-.timeline-item.inspired   .mood-pill    { background: color-mix(in srgb, var(--blue) 30%, var(--background)); }
-
-.timeline-item.hyped      .timeline-dot,
-.timeline-item.hyped      .mood-pill,
-.timeline-item.lonely     .timeline-dot,
-.timeline-item.lonely     .mood-pill    { background: var(--light-pink); }
-
-.timeline-item.radiant    .timeline-dot,
-.timeline-item.radiant    .mood-pill    { background: var(--light-yellow); }
+.timeline-item.overwhelmed {
+  min-height: 56px;
+}
 
 .timeline-item.overwhelmed .timeline-dot,
-.timeline-item.overwhelmed .mood-pill,
-.timeline-item.frustrated  .timeline-dot,
-.timeline-item.frustrated  .mood-pill   { background: color-mix(in srgb, var(--dark-orange) 28%, var(--background)); }
+.timeline-item.overwhelmed .mood-pill {
+  background: #ef4939;
+}
 
-.timeline-item.panicked   .timeline-dot,
-.timeline-item.panicked   .mood-pill    { background: color-mix(in srgb, var(--light-red) 22%, var(--background)); }
+.timeline-item.overwhelmed .mood-pill {
+  color: var(--white);
+}
 
-.timeline-item.drained    .timeline-dot,
-.timeline-item.drained    .mood-pill,
-.timeline-item.restless   .timeline-dot,
-.timeline-item.restless   .mood-pill    { background: color-mix(in srgb, var(--light-green) 50%, var(--background)); }
+.timeline-item.generous .timeline-dot,
+.timeline-item.generous .mood-pill {
+  background: #f04fc6;
+}
 
+.timeline-item.numb {
+  min-height: 56px;
+}
 
-.timeline-item.unmotivated .timeline-dot,
-.timeline-item.unmotivated .mood-pill,
-.timeline-item.insecure    .timeline-dot,
-.timeline-item.insecure    .mood-pill   { background: color-mix(in srgb, var(--hot-pink) 28%, var(--background)); }
+.timeline-item.numb .timeline-dot,
+.timeline-item.numb .mood-pill {
+  background: #6c3f20;
+}
 
-.timeline-item.numb       .timeline-dot,
-.timeline-item.numb       .mood-pill,
-.timeline-item.stuck      .timeline-dot,
-.timeline-item.stuck      .mood-pill,
-.timeline-item.lost       .timeline-dot,
-.timeline-item.lost       .mood-pill    { background: var(--gray-lightest); }
+.timeline-item.numb .mood-pill {
+  color: var(--white);
+}
 
-/* ── Estado vazio ── */
-.history-empty {
-  margin: 48px 0 0;
-  font-size: 15px;
-  font-weight: 400;
-  color: var(--medium-text);
-  text-align: center;
-  line-height: 1.5;
+@media (max-width: 420px) {
+  .history-page {
+    width: 100%;
+    min-height: 100svh;
+  }
 }
 
 @media (min-width: 768px) {

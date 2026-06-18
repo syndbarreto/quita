@@ -56,15 +56,15 @@ document.addEventListener("click", (event) => {
 });
 
 // Handle radio button changes with event delegation
-document.addEventListener('change', (event) => {
-  if (event.target.type === 'radio') {
+document.addEventListener("change", (event) => {
+  if (event.target.type === "radio") {
     // Remove 'selected' class from all labels with same name
     document.querySelectorAll(`input[name="${event.target.name}"]`).forEach((radio) => {
-      radio.closest('.quiz-option').classList.remove('selected');
+      radio.closest(".quiz-option").classList.remove("selected");
     });
     
     // Add 'selected' class to the clicked label
-    event.target.closest('.quiz-option').classList.add('selected');
+    event.target.closest(".quiz-option").classList.add("selected");
   }
 });
 
@@ -74,9 +74,9 @@ showQuizStep("1");
 function getQuizResult() {
   // Mapeia cada resposta para seu valor de ponto
   const pointMap = {
-    'option-1': 1, // seed
-    'option-2': 2, // knot
-    'option-3': 3  // burden
+    "option-1": 1, // seed
+    "option-2": 2, // knot
+    "option-3": 3  // burden
   };
 
   let totalPoints = 0;

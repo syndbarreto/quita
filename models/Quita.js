@@ -18,6 +18,7 @@ function normalizeName(name) {
   return limitName(name) || "Quita";
 }
 
+
 export class Quita {
   #id;
   #name;
@@ -50,7 +51,6 @@ export class Quita {
     if (journalCount === 1) return DOLL_STATES.CALM;
     return DOLL_STATES.HAPPY;
   }
-
 
   static fromServerRecord(record) {
     return record instanceof Quita ? record : new Quita(record);
