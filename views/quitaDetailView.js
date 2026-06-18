@@ -1,6 +1,7 @@
 import { getQuitaRecord, updateQuitaRecord } from "../services/api-service.js";
 import { requireAuth } from "../services/auth-service.js";
 import { getCalmingToolsByIds } from "../services/tools-service.js";
+import { notify } from "../services/notification-service.js";
 import {
   DOLL_STATES,
   WORRY_TYPES,
@@ -120,17 +121,6 @@ function getJournalText(journal) {
   return journal.text || journal.content || journal.reflection || journal.description || "";
 }
 
-function getDollStateByJournalCount(journalCount) {
-  if (journalCount <= 0) {
-    return DOLL_STATES.WORRIED;
-  }
-
-  if (journalCount === 1) {
-    return DOLL_STATES.CALM;
-  }
-
-  return DOLL_STATES.HAPPY;
-}
 
 function createHero(quita) {
   const figure = createElement("div", "quita-detail-hero-figure");
@@ -280,13 +270,19 @@ async function saveProgress() {
         createdAt: new Date().toISOString(),
       },
     ];
-    const dollState = getDollStateByJournalCount(updatedJournals.length);
+    const dollState = Quita.getDollStateByJournalCount(updatedJournals.length);
     const updatedRecord = await updateQuitaRecord(selectedQuita.id, {
       journals: updatedJournals,
       dollState,
     });
 
+    const previousState = selectedQuita.dollState;
     selectedQuita = Quita.fromServerRecord(updatedRecord);
+
+    if (previousState !== DOLL_STATES.HAPPY && selectedQuita.dollState === DOLL_STATES.HAPPY) {
+      notify("quita_happy", `${selectedQuita.name} has blossomed.`).catch(() => {});
+    }
+
     createHero(selectedQuita);
     renderTimeline(selectedQuita);
     updateHeroOnScroll();
@@ -339,8 +335,6 @@ async function loadDetail() {
     return;
   }
 
-  console.log("[quita-detail] loading quitaId:", quitaId);
-
   try {
     const record = await getQuitaRecord(quitaId);
 
@@ -360,7 +354,6 @@ async function loadDetail() {
     await renderRecommendedTools(worryType);
     updateHeroOnScroll();
   } catch (error) {
-    console.error("[quita-detail] loadDetail failed:", error);
     window.location.href = "./vault.html?view=list";
   }
 }

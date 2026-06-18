@@ -31,10 +31,10 @@ h1 {
   --description-line-height: 22.8px;
   --button-height: 54px;
 
-  width: 402px;
-  min-height: 874px;
+  width: min(100vw, 402px);
+  min-height: 100svh;
   margin: 0 auto;
-  padding: 72px 20px 28px;
+  padding: 72px 20px 48px;
   background: var(--page-background);
 
   display: flex;
@@ -108,7 +108,6 @@ h1 {
   --title-size: 34px;
   --button-height: 54px;
 
-  padding-bottom: 72px;
 }
 
 .onboarding-page--quiz {
@@ -146,7 +145,6 @@ h1 {
   --description-line-height: 21.13px;
   --button-height: 54.5px;
 
-  padding-bottom: 67px;
   gap: 72px;
 }
 
@@ -164,7 +162,6 @@ h1 {
   --description-size: 13px;
   --description-line-height: 21.13px;
 
-  padding-bottom: 67px;
   gap: 16px;
 }
 
@@ -183,7 +180,6 @@ h1 {
   --description-size: 14px;
   --description-line-height: 22.75px;
 
-  padding-bottom: 67px;
   gap: 69px;
 }
 
@@ -220,6 +216,7 @@ h1 {
 .skip-button {
   font-size: 13px;
   opacity: 0.7;
+  margin-left: auto;
 }
 
 .onboarding-art {
@@ -464,11 +461,9 @@ h1 {
   font-weight: 600;
 }
 
-@media (max-width: 600px) {
+@media (min-width: 768px) {
   .onboarding-page {
-    width: 100vw;
-    min-height: 100dvh;
-    margin: 0;
+    min-height: auto;
   }
 }
 

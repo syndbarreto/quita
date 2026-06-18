@@ -8,47 +8,46 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/pages/authentication.css">
+    <script src="../js/suppress-transition-errors.js"></script>
 </head>
 <body>
     <div class="auth-page">
+
+        <!-- Logo + tagline -->
         <div class="auth-hero">
             <img class="auth-logo" src="../assets/Quita Logo svg.svg" alt="Logótipo Quita" />
             <p class="auth-tagline">Give your worries a place to rest</p>
         </div>
-        
+
         <!-- Botões principais -->
-    <div class="auth-actions">
-      <button class="glass-chip auth-btn-primary" type="button" data-navigate="./signupLogin.html">
-        Create an account
-        </button>
-        
-            <button class="glass-chip" type="button" data-navigate="./signupLogin.html?view=login"
-                style="--glass-chip-width: 100%">
+        <div class="auth-actions">
+            <button class="glass-chip is-selected" style="--glass-chip-width: 100%; height: 58px;" data-navigate="./signupLogin.html">
+                Create an account
+            </button>
+            <button class="glass-chip" style="--glass-chip-width: 100%; height: 58px;" data-navigate="./signupLogin.html?view=login">
                 Log in
             </button>
         </div>
-        
+
         <div class="auth-separator"></div>
-        
-        <!-- Card Fast Entry -->
-    <div class="auth-alert">
-      <div class="auth-alert-header">
-        <div class="auth-alert-icon">
-          <img src="../assets/raio.svg" alt="" aria-hidden="true" />
-        </div>
-        
-        <div class="auth-alert-copy">
-          <h2>Need immediate relief?</h2>
-          <p>To start releasing worries right away</p>
-        </div>
+
+        <!-- Fast Entry -->
+        <div class="auth-alert">
+            <div class="auth-alert-header">
+                <div class="auth-alert-icon">
+                    <img src="../assets/raio.svg" alt="Ícone de Raio" />
+                </div>
+                <div class="auth-alert-copy">
+                    <h2>Need immediate relief?</h2>
+                    <p>To start releasing worries right away</p>
+                </div>
             </div>
-            
-        <button class="glass-chip auth-btn-fast-entry" type="button" data-navigate="./home.html">
-            Try fast entry
-        </button>
+            <button class="glass-chip is-selected" style="--glass-chip-width: 100%; height: 54px; --glass-chip-selected-background: var(--blue);" data-navigate="./home.html">
+                Try fast entry
+            </button>
         </div>
+
     </div>
     <script type="module" src="../views/authenticationView.js"></script>
-    
 </body>
 </html>

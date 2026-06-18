@@ -1,6 +1,7 @@
 import { getQuitaRecord, updateQuitaRecord } from "../services/api-service.js";
 import { QUITA_STATUS } from "../models/constants.js";
 import { requireAuth } from "../services/auth-service.js";
+import { notify } from "../services/notification-service.js";
 
 if (!requireAuth()) {
   throw new Error("Authentication required.");
@@ -60,6 +61,7 @@ form.addEventListener("submit", async (event) => {
       status: QUITA_STATUS.BLISS,
     });
 
+    notify("quita_released", `You released ${selectedQuita.name} to Bliss.`).catch(() => {});
     window.location.href = "./vault.html";
   } catch (error) {
     doneButton.disabled = false;

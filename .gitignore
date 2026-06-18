@@ -1,3 +1,6 @@
-GEMINI.md
 node_modules/
 config/chat-config.js
+.DS_Store
+.vscode/
+AGENTS.md
+GEMINI.md
