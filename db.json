@@ -26,7 +26,8 @@
       "lastName": "lindo",
       "birthDate": "2003-03-05",
       "favTools": [
-        13
+        13,
+        1
       ],
       "id": 4,
       "role": "user",
@@ -317,6 +318,36 @@
       "createdAt": "2026-06-18T00:25:22.614Z",
       "userId": 4,
       "id": 3
+    },
+    {
+      "feeling": "Drained",
+      "createdAt": "2026-06-18T00:37:44.773Z",
+      "userId": 4,
+      "id": 4
+    },
+    {
+      "feeling": "Numb",
+      "createdAt": "2026-06-18T00:43:38.244Z",
+      "userId": 4,
+      "id": 5
+    },
+    {
+      "feeling": "Frustrated",
+      "createdAt": "2026-06-18T00:47:44.749Z",
+      "userId": 4,
+      "id": 6
+    },
+    {
+      "feeling": "Panicked",
+      "createdAt": "2026-06-18T00:49:31.669Z",
+      "userId": 4,
+      "id": 7
+    },
+    {
+      "feeling": "Serene",
+      "createdAt": "2026-06-18T00:53:23.917Z",
+      "userId": 4,
+      "id": 8
     }
   ],
   "tools": [

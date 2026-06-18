@@ -6,6 +6,9 @@ if (!requireAuth()) {
 }
 
 const historyList = document.querySelector(".history-list");
+const filterChips = [...document.querySelectorAll("[data-filter]")];
+let currentFilter = "all";
+let allCheckins = [];
 
 function formatRelativeTime(isoString) {
   const created = new Date(isoString);
@@ -63,18 +66,12 @@ function renderCheckin(checkin) {
 
 function renderEmpty() {
   const empty = document.createElement("p");
+  empty.className = "history-empty";
   empty.textContent = "No check-ins yet. Come back after your first one.";
-  empty.style.color = "#a998bd";
   historyList.append(empty);
 }
 
-async function renderHistory() {
-  if (!historyList) {
-    return;
-  }
-
-  const checkins = await getOwnedRecords("emotionalCheckins");
-
+function renderList(checkins) {
   historyList.replaceChildren();
 
   if (!checkins || checkins.length === 0) {
@@ -82,14 +79,10 @@ async function renderHistory() {
     return;
   }
 
-  const sorted = [...checkins].sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
-  );
-
   const GROUP_ORDER = ["Today", "This week", "Earlier"];
   const groups = {};
 
-  sorted.forEach((checkin) => {
+  checkins.forEach((checkin) => {
     const group = getGroup(checkin.createdAt);
     if (!groups[group]) groups[group] = [];
     groups[group].push(checkin);
@@ -107,6 +100,36 @@ async function renderHistory() {
       historyList.append(renderCheckin(checkin));
     });
   });
+}
+
+function applyFilter(filter) {
+  currentFilter = filter;
+
+  filterChips.forEach((chip) => {
+    chip.setAttribute("aria-pressed", String(chip.dataset.filter === filter));
+  });
+
+  const filtered = filter === "all"
+    ? allCheckins
+    : allCheckins.filter((c) => c.feeling.toLowerCase() === filter);
+
+  renderList(filtered);
+}
+
+filterChips.forEach((chip) => {
+  chip.addEventListener("click", () => applyFilter(chip.dataset.filter));
+});
+
+async function renderHistory() {
+  if (!historyList) return;
+
+  const checkins = await getOwnedRecords("emotionalCheckins");
+
+  allCheckins = checkins
+    ? [...checkins].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    : [];
+
+  applyFilter(currentFilter);
 }
 
 renderHistory();

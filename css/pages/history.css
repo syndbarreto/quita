@@ -1,13 +1,13 @@
 body {
-  background: #eaeaea;
-  font-family: var(--font-primary), Arial, Helvetica, sans-serif;
+  background: var(--body-bg);
+  font-family: var(--font-primary);
 }
 
 .history-page {
   width: min(100vw, 402px);
   min-height: 100svh;
   margin: 0 auto;
-  padding: 72px 20px 48px;
+  padding: 20px 20px 48px;
   background: var(--background);
   color: var(--purple);
   overflow: hidden;
@@ -16,37 +16,35 @@ body {
 .history-header {
   height: 68px;
   display: grid;
-  grid-template-columns: 44px 1fr 44px;
+  grid-template-columns: 48px 1fr 48px;
   align-items: center;
+  margin-bottom: 8px;
 }
 
 .history-header h1 {
   grid-column: 2;
-  font-family: var(--font-primary), Arial, Helvetica, sans-serif;
-  font-size: 27px;
+  font-family: var(--font-primary);
+  font-size: 17px;
   line-height: 1;
   font-weight: 800;
   text-align: center;
   color: var(--purple);
 }
 
-.back-button {
-  width: 44px;
-  height: 44px;
-  position: relative;
-  display: block;
+.checkin-back {
+  width: 48px;
+  height: 48px;
+  color: var(--black);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.back-button::before {
-  content: "";
-  width: 15px;
-  height: 15px;
-  border-left: 3px solid #111111;
-  border-bottom: 3px solid #111111;
-  position: absolute;
-  left: 14px;
-  top: 13px;
-  transform: rotate(45deg);
+.checkin-back img {
+  width: 24px;
+  height: 24px;
+  display: block;
 }
 
 .hero {
@@ -55,7 +53,7 @@ body {
 
 .hero h2 {
   margin-bottom: 8px;
-  font-family: var(--font-title), var(--font-primary), sans-serif;
+  font-family: var(--font-title);
   font-size: 57px;
   line-height: 0.88;
   font-weight: 400;
@@ -65,7 +63,7 @@ body {
 .hero p {
   font-size: 20px;
   line-height: 1.25;
-  color: #9787ad;
+  color: var(--history-lavender-text);
 }
 
 .mood-filters {
@@ -81,64 +79,114 @@ body {
   display: none;
 }
 
-.filter-chip,
+.filter-chip {
+  --glass-chip-color: var(--purple);
+  --glass-chip-selected-color: var(--purple);
+  flex: 0 0 auto;
+  outline: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: var(--gray-lightest);
+  background-blend-mode: normal;
+}
+
+.filter-chip[aria-pressed="true"] {
+  --glass-chip-selected-background: var(--purple);
+  --glass-chip-selected-color: var(--background);
+}
+
+.filter-chip--calm {
+  --glass-chip-selected-background: var(--mint);
+  background: color-mix(in srgb, var(--mint) 35%, transparent);
+}
+
+.filter-chip--calm[aria-pressed="true"] {
+  background: var(--mint);
+}
+
+.filter-chip--anxious {
+  --glass-chip-selected-background: var(--yellow);
+  background: color-mix(in srgb, var(--yellow) 35%, transparent);
+}
+
+.filter-chip--anxious[aria-pressed="true"] {
+  background: var(--yellow);
+}
+
+.filter-chip--tender {
+  --glass-chip-selected-background: var(--light-pink);
+  background: color-mix(in srgb, var(--light-pink) 35%, transparent);
+}
+
+.filter-chip--tender[aria-pressed="true"] {
+  background: var(--light-pink);
+}
+
+.filter-chip--tired {
+  --glass-chip-selected-background: var(--history-tired);
+  background: color-mix(in srgb, var(--history-tired) 35%, transparent);
+}
+
+.filter-chip--tired[aria-pressed="true"] {
+  background: var(--history-tired);
+}
+
+.filter-chip--hopeful {
+  --glass-chip-selected-background: var(--light-blue);
+  background: color-mix(in srgb, var(--light-blue) 35%, transparent);
+}
+
+.filter-chip--hopeful[aria-pressed="true"] {
+  background: var(--light-blue);
+}
+
 .mood-pill {
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  text-decoration: none;
   color: var(--purple);
   white-space: nowrap;
 }
 
-.filter-chip {
-  height: 70px;
-  padding: 0 24px;
-  flex: 0 0 auto;
-  font-size: 18px;
-}
-
-.filter-chip.all {
-  width: 70px;
-  padding: 0;
-  color: var(--background);
-  background: var(--purple);
-}
-
-.filter-chip.calm,
 .timeline-item.calm .timeline-dot,
 .timeline-item.calm .mood-pill {
   background: var(--mint);
 }
 
-.filter-chip.anxious,
 .timeline-item.anxious .timeline-dot,
 .timeline-item.anxious .mood-pill {
   background: var(--yellow);
 }
 
-.filter-chip.tender,
 .timeline-item.tender .timeline-dot,
 .timeline-item.tender .mood-pill {
-  background: #ffa6c9;
+  background: var(--history-tender);
 }
 
-.filter-chip.tired,
 .timeline-item.tired .timeline-dot,
 .timeline-item.tired .mood-pill {
-  background: #bea5ef;
+  background: var(--history-tired);
 }
 
-.filter-chip.hopeful,
 .timeline-item.hopeful .timeline-dot,
 .timeline-item.hopeful .mood-pill {
-  background: #63a7f7;
+  background: var(--light-blue);
+}
+
+.timeline-item .timeline-dot,
+.timeline-item .mood-pill {
+  background: var(--hot-pink);
 }
 
 .history-list {
   padding-top: 4px;
+}
+
+.history-empty {
+  color: var(--history-muted);
 }
 
 .section-label {
@@ -147,7 +195,7 @@ body {
   line-height: 1;
   letter-spacing: 6px;
   text-transform: uppercase;
-  color: #a998bd;
+  color: var(--history-muted);
 }
 
 .section-label:not(:first-child) {
@@ -167,7 +215,7 @@ body {
   left: 15px;
   top: 29px;
   bottom: -2px;
-  background: #e6dfe8;
+  background: var(--history-line);
 }
 
 .timeline-item:last-child::before {
@@ -205,14 +253,14 @@ body {
 .timeline-meta time {
   font-size: 17px;
   line-height: 1;
-  color: #a294b8;
+  color: var(--history-time);
 }
 
 .timeline-content p {
   margin-top: 13px;
   font-size: 20px;
   line-height: 1.25;
-  color: #705892;
+  color: var(--history-copy);
 }
 
 .timeline-item.overwhelmed {
@@ -221,7 +269,7 @@ body {
 
 .timeline-item.overwhelmed .timeline-dot,
 .timeline-item.overwhelmed .mood-pill {
-  background: #ef4939;
+  background: var(--history-overwhelmed);
 }
 
 .timeline-item.overwhelmed .mood-pill {
@@ -230,7 +278,7 @@ body {
 
 .timeline-item.generous .timeline-dot,
 .timeline-item.generous .mood-pill {
-  background: #f04fc6;
+  background: var(--history-generous);
 }
 
 .timeline-item.numb {
@@ -239,7 +287,7 @@ body {
 
 .timeline-item.numb .timeline-dot,
 .timeline-item.numb .mood-pill {
-  background: #6c3f20;
+  background: var(--history-numb);
 }
 
 .timeline-item.numb .mood-pill {

@@ -27,7 +27,7 @@
 
 .calming-tools-page[hidden],
 .search-view[hidden] {
-  display: none;
+  display: none !important;
 }
 
 /* Header */
@@ -37,7 +37,6 @@
   justify-content: space-between;
   gap: 16px;
   margin-top: 72px;
-  font: SF Pro Expanded;
 }
 
 .calming-title {
@@ -157,7 +156,7 @@
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--black) 8%, transparent);
   height: 100%;
   width: 100%;
 }
@@ -231,10 +230,12 @@
 
 /* Search View */
 .search-view {
-  width: 100%;
-  min-height: 100vh;
-  padding: 72px 0px 120px 20px;
-  position: relative;
+  width: min(100vw, 402px);
+  padding: 72px 20px 40px;
+  position: fixed;
+  inset: 0;
+  margin: 0 auto;
+  z-index: 300;
   background: var(--background);
   display: none;
   flex-direction: column;
@@ -242,6 +243,8 @@
   align-items: flex-start;
   gap: 20px;
   box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .search-view.is-active {
@@ -304,7 +307,7 @@
 }
 
 .search-header-bar {
-  align-self: stretch;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -325,16 +328,16 @@
 }
 
 .search-input-wrapper {
+  min-width: 0;
   flex: 1;
   height: 54px;
   padding: 0 23px;
-  background: rgba(120, 120, 128, 0.08);
+  background: color-mix(in srgb, var(--light-grey) 8%, transparent);
   border-radius: 100px;
   display: flex;
   align-items: center;
   box-sizing: border-box;
   border: none;
-  margin-right: 2rem;
 }
 
 .search-input-wrapper .search-input-text {
@@ -344,22 +347,25 @@
 }
 
 .search-filters-container {
-  align-self: stretch;
+  width: 100%;
+  min-height: 52px;
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   overflow-x: auto;
   padding-bottom: 4px;
+  flex: 0 0 auto;
 }
 .search-filters-container::-webkit-scrollbar {
   display: none;
 }
 
 .filter-chip {
+  flex: 0 0 auto;
   padding: 6px 20px;
   position: relative;
-  background: #F5F2EB;
+  background: var(--vault-filter-bg);
   border: none;
   border-radius: 1000px;
   display: flex;
@@ -372,9 +378,8 @@
 }
 
 .filter-chip.active {
-  background: linear-gradient(0deg, var(--blue) 0%, var(--blue) 100%), #999999;
-  background-blend-mode: linear_burn;
-  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.12);
+  background: var(--blue);
+  box-shadow: 0px 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
 }
 
 .filter-chip .chip-text {
@@ -393,6 +398,7 @@
   flex-direction: column;
   gap: 14px;
   width: 100%;
+  min-width: 0;
 }
 
 .result-card {
@@ -424,7 +430,7 @@
 .art-54321-inner { width: 49px; height: 53px; left: 11px; top: 9px; position: absolute; background: var(--light-orange); }
 .art-bodyscan { background: var(--light-blue); border-radius: 20px; }
 .art-perspectives { background: var(--dark-orange); border-radius: 20px; }
-.art-organize { background: var(--mint); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 20px; }
+.art-organize { background: var(--mint); box-shadow: 0px 4px 4px color-mix(in srgb, var(--black) 25%, transparent); border-radius: 20px; }
 .art-patience { background: var(--light-blue); }
 
 .result-details {
@@ -447,20 +453,19 @@
 }
 
 .done-button-container {
-  width: calc(100% - 40px);
+  width: 100%;
   height: 48px;
-  position: fixed;
-  bottom: 40px;
-  left: 20px;
+  position: sticky;
+  bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 1000px;
   background: var(--blue);
-  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 8px 40px color-mix(in srgb, var(--black) 12%, transparent);
   cursor: pointer;
-  z-index: 10;
   border: none;
+  margin-top: auto;
 }
 
 .done-button-text {
@@ -485,7 +490,7 @@
 
 .favorite-btn:hover,
 .favorite-btn.active {
-  color: var(--dark-red, #b20202);
+  color: var(--dark-red);
 }
 
 .favorite-btn.active .heart-outline {
@@ -566,8 +571,8 @@
   margin-top: 8px;
   padding: 12px 20px;
   border-radius: 999px;
-  background: #ff0000;
-  color: #ffffff;
+  background: var(--youtube-red);
+  color: var(--white);
   font-family: var(--font-primary);
   font-size: 15px;
   font-weight: 600;
@@ -581,7 +586,7 @@
 }
 
 .tool-youtube-link:focus-visible {
-  outline: 2px solid #ff0000;
+  outline: 2px solid var(--youtube-red);
   outline-offset: 3px;
 }
 
@@ -1070,6 +1075,6 @@
 
   .tools-gallery > .tool-card:nth-child(3) img {
     object-fit: contain;
-    background-color: #DE98B2;
+    background-color: var(--calming-grounding-desktop-bg);
   }
 }

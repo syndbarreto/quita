@@ -41,6 +41,16 @@
   gap: 12px;
 }
 
+.auth-chip {
+  --glass-chip-width: 100%;
+  height: 58px;
+}
+
+.auth-chip--fast {
+  --glass-chip-selected-background: var(--blue);
+  height: 54px;
+}
+
 /* Separador */
 .auth-separator {
   width: 100%;
@@ -73,7 +83,7 @@
   background: var(--background);
   display: grid;
   place-items: center;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--black) 10%, transparent);
 }
 
 .auth-alert-icon img {
