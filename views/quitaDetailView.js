@@ -1,4 +1,4 @@
-import { getQuitaRecord, updateQuitaRecord } from "../services/api-service.js";
+import { getQuitaRecord, updateQuitaRecord, deleteQuitaRecord } from "../services/api-service.js";
 import { requireAuth } from "../services/auth-service.js";
 import { getCalmingToolsByIds } from "../services/tools-service.js";
 import { notify } from "../services/notification-service.js";
@@ -26,6 +26,9 @@ const progressOverlay = document.querySelector("[data-progress-overlay]");
 const progressTitleInput = document.querySelector("[data-progress-title]");
 const progressTextarea = document.querySelector("[data-progress-textarea]");
 const progressSaveButton = document.querySelector("[data-progress-save]");
+const chatButton = document.querySelector("[data-detail-open-chat]");
+const deleteButton = document.querySelector("[data-detail-delete]");
+const confirmOverlay = document.querySelector("[data-detail-confirm-overlay]");
 const params = new URLSearchParams(window.location.search);
 const quitaId = params.get("quitaId");
 let selectedQuita = null;
@@ -357,6 +360,41 @@ async function loadDetail() {
     window.location.href = "./vault.html?view=list";
   }
 }
+
+function openConfirmOverlay() {
+  confirmOverlay.hidden = false;
+}
+
+function closeConfirmOverlay() {
+  confirmOverlay.hidden = true;
+}
+
+async function handleDelete() {
+  if (!selectedQuita) return;
+
+  try {
+    await deleteQuitaRecord(selectedQuita.id);
+    window.location.href = "./vault.html?view=list";
+  } catch {
+    closeConfirmOverlay();
+  }
+}
+
+function openChat() {
+  if (!selectedQuita) return;
+  sessionStorage.setItem("quita-chat-data", JSON.stringify(selectedQuita));
+  window.location.href = `./quita-chat.html?quitaId=${encodeURIComponent(selectedQuita.id)}`;
+}
+
+chatButton.addEventListener("click", openChat);
+deleteButton.addEventListener("click", openConfirmOverlay);
+confirmOverlay.addEventListener("click", (event) => {
+  if (event.target.closest("[data-detail-confirm-yes]")) {
+    handleDelete();
+  } else if (event.target.closest("[data-detail-confirm-no]")) {
+    closeConfirmOverlay();
+  }
+});
 
 window.addEventListener("scroll", updateHeroOnScroll, { passive: true });
 progressTitleInput.addEventListener("input", updateProgressButtonState);
