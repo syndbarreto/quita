@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../css/global.css" />
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/pages/quita-detail.css" />
+  <link rel="stylesheet" href="../css/pages/vault.css" />
   <script src="../js/suppress-transition-errors.js"></script>
 </head>
 <body>
@@ -17,10 +18,10 @@
         <span class="quita-detail-close-icon" aria-hidden="true"></span>
       </a>
       <div class="quita-detail-actions" aria-label="Quita actions">
-        <button class="quita-detail-action" type="button" aria-label="Open Quita chat">
+        <button class="quita-detail-action" type="button" aria-label="Open Quita chat" data-detail-open-chat>
           <span class="quita-detail-action-icon quita-detail-action-icon--chatbot" aria-hidden="true"></span>
         </button>
-        <button class="quita-detail-action" type="button" aria-label="Delete Quita">
+        <button class="quita-detail-action" type="button" aria-label="Delete Quita" data-detail-delete>
           <span class="quita-detail-action-icon quita-detail-action-icon--delete" aria-hidden="true"></span>
         </button>
       </div>
@@ -62,6 +63,18 @@
         <textarea id="progress-note" name="progress-note" placeholder="Write your progress..." data-progress-textarea></textarea>
       </label>
       <button class="glass-chip quita-progress-save" type="button" data-progress-save disabled>Done</button>
+    </section>
+  </div>
+
+  <div class="vault-confirm-overlay is-delete" data-detail-confirm-overlay hidden>
+    <div class="vault-confirm-backdrop" data-detail-confirm-no></div>
+    <section class="vault-confirm-sheet" aria-modal="true" aria-labelledby="detail-confirm-title" role="dialog">
+      <div class="vault-confirm-handle" aria-hidden="true"></div>
+      <h2 class="vault-confirm-title" id="detail-confirm-title">Are you sure you want to <span>delete</span> this Quita?</h2>
+      <div class="vault-confirm-actions">
+        <button class="vault-confirm-button vault-confirm-button--yes" type="button" data-detail-confirm-yes>Yes</button>
+        <button class="vault-confirm-button vault-confirm-button--no" type="button" data-detail-confirm-no>No</button>
+      </div>
     </section>
   </div>
 
