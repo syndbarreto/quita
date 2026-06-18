@@ -128,17 +128,17 @@ async function init() {
     return;
   }
 
-  console.log("[quita-chat] loading quitaId:", quitaId);
-
   try {
-    const quita = await getQuitaRecord(quitaId);
-    const systemPrompt = buildSystemPrompt(quita.name, quita.worryText);
+    const cached = sessionStorage.getItem("quita.chatQuita");
+    const quita = cached ? JSON.parse(cached) : await getQuitaRecord(quitaId);
+    sessionStorage.removeItem("quita.chatQuita");
 
+    const systemPrompt = buildSystemPrompt(quita.name, quita.worryText);
     history = new ChatHistory(systemPrompt);
     subtitleEl.textContent = quita.name;
     createBubble("bot", INITIAL_GREETING);
   } catch (err) {
-    console.error("[quita-chat] init failed:", err);
+    console.error("[chat init error]", err);
     window.history.back();
     return;
   }

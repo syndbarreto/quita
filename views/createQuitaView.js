@@ -302,8 +302,8 @@ form.addEventListener("submit", async (event) => {
   const quita = new Quita(getFormData());
 
   try {
-    const createdQuita = await createQuitaRecord(quita);
-    notify("quita_created", `${createdQuita.name} arrived in your vault!`).catch(()=>{});
+    const created = await createQuitaRecord(quita);
+    notify("quita_created", `${created.name} arrived in your vault.`).catch(() => {});
     window.location.href = "./vault.html";
   } catch (error) {
     if (error.message.includes("logged in") || error.message.includes("session expired")) {
